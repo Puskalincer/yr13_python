@@ -117,6 +117,9 @@ def format_display_question(questions):
     return temp_array , questions["question"]
 def question_request(amount,change_range=50):
     return random.sample(range(change_range), amount)
+
+
+
 def main_question_loop(how_many_questions):
     requested_quesions = question_request(how_many_questions)
     x=0
@@ -143,6 +146,8 @@ def main_question_loop(how_many_questions):
         for beans, value in enumerate(active_users):
             print(active_users[beans][0] + " \t " + str(active_users[beans][1]) + " \t \t " + str(active_users[beans][2]))
         input("")
+
+
 
 #User stuff
 def view_user_data():
@@ -215,22 +220,15 @@ def active_users_select():
         beanz = int(beanz) - 1
         active_users.append(users[beanz])
 
-
-
+def question_reroll():
+    thing_code , questions =  request_questions('50',request_token,catagory=0)
+    open('1questions.json', 'w').write(json.dumps(questions , ensure_ascii=False, indent=4 ))
 
 #Initialization things
 request_token , users = data_manager()
 save_data()
 
 questions = json.loads(open('questions.json', 'r').read())
-
-
-
-
-
-
-
-
 
 def main_menu():
     clear()
@@ -250,27 +248,14 @@ def game_menu():
     elif user_choice == "2":
         MAIN_QUIZ(10)
     elif user_choice == "3":
+        question_reroll()
         MAIN_QUIZ(20)
     elif user_choice == "4":
         MAIN_QUIZ(10)
-
-
 
 def MAIN_QUIZ(quastion_amount):
     active_users_select()
     main_question_loop(quastion_amount)
     clear()
-
-
-
-
-
-
-
-
-
-
-
-
 
 main_menu()
