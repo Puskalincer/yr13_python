@@ -11,12 +11,9 @@ serverPort = 8080
 response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
 
 request_token = ""
-userz = [["bob",10,1,"tv"]]
 
 users = []
-
 active_users = []
-
 
 questions = ""
 
@@ -62,7 +59,7 @@ def get_token():
 
 def data_manager():
     try:
-        f = open("data.txt", "r")
+        f = open("data.json", "r")
         thing = json.loads(f.read())
         f.close()
         return thing["token"] , thing["users"]
@@ -73,7 +70,7 @@ def save_data():
       "users": users,
       "token": request_token
     }
-    f = open("data.txt", "w")
+    f = open("data.json", "w")
     f.write(json.dumps(x))
     f.close()
 
@@ -88,14 +85,6 @@ def request_questions(amount,token,catagory='',difficulty='',type=''):
     response = json.loads(res.text)
     return response["response_code"] , response["results"]
 
-def active_users_select():
-    print("How many players?")
-    x = input("Num : ")
-    list_formatter(users,"Users")
-    for y in range(int(x)):
-        beanz = input("Num : ")  
-        beanz = int(beanz) - 1
-        active_users.append(users[beanz])
 
 def divider():
     print("\n" + 34 * "-" + "\n")
@@ -119,15 +108,15 @@ def list_formatter2(arrayname,array_name_formatted,instructions=""):
         print(str(idx) + " - "+ array_item)
     divider()
 
+
+#Main quizz stuff
 def format_display_question(questions):
     temp_array = questions["incorrect_answers"]
     temp_array.append(questions["correct_answer"])
     random.shuffle(temp_array)
     return temp_array , questions["question"]
-
 def question_request(amount,change_range=50):
     return random.sample(range(change_range), amount)
-
 def main_question_loop(how_many_questions):
     requested_quesions = question_request(how_many_questions)
     x=0
@@ -155,15 +144,9 @@ def main_question_loop(how_many_questions):
             print(active_users[beans][0] + " \t " + str(active_users[beans][1]) + " \t \t " + str(active_users[beans][2]))
         input("")
 
-
-request_token , users = data_manager()
-save_data()
-
-
-
-
-
+#User stuff
 def view_user_data():
+    save_data()
     clear()
     divider()
     print("User \t \t Correct \t Incorrect \t W/L Ratio \t Best category \n")
@@ -177,13 +160,13 @@ def view_user_data():
         delete_user()
     elif user_choice == "3":
         change_user_pin()
-
+    elif user_choice == '':
+        main_menu()
 def new_user():
     len(users)
     user = input("user name : ")
     users.append([user , 0, 0, 0, "none", "none" ])
     view_user_data()
-
 def delete_user():
     clear()
     list_formatter(users,"Delete user")
@@ -210,7 +193,6 @@ def delete_user():
         else:
             users.pop(int(beanz))
     view_user_data()
-
 def change_user_pin():
     clear()
     list_formatter(users,"Change pin")
@@ -221,47 +203,74 @@ def change_user_pin():
     wanted_pin = input("-- ")
     users[beanz][5] = wanted_pin
     view_user_data()
+def active_users_select():
+    clear()
+    list_formatter(users,"Users")
+    print("How many players?")
+    x = input("Num : ")
+    clear()
+    list_formatter(users,"Users")
+    for y in range(int(x)):
+        beanz = input("Num : ")  
+        beanz = int(beanz) - 1
+        active_users.append(users[beanz])
 
 
 
 
-
-
-view_user_data()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-list_formatter2(["Play","User managment"],"Menu:")
-input("-- ")
-
-list_formatter2(["Quick","Basic","Advanced","Custom"],"Game mode:")
-input("-- ")
-
-
-
-
-
-
- 
-
+#Initialization things
+request_token , users = data_manager()
+save_data()
 
 questions = json.loads(open('questions.json', 'r').read())
 
-list_formatter(users,"Users")
-active_users_select()
 
-main_question_loop(10)
-"""
+
+
+
+
+
+
+
+def main_menu():
+    clear()
+    list_formatter2(["Play","User managment"],"Menu:")
+    user_choice = input("-- ")
+    if user_choice == "1":
+        game_menu()
+    elif user_choice == "2":
+        view_user_data()
+
+def game_menu():
+    clear()
+    list_formatter2(["Quick","Basic","Advanced","Custom"],"Game mode:")
+    user_choice = input("-- ")
+    if user_choice == "1":
+        MAIN_QUIZ(5)
+    elif user_choice == "2":
+        MAIN_QUIZ(10)
+    elif user_choice == "3":
+        MAIN_QUIZ(20)
+    elif user_choice == "4":
+        MAIN_QUIZ(10)
+
+
+
+def MAIN_QUIZ(quastion_amount):
+    active_users_select()
+    main_question_loop(quastion_amount)
+    clear()
+
+
+
+
+
+
+
+
+
+
+
+
+
+main_menu()
