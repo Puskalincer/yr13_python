@@ -1,0 +1,1 @@
+{"users": [["Bob", 0, 0, 0, "none", "1234"], ["John", 0, 0, 0, "none", "none"], ["Jared", 0, 0, 0, "none"], ["Beanos", 0, 0, 0, "none"], ["Beanos", 0, 0, 0, "none"], ["Beanos", 0, 0, 0, "none"]], "token": "fb0681278c908cb62038f898c182c2dc1259bd751c79f650c0fec5a9ee90c6f7"}

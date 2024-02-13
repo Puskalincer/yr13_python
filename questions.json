@@ -1,0 +1,580 @@
+[
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Science & Nature",
+        "question": "Which constellation contains the center of the Milky Way?",
+        "correct_answer": "Sagittarius",
+        "incorrect_answers": [
+            "Scorpius",
+            "Ophiuchus",
+            "Capricornus"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Music",
+        "question": "Which band had hits in 1975 with the songs, 'One Of These Nights' & 'Lyin Eyes'?",
+        "correct_answer": "The Eagles",
+        "incorrect_answers": [
+            "Fools Gold",
+            "The Doobie Brothers",
+            "Fleetwood Mac"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Entertainment: Video Games",
+        "question": "What vault in the video game 'Fallout 3' is the home of multiple clones named Gary?",
+        "correct_answer": "Vault 108",
+        "incorrect_answers": [
+            "Vault 101",
+            "Vault 87",
+            "Vault 21"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Japanese Anime & Manga",
+        "question": "Which of these is not a world in the anime 'Buddyfight'?",
+        "correct_answer": "Ancient Dragon World",
+        "incorrect_answers": [
+            "Dragon World",
+            "Star Dragon World",
+            "Darkness Dragon World"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Video Games",
+        "question": "How many normal endings are there in Cry Of Fear's campaign mode?",
+        "correct_answer": "4",
+        "incorrect_answers": [
+            "5",
+            "3",
+            "6"
+        ]
+    },
+    {
+        "type": "boolean",
+        "difficulty": "medium",
+        "category": "General Knowledge",
+        "question": "Sitting for more than three hours a day can cut two years off a person's life expectancy.",
+        "correct_answer": "True",
+        "incorrect_answers": [
+            "False"
+        ]
+    },
+    {
+        "type": "boolean",
+        "difficulty": "medium",
+        "category": "Science & Nature",
+        "question": "Sound can travel through a vacuum.",
+        "correct_answer": "False",
+        "incorrect_answers": [
+            "True"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Entertainment: Board Games",
+        "question": "What Magic: The Gathering card's flavor text is just 'Ribbit.'?",
+        "correct_answer": "Turn to Frog",
+        "incorrect_answers": [
+            "Spore Frog",
+            "Bloated Toad",
+            "Frogmite"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Japanese Anime & Manga",
+        "question": "Who voices 'Shou Suzuki' in the English dub of 'Mob Psycho 100'?",
+        "correct_answer": "Casey Mongillo",
+        "incorrect_answers": [
+            "Ben Diskin",
+            "Chris Niosi",
+            "David Naughton"
+        ]
+    },
+    {
+        "type": "boolean",
+        "difficulty": "easy",
+        "category": "Entertainment: Video Games",
+        "question": "The Indie Game Development Studio Cing, developers of Hotel Dusk and Last Window, went bankrupt on March 1st, 2010.",
+        "correct_answer": "True",
+        "incorrect_answers": [
+            "False"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Entertainment: Japanese Anime & Manga",
+        "question": "The name of Junko Enoshima's imposter at the beginning of Danganronpa: Trigger Happy Havoc is?",
+        "correct_answer": "Mukuro Ikusaba",
+        "incorrect_answers": [
+            "Ryota Mitarai",
+            "Ultimate Imposter",
+            "Komaru Naegi"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Science & Nature",
+        "question": "Which element has the highest melting point?",
+        "correct_answer": "Carbon",
+        "incorrect_answers": [
+            "Tungsten",
+            "Platinum",
+            "Osmium"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Music",
+        "question": "According to the RIAA: Which artist has sold the most albums by the million?",
+        "correct_answer": "The Beatles",
+        "incorrect_answers": [
+            "Elvis Presley",
+            "Michael Jackson",
+            "Pink Floyd"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "General Knowledge",
+        "question": "What is the name of NASA&rsquo;s most famous space telescope?",
+        "correct_answer": "Hubble Space Telescope",
+        "incorrect_answers": [
+            "Big Eye",
+            "Death Star",
+            "Millenium Falcon"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Science & Nature",
+        "question": "Which of these bones is hardest to break?",
+        "correct_answer": "Femur",
+        "incorrect_answers": [
+            "Cranium",
+            "Humerus",
+            "Tibia"
+        ]
+    },
+    {
+        "type": "boolean",
+        "difficulty": "hard",
+        "category": "Entertainment: Japanese Anime & Manga",
+        "question": "The character Plum from 'No Game No Life' is a girl.",
+        "correct_answer": "False",
+        "incorrect_answers": [
+            "True"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Science: Mathematics",
+        "question": "What is the area of a circle with a diameter of 20 inches if &pi;= 3.1415?",
+        "correct_answer": "314.15 Inches",
+        "incorrect_answers": [
+            "380.1215 Inches",
+            "3141.5 Inches",
+            "1256.6 Inches"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Entertainment: Music",
+        "question": "Which of these are NOT a Men at Work song?",
+        "correct_answer": "Basket Case",
+        "incorrect_answers": [
+            "Dr. Heckyll and Mr. Jive",
+            "Who Can It Be Now?",
+            "Be Good Johnny"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Science: Computers",
+        "question": "All of the following programs are classified as raster graphics editors EXCEPT:",
+        "correct_answer": "Inkscape",
+        "incorrect_answers": [
+            "Paint.NET",
+            "GIMP",
+            "Adobe Photoshop"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Entertainment: Japanese Anime & Manga",
+        "question": "What caused the titular mascot of Yo-Kai Watch, Jibanyan, to become a yokai?",
+        "correct_answer": "Being run over by a truck",
+        "incorrect_answers": [
+            "Ate one too many chocobars",
+            "Through a magical ritual",
+            "When he put on the harmaki"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Celebrities",
+        "question": "In what year did 'Bob Ross' die?",
+        "correct_answer": "1995",
+        "incorrect_answers": [
+            "1986",
+            "1989",
+            "1997"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Entertainment: Comics",
+        "question": "What's the race of Invincible's father?",
+        "correct_answer": "Viltrumite",
+        "incorrect_answers": [
+            "Kryptonian",
+            "Kree",
+            "Irken"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Entertainment: Books",
+        "question": "Which famous book is sub-titled 'The Modern Prometheus'?",
+        "correct_answer": "Frankenstein",
+        "incorrect_answers": [
+            "Dracula",
+            "The Strange Case of Dr. Jekyll and Mr. Hyde ",
+            "The Legend of Sleepy Hollow"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Entertainment: Film",
+        "question": "What is the name of the assassin in the first 'Hellboy' movie?",
+        "correct_answer": "Karl Ruprecht Kroenen",
+        "incorrect_answers": [
+            "Klaus Werner von Krupt",
+            "Grigori Efimovich Rasputin",
+            "Ilsa Haupstein"
+        ]
+    },
+    {
+        "type": "boolean",
+        "difficulty": "easy",
+        "category": "Entertainment: Music",
+        "question": "Stevie Wonder's real name is Stevland Hardaway Morris.",
+        "correct_answer": "True",
+        "incorrect_answers": [
+            "False"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Science: Computers",
+        "question": "What internet protocol was documented in RFC 1459?",
+        "correct_answer": "IRC",
+        "incorrect_answers": [
+            "HTTP",
+            "HTTPS",
+            "FTP"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Animals",
+        "question": "'Decapods' are an order of ten-footed crustaceans.  Which of these are NOT decapods?",
+        "correct_answer": "Krill",
+        "incorrect_answers": [
+            "Lobsters",
+            "Shrimp",
+            "Crabs"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Video Games",
+        "question": "Which 'Perk-A-Cola' in 'Call Of Duty: Zombies' was 'reworked' in 'Call of Duty: Black Ops II'?",
+        "correct_answer": "Double Tap Root Beer",
+        "incorrect_answers": [
+            "Who's Who",
+            "Juggernog",
+            "Mule Kick"
+        ]
+    },
+    {
+        "type": "boolean",
+        "difficulty": "medium",
+        "category": "History",
+        "question": "Franz Joseph I was the last emperor of Austria.",
+        "correct_answer": "False",
+        "incorrect_answers": [
+            "True"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Entertainment: Music",
+        "question": "Who was 'Kung Fu Fighting' in 1974?",
+        "correct_answer": "Carl Douglas",
+        "incorrect_answers": [
+            "The Bee Gees",
+            "Heatwave",
+            "Kool & the Gang"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Entertainment: Video Games",
+        "question": "What's the name of the halloween-related Sims 4 Stuff Pack released September 29th, 2015?",
+        "correct_answer": "Spooky Stuff",
+        "incorrect_answers": [
+            "Ghosts n' Ghouls",
+            "Nerving Nights",
+            "Fearful Frights"
+        ]
+    },
+    {
+        "type": "boolean",
+        "difficulty": "hard",
+        "category": "Science & Nature",
+        "question": "It was once believed that injecting shark cartilage into people would prevent them from contracting cancer.",
+        "correct_answer": "True",
+        "incorrect_answers": [
+            "False"
+        ]
+    },
+    {
+        "type": "boolean",
+        "difficulty": "easy",
+        "category": "Entertainment: Video Games",
+        "question": "In the game Dead by Daylight, the killer Michael Myers is refered to as 'The Shape'.",
+        "correct_answer": "True",
+        "incorrect_answers": [
+            "False"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Music",
+        "question": "Which iconic album cover features the pulsar waves of CP 1919 placed in the center of the cover?",
+        "correct_answer": "Unknown Pleasures",
+        "incorrect_answers": [
+            "The Dark Side of the Moon",
+            "London Calling",
+            "The Velvet Underground & Nico"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Art",
+        "question": "Who painted 'Swans Reflecting Elephants', 'Sleep', and 'The Persistence of Memory'?",
+        "correct_answer": "Salvador Dali",
+        "incorrect_answers": [
+            "Jackson Pollock",
+            "Vincent van Gogh",
+            "Edgar Degas"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Film",
+        "question": "Which retired American football quarterback played himself in 'Ace Ventura: Pet Detective' and 'Little Nicky'?",
+        "correct_answer": "Dan Marino",
+        "incorrect_answers": [
+            "John Elway",
+            "Tom Brady",
+            "Joe Montana"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Geography",
+        "question": "What European country is not a part of the EU?",
+        "correct_answer": "Norway",
+        "incorrect_answers": [
+            "Lithuania",
+            "Ireland",
+            "Czechia"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Entertainment: Video Games",
+        "question": "Which monster in 'Monster Hunter Tri' was causing earthquakes in Moga Village?",
+        "correct_answer": "Ceadeus",
+        "incorrect_answers": [
+            "Alatreon",
+            "Rathalos",
+            "Lagiacrus"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Video Games",
+        "question": "In the ARPG 'Path of Exile,' what is the highest amount of sockets that an item can have?",
+        "correct_answer": "6",
+        "incorrect_answers": [
+            "5",
+            "4",
+            "8"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "History",
+        "question": "What disease crippled President Franklin D. Roosevelt and led him to help the nation find a cure? ",
+        "correct_answer": "Polio",
+        "incorrect_answers": [
+            "Cancer",
+            "Meningitis",
+            "HIV"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Entertainment: Japanese Anime & Manga",
+        "question": "In the anime Initial D, how does Takumi Fujiwara describe a drift?",
+        "correct_answer": "'. . . the front tires slide so the car won't face the inside'",
+        "incorrect_answers": [
+            "'. . . the wheels lose traction, making the car slide sideways'",
+            "'. . . the car oversteers through a curve, causing it to turn faster'",
+            "'. . . you turn a lot'"
+        ]
+    },
+    {
+        "type": "boolean",
+        "difficulty": "medium",
+        "category": "Entertainment: Music",
+        "question": "3 members of 2 Live Crew were arrested for playing songs from their album, As Nasty As They Wanna Be, live.",
+        "correct_answer": "True",
+        "incorrect_answers": [
+            "False"
+        ]
+    },
+    {
+        "type": "boolean",
+        "difficulty": "medium",
+        "category": "Vehicles",
+        "question": "The snowmobile was invented by Canadian Joseph-Armand Bombardier in 1937.",
+        "correct_answer": "True",
+        "incorrect_answers": [
+            "False"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Geography",
+        "question": "What is the capital of the US state Nevada?",
+        "correct_answer": "Carson City",
+        "incorrect_answers": [
+            "Las Vegas",
+            "Henderson",
+            "Reno"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Comics",
+        "question": "The stuffed tiger in Calvin and Hobbes is named after what philosopher?",
+        "correct_answer": "Thomas Hobbes",
+        "incorrect_answers": [
+            "David Hobbes",
+            "John Hobbes",
+            "Nathaniel Hobbes"
+        ]
+    },
+    {
+        "type": "boolean",
+        "difficulty": "easy",
+        "category": "Entertainment: Japanese Anime & Manga",
+        "question": "In the 'Toaru Kagaku no Railgun' anime,  espers can only reach a maximum of level 6 in their abilities.",
+        "correct_answer": "False",
+        "incorrect_answers": [
+            "True"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Entertainment: Video Games",
+        "question": "In the video game 'Postal 2', what is the name of Postal Dude's dog?",
+        "correct_answer": "Champ",
+        "incorrect_answers": [
+            "Snoopy",
+            "Krotchy",
+            "Duke"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "General Knowledge",
+        "question": "Electronic music producer Kygo's popularity skyrocketed after a certain remix. Which song did he remix?",
+        "correct_answer": "Ed Sheeran - I See Fire",
+        "incorrect_answers": [
+            "Marvin Gaye - Sexual Healing",
+            "Coldplay - Midnight",
+            "a-ha - Take On Me"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Music",
+        "question": "What country did Shirley Bassey originate from?",
+        "correct_answer": "Wales",
+        "incorrect_answers": [
+            "America",
+            "England",
+            "Canada"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Geography",
+        "question": "Which of the following Japanese islands is the biggest?",
+        "correct_answer": "Honshu",
+        "incorrect_answers": [
+            "Hokkaido",
+            "Shikoku",
+            "Kyushu"
+        ]
+    }
+]
