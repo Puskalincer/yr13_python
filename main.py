@@ -230,6 +230,70 @@ save_data()
 
 questions = json.loads(open('questions.json', 'r').read())
 
+
+
+res = requests.get('https://opentdb.com/api_category.php')
+response = json.loads(res.text)
+response = response["trivia_categories"]
+
+
+catagories = [[],[],[]]
+
+def array_untangler(array,item=0):
+    temp_array = []
+    for x in array:
+        temp_array.append(x[item])
+    return temp_array 
+
+def prepare_catagories():
+    res = requests.get('https://opentdb.com/api_category.php')
+    response = json.loads(res.text)
+    response = response["trivia_categories"]
+
+
+
+    for x in response:
+        first_word = x["name"].split()[0]
+        if first_word == "Entertainment:" or first_word == "Science:":
+            pass
+        else:
+            catagories[0].append([ x["id"],x["name"]])
+
+    for x in response:
+        first_word = x["name"].split()[0]
+        if first_word == "Entertainment:":
+            catagories[1].append([x["id"],x["name"]])
+
+    for x in response:
+        first_word = x["name"].split()[0]
+        if first_word == "Science:":
+            catagories[2].append([x["id"],x["name"]])
+
+#Run at start
+prepare_catagories()
+
+def advanced_game():
+    clear()
+    list_formatter2(["Main","Entertainment","Science"],"Mode selection:")
+    inpoot = input()
+    if inpoot == "1":
+        clear()
+        list_formatter2(array_untangler(catagories[0],1),"- Mode selection:")
+        input()
+    elif inpoot == "2":
+        clear()
+        list_formatter2(array_untangler(catagories[1],1),"- Mode selection:")
+        input()
+    elif inpoot == "3":
+        clear()
+        list_formatter2(array_untangler(catagories[2],1),"- Mode selection:")
+        input()
+    elif inpoot == '':
+        game_menu()
+
+
+
+
 def main_menu():
     clear()
     list_formatter2(["Play","User managment"],"Menu:")
@@ -251,11 +315,16 @@ def game_menu():
         question_reroll()
         MAIN_QUIZ(20)
     elif user_choice == "4":
-        MAIN_QUIZ(10)
+        advanced_game()
 
 def MAIN_QUIZ(quastion_amount):
     active_users_select()
     main_question_loop(quastion_amount)
     clear()
 
-main_menu()
+
+
+
+
+print(array_untangler(catagories[0],0))
+#main_menu()
