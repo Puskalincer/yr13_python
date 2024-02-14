@@ -279,7 +279,12 @@ def advanced_game():
     if inpoot == "1":
         clear()
         list_formatter2(array_untangler(catagories[0],1),"- Mode selection:")
-        input()
+        inpurt = input()
+        aids = array_untangler(catagories[0],0)
+        print(aids[int(inpurt)])
+
+    
+
     elif inpoot == "2":
         clear()
         list_formatter2(array_untangler(catagories[1],1),"- Mode selection:")
@@ -290,6 +295,12 @@ def advanced_game():
         input()
     elif inpoot == '':
         game_menu()
+    
+
+
+
+
+
 
 
 
@@ -326,5 +337,5 @@ def MAIN_QUIZ(quastion_amount):
 
 
 
-print(array_untangler(catagories[0],0))
-#main_menu()
+#print(array_untangler(catagories[0],0))
+main_menu()
