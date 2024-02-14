@@ -12,10 +12,41 @@ response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found "
 
 request_token = ""
 
+catagories = [[],[],[]]
+
 users = []
 active_users = []
 
 questions = ""
+
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def array_untangler(array,item=0):
+    temp_array = []
+    for x in array:
+        temp_array.append(x[item])
+    return temp_array 
+
+def prepare_catagories():
+    res = requests.get('https://opentdb.com/api_category.php')
+    response = json.loads(res.text)
+    response = response["trivia_categories"]
+    for x in response:
+        first_word = x["name"].split()[0]
+        if first_word == "Entertainment:" or first_word == "Science:":
+            pass
+        else:
+            catagories[0].append([ x["id"],x["name"]])
+    for x in response:
+        first_word = x["name"].split()[0]
+        if first_word == "Entertainment:":
+            catagories[1].append([x["id"],x["name"]])
+    for x in response:
+        first_word = x["name"].split()[0]
+        if first_word == "Science:":
+            catagories[2].append([x["id"],x["name"]])
+    save_data()
 
 def webserver():
     class MyServer(BaseHTTPRequestHandler):
@@ -40,8 +71,6 @@ def webserver():
 
         webServer.server_close()
         print("Server stopped.")
-def clear():
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 def reset_token(token):
     res = requests.get('https://opentdb.com/api_token.php?command=reset&token='+token)
@@ -62,13 +91,15 @@ def data_manager():
         f = open("data.json", "r")
         thing = json.loads(f.read())
         f.close()
-        return thing["token"] , thing["users"]
+        return thing["token"] , thing["users"] , thing["catagories"]
     except:
+        prepare_catagories()
         return get_token() , []
 def save_data():
     x = {
-      "users": users,
-      "token": request_token
+        "users": users,
+        "token": request_token,
+        "catagories" : catagories
     }
     f = open("data.json", "w")
     f.write(json.dumps(x))
@@ -84,7 +115,6 @@ def request_questions(amount,token,catagory='',difficulty='',type=''):
     res = requests.get('https://opentdb.com/api.php?amount=' + amount + str(catagory) + difficulty + type + '&token='+ token)
     response = json.loads(res.text)
     return response["response_code"] , response["results"]
-
 
 def divider():
     print("\n" + 34 * "-" + "\n")
@@ -108,7 +138,6 @@ def list_formatter2(arrayname,array_name_formatted,instructions=""):
         print(str(idx) + " - "+ array_item)
     divider()
 
-
 #Main quizz stuff
 def format_display_question(questions):
     temp_array = questions["incorrect_answers"]
@@ -117,8 +146,6 @@ def format_display_question(questions):
     return temp_array , questions["question"]
 def question_request(amount,change_range=50):
     return random.sample(range(change_range), amount)
-
-
 
 def main_question_loop(how_many_questions):
     requested_quesions = question_request(how_many_questions)
@@ -146,8 +173,6 @@ def main_question_loop(how_many_questions):
         for beans, value in enumerate(active_users):
             print(active_users[beans][0] + " \t " + str(active_users[beans][1]) + " \t \t " + str(active_users[beans][2]))
         input("")
-
-
 
 #User stuff
 def view_user_data():
@@ -224,53 +249,10 @@ def question_reroll():
     thing_code , questions =  request_questions('50',request_token,catagory=0)
     open('1questions.json', 'w').write(json.dumps(questions , ensure_ascii=False, indent=4 ))
 
-#Initialization things
-request_token , users = data_manager()
-save_data()
-
-questions = json.loads(open('questions.json', 'r').read())
-
-
-
-res = requests.get('https://opentdb.com/api_category.php')
-response = json.loads(res.text)
-response = response["trivia_categories"]
-
-
-catagories = [[],[],[]]
-
-def array_untangler(array,item=0):
-    temp_array = []
-    for x in array:
-        temp_array.append(x[item])
-    return temp_array 
-
-def prepare_catagories():
-    res = requests.get('https://opentdb.com/api_category.php')
-    response = json.loads(res.text)
-    response = response["trivia_categories"]
-
-
-
-    for x in response:
-        first_word = x["name"].split()[0]
-        if first_word == "Entertainment:" or first_word == "Science:":
-            pass
-        else:
-            catagories[0].append([ x["id"],x["name"]])
-
-    for x in response:
-        first_word = x["name"].split()[0]
-        if first_word == "Entertainment:":
-            catagories[1].append([x["id"],x["name"]])
-
-    for x in response:
-        first_word = x["name"].split()[0]
-        if first_word == "Science:":
-            catagories[2].append([x["id"],x["name"]])
-
-#Run at start
-prepare_catagories()
+def catagory_other_thing(that_one):
+    inpurt = input()
+    aids = array_untangler(catagories[that_one],0)
+    return aids[int(inpurt)]
 
 def advanced_game():
     clear()
@@ -279,31 +261,17 @@ def advanced_game():
     if inpoot == "1":
         clear()
         list_formatter2(array_untangler(catagories[0],1),"- Mode selection:")
-        inpurt = input()
-        aids = array_untangler(catagories[0],0)
-        print(aids[int(inpurt)])
-
-    
-
+        print(catagory_other_thing(0))
     elif inpoot == "2":
         clear()
         list_formatter2(array_untangler(catagories[1],1),"- Mode selection:")
-        input()
+        print(catagory_other_thing(1))
     elif inpoot == "3":
         clear()
         list_formatter2(array_untangler(catagories[2],1),"- Mode selection:")
-        input()
+        print(catagory_other_thing(2))
     elif inpoot == '':
         game_menu()
-    
-
-
-
-
-
-
-
-
 
 def main_menu():
     clear()
@@ -334,8 +302,10 @@ def MAIN_QUIZ(quastion_amount):
     clear()
 
 
+#Initialization things
+request_token , users , catagories = data_manager()
+save_data()
 
+questions = json.loads(open('questions.json', 'r').read())
 
-
-#print(array_untangler(catagories[0],0))
 main_menu()
