@@ -10,6 +10,9 @@ serverPort = 8080
 
 response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
 
+difficulty = ["easy","medium","hard"]
+types = ["multiple","boolean"]
+
 request_token = ""
 
 catagories = [[],[],[]]
@@ -254,6 +257,20 @@ def catagory_other_thing(that_one):
     aids = array_untangler(catagories[that_one],0)
     return aids[int(inpurt)]
 
+def diffuculty_other_thing():
+    clear()
+    list_formatter2(["easy","medium","hard"],"- difficulty selection:")
+    inpurt = input()
+    inpurt = int(inpurt) - 1
+    return difficulty[inpurt]
+
+def type_other_thing():
+    clear()
+    list_formatter2(["multiple","boolean","either"],"- Type selection:")
+    inpurt = input()
+    inpurt = int(inpurt) - 1
+    return types[inpurt]
+
 def advanced_game():
     clear()
     list_formatter2(["Main","Entertainment","Science"],"Mode selection:")
@@ -261,7 +278,22 @@ def advanced_game():
     if inpoot == "1":
         clear()
         list_formatter2(array_untangler(catagories[0],1),"- Mode selection:")
-        print(catagory_other_thing(0))
+        request_catagory = catagory_other_thing(0)
+        request_diffuculty = diffuculty_other_thing()
+        request_type = type_other_thing()
+        clear()
+        divider()
+        request_amount = input("How many questions:")
+        thing_code , questions =  request_questions(request_amount,request_token,str(request_catagory),request_diffuculty,request_type)
+        print(questions)
+
+        
+
+
+
+
+
+
     elif inpoot == "2":
         clear()
         list_formatter2(array_untangler(catagories[1],1),"- Mode selection:")
@@ -291,7 +323,6 @@ def game_menu():
     elif user_choice == "2":
         MAIN_QUIZ(10)
     elif user_choice == "3":
-        question_reroll()
         MAIN_QUIZ(20)
     elif user_choice == "4":
         advanced_game()
