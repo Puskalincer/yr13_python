@@ -97,7 +97,7 @@ def data_manager():
         return thing["token"] , thing["users"] , thing["catagories"]
     except:
         prepare_catagories()
-        return get_token() , []
+        return get_token() , [] , []
 def save_data():
     x = {
         "users": users,
@@ -286,7 +286,6 @@ def advanced_game():
         request_amount = input("How many questions:")
         thing_code , questions =  request_questions(request_amount,request_token,str(request_catagory),request_diffuculty,request_type)
         print(questions)
-
         
 
 
@@ -331,6 +330,7 @@ def MAIN_QUIZ(quastion_amount):
     active_users_select()
     main_question_loop(quastion_amount)
     clear()
+
 
 
 #Initialization things
