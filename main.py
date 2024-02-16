@@ -108,14 +108,16 @@ def save_data():
     f.write(json.dumps(x))
     f.close()
 
-def request_questions(amount,token,catagory='',difficulty='',type=''):
+def request_questions(amount,token='',catagory='',difficulty='',type=''):
     if catagory:
         catagory = '&category=' + catagory
     if difficulty:
         difficulty = '&difficulty=' + difficulty
     if type:
         type = '&type=' + type
-    res = requests.get('https://opentdb.com/api.php?amount=' + amount + str(catagory) + difficulty + type + '&token='+ token)
+    if token:
+        token = '&token='+ token
+    res = requests.get('https://opentdb.com/api.php?amount=' + str(amount) + str(catagory) + difficulty + type + token)
     response = json.loads(res.text)
     return response["response_code"] , response["results"]
 
@@ -147,13 +149,14 @@ def format_display_question(questions):
     temp_array.append(questions["correct_answer"])
     random.shuffle(temp_array)
     return temp_array , questions["question"]
-def question_request(amount,change_range=50):
-    return random.sample(range(change_range), amount)
 
-def main_question_loop(how_many_questions):
+def question_request(amount,change_range=50):
+    return random.sample(range(change_range), int(amount))
+
+def main_question_loop(how_many_questions,questions):
     requested_quesions = question_request(how_many_questions)
     x=0
-    while x < how_many_questions:
+    while x < int(how_many_questions):
         question = questions[requested_quesions[x]]
         thing1 , thing2 = format_display_question(question)
         x=x+1
@@ -249,11 +252,12 @@ def active_users_select():
         active_users.append(users[beanz])
 
 def question_reroll():
-    thing_code , questions =  request_questions('50',request_token,catagory=0)
+    thing_code , questions =  request_questions(50,request_token,catagory=0)
     open('1questions.json', 'w').write(json.dumps(questions , ensure_ascii=False, indent=4 ))
 
 def catagory_other_thing(that_one):
     inpurt = input()
+    inpurt =- 1
     aids = array_untangler(catagories[that_one],0)
     return aids[int(inpurt)]
 
@@ -284,9 +288,10 @@ def advanced_game():
         clear()
         divider()
         request_amount = input("How many questions:")
-        thing_code , questions =  request_questions(request_amount,request_token,str(request_catagory),request_diffuculty,request_type)
+        thing_code , questions =  request_questions(50,str(request_catagory),request_diffuculty,request_type)
+        print( response_codes[thing_code])
         print(questions)
-        
+        #MAIN_QUIZ(request_amount,questions)
 
 
 
@@ -326,9 +331,9 @@ def game_menu():
     elif user_choice == "4":
         advanced_game()
 
-def MAIN_QUIZ(quastion_amount):
+def MAIN_QUIZ(quastion_amount,questions):
     active_users_select()
-    main_question_loop(quastion_amount)
+    main_question_loop(quastion_amount,questions)
     clear()
 
 
