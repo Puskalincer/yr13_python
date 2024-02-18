@@ -258,10 +258,27 @@ def question_reroll():
     thing_code , questions =  request_questions(50,request_token,catagory=0)
     open('1questions.json', 'w').write(json.dumps(questions , ensure_ascii=False, indent=4 ))
 
-#Fixed catagories always picking same catagory
+
+
+
+
+def base_custom_input(array,array_name,misc=''):
+    clear()
+    list_formatter2(array,array_name)
+    chosen_item = int(input())
+    chosen_item = chosen_item - 1
+    # Had to change this as it didnt work with 0s
+    if misc >= 0 :
+        nested_catagory = array_untangler(catagories[misc],0)
+        print(nested_catagory)
+        return nested_catagory[chosen_item]
+    return array[chosen_item]
+
+"""
+Replaced by above function
+
 def catagory_other_thing(that_one):
     inpurt = int(input())
-    #inpurt =- 1
     inpurt = inpurt - 1
     aids = array_untangler(catagories[that_one],0)
     return aids[int(inpurt)]
@@ -279,6 +296,9 @@ def type_other_thing():
     inpurt = input()
     inpurt = int(inpurt) - 1
     return types[inpurt]
+"""
+
+
 
 def advanced_game():
     clear()
@@ -286,10 +306,13 @@ def advanced_game():
     inpoot = input()
     if inpoot == "1":
         clear()
-        list_formatter2(array_untangler(catagories[0],1),"- Mode selection:")
-        request_catagory = catagory_other_thing(0)
-        request_diffuculty = diffuculty_other_thing()
-        request_type = type_other_thing()
+        request_catagory = base_custom_input(array_untangler(catagories[0],1),"- Catagoey selection:",0)
+        input()
+
+
+
+        request_diffuculty = base_custom_input(["easy","medium","hard"],"- difficulty selection:")
+        request_type = base_custom_input(["multiple","boolean","either"],"- Type selection:")
         clear()
         divider()
         request_amount = input("How many questions:")
@@ -355,8 +378,4 @@ save_data()
 
 questions = json.loads(open('questions.json', 'r').read())
 
-#main_menu()
-
-#Test to see if correct info was there
-print(catagories)
-print(catagory_other_thing(0))
+main_menu()
