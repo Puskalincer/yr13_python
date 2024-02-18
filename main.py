@@ -11,7 +11,7 @@ serverPort = 8080
 response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
 
 difficulty = ["easy","medium","hard"]
-types = ["multiple","boolean"]
+types = ["multiple","boolean","either"]
 
 request_token = ""
 
@@ -108,18 +108,29 @@ def save_data():
     f.write(json.dumps(x))
     f.close()
 
-def request_questions(amount,token='',catagory='',difficulty='',type=''):
+
+#Old one
+#def request_questions(amount,token='',catagory='',difficulty='',type=''):
+#Fixed
+def request_questions(amount,catagory='',difficulty='',type='',token=''):
     if catagory:
         catagory = '&category=' + catagory
     if difficulty:
         difficulty = '&difficulty=' + difficulty
     if type:
-        type = '&type=' + type
+        if type != "either":
+            type = '&type=' + type
+        else:
+            type=''
     if token:
         token = '&token='+ token
     res = requests.get('https://opentdb.com/api.php?amount=' + str(amount) + str(catagory) + difficulty + type + token)
+
+    #Adding this debug line i found that if i didnt include a token it would be the parsed data meant for the catagory as the token was second not last.
+    print('https://opentdb.com/api.php?amount=' + str(amount) + str(catagory) + difficulty + type + token)
+
     response = json.loads(res.text)
-    return response["response_code"] , response["results"]
+    return response["response_code"] , response["results"] 
 
 def divider():
     print("\n" + 34 * "-" + "\n")
@@ -288,7 +299,13 @@ def advanced_game():
         clear()
         divider()
         request_amount = input("How many questions:")
-        thing_code , questions =  request_questions(50,str(request_catagory),request_diffuculty,request_type)
+
+        print(request_catagory)
+        print(request_diffuculty)
+        print(request_type)
+
+
+        thing_code , questions =  request_questions(request_amount,str(request_catagory),request_diffuculty,request_type)
         print( response_codes[thing_code])
         print(questions)
         #MAIN_QUIZ(request_amount,questions)
