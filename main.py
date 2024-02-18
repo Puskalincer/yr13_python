@@ -108,10 +108,6 @@ def save_data():
     f.write(json.dumps(x))
     f.close()
 
-
-#Old one
-#def request_questions(amount,token='',catagory='',difficulty='',type=''):
-#Fixed
 def request_questions(amount,catagory='',difficulty='',type='',token=''):
     if catagory:
         catagory = '&category=' + catagory
@@ -125,10 +121,6 @@ def request_questions(amount,catagory='',difficulty='',type='',token=''):
     if token:
         token = '&token='+ token
     res = requests.get('https://opentdb.com/api.php?amount=' + str(amount) + str(catagory) + difficulty + type + token)
-
-    #Adding this debug line i found that if i didnt include a token it would be the parsed data meant for the catagory as the token was second not last.
-    print('https://opentdb.com/api.php?amount=' + str(amount) + str(catagory) + difficulty + type + token)
-
     response = json.loads(res.text)
     return response["response_code"] , response["results"] 
 
@@ -266,9 +258,11 @@ def question_reroll():
     thing_code , questions =  request_questions(50,request_token,catagory=0)
     open('1questions.json', 'w').write(json.dumps(questions , ensure_ascii=False, indent=4 ))
 
+#Fixed catagories always picking same catagory
 def catagory_other_thing(that_one):
-    inpurt = input()
-    inpurt =- 1
+    inpurt = int(input())
+    #inpurt =- 1
+    inpurt = inpurt - 1
     aids = array_untangler(catagories[that_one],0)
     return aids[int(inpurt)]
 
@@ -361,4 +355,8 @@ save_data()
 
 questions = json.loads(open('questions.json', 'r').read())
 
-main_menu()
+#main_menu()
+
+#Test to see if correct info was there
+print(catagories)
+print(catagory_other_thing(0))
