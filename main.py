@@ -14,7 +14,7 @@ difficulty = ["easy","medium","hard"]
 types = ["multiple","boolean","either"]
 
 
-advanced_game_menu = [["Mode selection:",["Main","Entertainment","Science"]]]
+a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard"]],["- Type selection:"],["multiple","boolean","either"]]
 
 
 
@@ -283,14 +283,14 @@ def base_custom_input(array,array_name,misc=''):
 
 def advanced_game():
     clear()
-    sub_cat = base_custom_input(advanced_game_menu[0][1],advanced_game_menu[0][0],"num")
+    sub_cat = base_custom_input(a_g_m[0][1],a_g_m[0][0],"num")
     #print(main_catagory)
     #input()
     temp_cat_select = sub_cat + 1
     clear()
     request_catagory = base_custom_input(array_untangler(catagories[sub_cat],1),"- Catagoey selection:",temp_cat_select)
-    request_diffuculty = base_custom_input(["easy","medium","hard"],"- difficulty selection:")
-    request_type = base_custom_input(["multiple","boolean","either"],"- Type selection:")
+    request_diffuculty = base_custom_input(a_g_m[1][1],a_g_m[1][0])
+    request_type = base_custom_input(a_g_m[2][1],a_g_m[2][0])
     cd()
     request_amount = input("How many questions:")
     thing_code , questions =  request_questions(request_amount,str(request_catagory),request_diffuculty,request_type)
