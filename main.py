@@ -13,6 +13,11 @@ response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found "
 difficulty = ["easy","medium","hard"]
 types = ["multiple","boolean","either"]
 
+
+advanced_game_menu = [["Mode selection:",["Main","Entertainment","Science"]]]
+
+
+
 request_token = ""
 
 catagories = [[],[],[]]
@@ -24,6 +29,12 @@ questions = ""
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+def cd():
+    clear()
+    divider()
+
+
 
 def array_untangler(array,item=0):
     temp_array = []
@@ -157,7 +168,8 @@ def question_request(amount,change_range=50):
     return random.sample(range(change_range), int(amount))
 
 def main_question_loop(how_many_questions,questions):
-    requested_quesions = question_request(how_many_questions)
+    #Questionable fix
+    requested_quesions = question_request(how_many_questions,int(how_many_questions))
     x=0
     while x < int(how_many_questions):
         question = questions[requested_quesions[x]]
@@ -263,85 +275,58 @@ def question_reroll():
 
 
 def base_custom_input(array,array_name,misc=''):
-    clear()
+    clear() 
     list_formatter2(array,array_name)
     chosen_item = int(input())
     chosen_item = chosen_item - 1
-    # Had to change this as it didnt work with 0s
-    if misc >= 0 :
+    if misc == "num":
+        return chosen_item
+    if misc:
+        misc = misc - 1
         nested_catagory = array_untangler(catagories[misc],0)
-        print(nested_catagory)
         return nested_catagory[chosen_item]
     return array[chosen_item]
 
-"""
-Replaced by above function
-
-def catagory_other_thing(that_one):
-    inpurt = int(input())
-    inpurt = inpurt - 1
-    aids = array_untangler(catagories[that_one],0)
-    return aids[int(inpurt)]
-
-def diffuculty_other_thing():
-    clear()
-    list_formatter2(["easy","medium","hard"],"- difficulty selection:")
-    inpurt = input()
-    inpurt = int(inpurt) - 1
-    return difficulty[inpurt]
-
-def type_other_thing():
-    clear()
-    list_formatter2(["multiple","boolean","either"],"- Type selection:")
-    inpurt = input()
-    inpurt = int(inpurt) - 1
-    return types[inpurt]
-"""
 
 
 
+
+
+
+
+#fin - ish - ed
 def advanced_game():
     clear()
-    list_formatter2(["Main","Entertainment","Science"],"Mode selection:")
-    inpoot = input()
-    if inpoot == "1":
-        clear()
-        request_catagory = base_custom_input(array_untangler(catagories[0],1),"- Catagoey selection:",0)
-        input()
-
-
-
-        request_diffuculty = base_custom_input(["easy","medium","hard"],"- difficulty selection:")
-        request_type = base_custom_input(["multiple","boolean","either"],"- Type selection:")
-        clear()
-        divider()
-        request_amount = input("How many questions:")
-
-        print(request_catagory)
-        print(request_diffuculty)
-        print(request_type)
-
-
-        thing_code , questions =  request_questions(request_amount,str(request_catagory),request_diffuculty,request_type)
-        print( response_codes[thing_code])
-        print(questions)
-        #MAIN_QUIZ(request_amount,questions)
+    sub_cat = base_custom_input(advanced_game_menu[0][1],advanced_game_menu[0][0],"num")
+    #print(main_catagory)
+    #input()
+    temp_cat_select = sub_cat + 1
+    clear()
+    request_catagory = base_custom_input(array_untangler(catagories[sub_cat],1),"- Catagoey selection:",temp_cat_select)
+    request_diffuculty = base_custom_input(["easy","medium","hard"],"- difficulty selection:")
+    request_type = base_custom_input(["multiple","boolean","either"],"- Type selection:")
+    cd()
+    request_amount = input("How many questions:")
+    thing_code , questions =  request_questions(request_amount,str(request_catagory),request_diffuculty,request_type)
+    #Temp manuel check response code
+    print( response_codes[thing_code])
+    input()
+    #
+    MAIN_QUIZ(request_amount,questions)
 
 
 
 
 
 
-    elif inpoot == "2":
-        clear()
-        list_formatter2(array_untangler(catagories[1],1),"- Mode selection:")
-        print(catagory_other_thing(1))
-    elif inpoot == "3":
-        clear()
-        list_formatter2(array_untangler(catagories[2],1),"- Mode selection:")
-        print(catagory_other_thing(2))
-    elif inpoot == '':
-        game_menu()
+
+
+
+
+
+
+
+
 
 def main_menu():
     clear()
