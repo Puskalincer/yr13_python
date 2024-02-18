@@ -29,12 +29,11 @@ questions = ""
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
-
+def divider():
+    print("\n" + 34 * "-" + "\n")
 def cd():
     clear()
     divider()
-
-
 
 def array_untangler(array,item=0):
     temp_array = []
@@ -135,8 +134,6 @@ def request_questions(amount,catagory='',difficulty='',type='',token=''):
     response = json.loads(res.text)
     return response["response_code"] , response["results"] 
 
-def divider():
-    print("\n" + 34 * "-" + "\n")
 def list_formatter(arrayname,array_name_formatted,instructions=""):
     if instructions:
         divider()
@@ -167,9 +164,8 @@ def format_display_question(questions):
 def question_request(amount,change_range=50):
     return random.sample(range(change_range), int(amount))
 
-def main_question_loop(how_many_questions,questions):
-    #Questionable fix
-    requested_quesions = question_request(how_many_questions,int(how_many_questions))
+def main_question_loop(how_many_questions,questions,change_range):
+    requested_quesions = question_request(how_many_questions,int(change_range))
     x=0
     while x < int(how_many_questions):
         question = questions[requested_quesions[x]]
@@ -266,14 +262,12 @@ def active_users_select():
         beanz = int(beanz) - 1
         active_users.append(users[beanz])
 
+#Does stuff?
 def question_reroll():
     thing_code , questions =  request_questions(50,request_token,catagory=0)
     open('1questions.json', 'w').write(json.dumps(questions , ensure_ascii=False, indent=4 ))
 
-
-
-
-
+#Custom game setup
 def base_custom_input(array,array_name,misc=''):
     clear() 
     list_formatter2(array,array_name)
@@ -287,14 +281,6 @@ def base_custom_input(array,array_name,misc=''):
         return nested_catagory[chosen_item]
     return array[chosen_item]
 
-
-
-
-
-
-
-
-#fin - ish - ed
 def advanced_game():
     clear()
     sub_cat = base_custom_input(advanced_game_menu[0][1],advanced_game_menu[0][0],"num")
@@ -308,12 +294,11 @@ def advanced_game():
     cd()
     request_amount = input("How many questions:")
     thing_code , questions =  request_questions(request_amount,str(request_catagory),request_diffuculty,request_type)
-    #Temp manuel check response code
+    #Temp manuel check response code, make automatic later
     print( response_codes[thing_code])
     input()
     #
-    MAIN_QUIZ(request_amount,questions)
-
+    MAIN_QUIZ(request_amount,questions,request_amount)
 
 
 
@@ -350,9 +335,9 @@ def game_menu():
     elif user_choice == "4":
         advanced_game()
 
-def MAIN_QUIZ(quastion_amount,questions):
+def MAIN_QUIZ(quastion_amount,questions,change_range=50):
     active_users_select()
-    main_question_loop(quastion_amount,questions)
+    main_question_loop(quastion_amount,questions,change_range)
     clear()
 
 
