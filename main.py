@@ -5,14 +5,14 @@ import time
 import random
 import os
 
+#https://opentdb.com/api_count.php?category=9
+
 hostName = "localhost"
 serverPort = 8080
 
 response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
 
-a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard"]],["- Type selection:",["multiple","boolean","either"]]]
-
-
+a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard","any"]],["- Type selection:",["multiple","boolean","either"]]]
 
 request_token = ""
 
@@ -22,7 +22,6 @@ users = []
 active_users = []
 
 questions = ""
-
 
 #Runs on first start, never used again.
 def prepare_catagories():
@@ -43,7 +42,6 @@ def prepare_catagories():
         first_word = x["name"].split()[0]
         if first_word == "Science:":
             catagories[2].append([x["id"],x["name"]])
-
 #Runs on first start, never used again.
 def generate_data_file():
     x = {
@@ -54,7 +52,6 @@ def generate_data_file():
     f = open("data.json", "w")
     f.write(json.dumps(x))
     f.close()
-
 #Runs on first start, never used again.
 def one_time_start():
     print("Generating Start file")
@@ -65,13 +62,11 @@ def one_time_start():
         request_token = request_token_temp
     save_new([],request_token,catagories)
     data_manager()
-
 #Runs on first start, never used again.
 def get_token():
     res = requests.get('https://opentdb.com/api_token.php?command=request')
     response = json.loads(res.text)
     return response["response_code"] , response["token"]
-
 #Always runs at on startup
 def data_manager():
     try:
@@ -82,7 +77,6 @@ def data_manager():
     except:
         one_time_start()
         return "o_t_s"
-        
 #Save data
 def save_new(users='',token='',catagories=''):
     with open('data.json') as infile:
@@ -96,10 +90,6 @@ def save_new(users='',token='',catagories=''):
 
     with open('data.json', 'w') as outfile:
         json.dump(data, outfile)
-
-
-
-
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -148,7 +138,10 @@ def request_questions(amount,catagory='',difficulty='',type='',token=''):
     if catagory:
         catagory = '&category=' + catagory
     if difficulty:
-        difficulty = '&difficulty=' + difficulty
+        if difficulty != "any":
+            difficulty = '&difficulty=' + difficulty
+        else:
+            difficulty=''
     if type:
         if type != "either":
             type = '&type=' + type
