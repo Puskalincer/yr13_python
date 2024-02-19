@@ -10,11 +10,7 @@ serverPort = 8080
 
 response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
 
-difficulty = ["easy","medium","hard"]
-types = ["multiple","boolean","either"]
-
-
-a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard"]],["- Type selection:"],["multiple","boolean","either"]]
+a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard"]],["- Type selection:",["multiple","boolean","either"]]]
 
 
 
@@ -27,20 +23,8 @@ active_users = []
 
 questions = ""
 
-def clear():
-    os.system('cls' if os.name == 'nt' else 'clear')
-def divider():
-    print("\n" + 34 * "-" + "\n")
-def cd():
-    clear()
-    divider()
 
-def array_untangler(array,item=0):
-    temp_array = []
-    for x in array:
-        temp_array.append(x[item])
-    return temp_array 
-
+#Runs on first start, never used again.
 def prepare_catagories():
     res = requests.get('https://opentdb.com/api_category.php')
     response = json.loads(res.text)
@@ -59,7 +43,77 @@ def prepare_catagories():
         first_word = x["name"].split()[0]
         if first_word == "Science:":
             catagories[2].append([x["id"],x["name"]])
-    save_data()
+
+#Runs on first start, never used again.
+def generate_data_file():
+    x = {
+        "users": [],
+        "token": "",
+        "catagories" : []
+    }
+    f = open("data.json", "w")
+    f.write(json.dumps(x))
+    f.close()
+
+#Runs on first start, never used again.
+def one_time_start():
+    print("Generating Start file")
+    generate_data_file()
+    prepare_catagories()
+    response_code , request_token_temp = get_token()
+    if response_code == 0:
+        request_token = request_token_temp
+    save_new([],request_token,catagories)
+    data_manager()
+
+#Runs on first start, never used again.
+def get_token():
+    res = requests.get('https://opentdb.com/api_token.php?command=request')
+    response = json.loads(res.text)
+    return response["response_code"] , response["token"]
+
+#Always runs at on startup
+def data_manager():
+    try:
+        f = open("data.json", "r")
+        thing = json.loads(f.read())
+        f.close()
+        return [thing["users"] , thing["token"] , thing["catagories"]]
+    except:
+        one_time_start()
+        return "o_t_s"
+        
+#Save data
+def save_new(users='',token='',catagories=''):
+    with open('data.json') as infile:
+        data = json.load(infile)
+    if users:
+        data["users"] = users
+    if token:
+        data["token"] = token
+    if catagories:
+        data["catagories"] = catagories
+
+    with open('data.json', 'w') as outfile:
+        json.dump(data, outfile)
+
+
+
+
+
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
+def divider():
+    print("\n" + 34 * "-" + "\n")
+def cd():
+    clear()
+    divider()
+
+def array_untangler(array,item=0):
+    temp_array = []
+    for x in array:
+        temp_array.append(x[item])
+    return temp_array 
 
 def webserver():
     class MyServer(BaseHTTPRequestHandler):
@@ -89,34 +143,6 @@ def reset_token(token):
     res = requests.get('https://opentdb.com/api_token.php?command=reset&token='+token)
     response = json.loads(res.text)
     return response_codes[response["response_code"]]
-def get_token():
-    res = requests.get('https://opentdb.com/api_token.php?command=request')
-    response = json.loads(res.text)
-    if response["response_code"] == 0:
-        print(response["token"]) 
-        print(response_codes[response["response_code"]])
-        return response["token"]
-    else:
-        print(response_codes[response["response_code"]])
-
-def data_manager():
-    try:
-        f = open("data.json", "r")
-        thing = json.loads(f.read())
-        f.close()
-        return thing["token"] , thing["users"] , thing["catagories"]
-    except:
-        prepare_catagories()
-        return get_token() , [] , []
-def save_data():
-    x = {
-        "users": users,
-        "token": request_token,
-        "catagories" : catagories
-    }
-    f = open("data.json", "w")
-    f.write(json.dumps(x))
-    f.close()
 
 def request_questions(amount,catagory='',difficulty='',type='',token=''):
     if catagory:
@@ -193,7 +219,6 @@ def main_question_loop(how_many_questions,questions,change_range):
 
 #User stuff
 def view_user_data():
-    save_data()
     clear()
     divider()
     print("User \t \t Correct \t Incorrect \t W/L Ratio \t Best category \n")
@@ -300,19 +325,6 @@ def advanced_game():
     #
     MAIN_QUIZ(request_amount,questions,request_amount)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 def main_menu():
     clear()
     list_formatter2(["Play","User managment"],"Menu:")
@@ -340,12 +352,13 @@ def MAIN_QUIZ(quastion_amount,questions,change_range=50):
     main_question_loop(quastion_amount,questions,change_range)
     clear()
 
-
-
 #Initialization things
-request_token , users , catagories = data_manager()
-save_data()
+clear()
+results = data_manager()
+if results != "o_t_s":
+    users = results[0]
+    request_token = results[1]
+    catagories = results[2]
 
 questions = json.loads(open('questions.json', 'r').read())
-
 main_menu()
