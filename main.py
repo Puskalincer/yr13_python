@@ -4,26 +4,51 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import time
 import random
 import os
+import html
+
+"""
+TOO DO LIST
+
+Add error checking to everything.
+
+Add automatic checking for advanced game choice validity
+
+Make game remember the stuff
+
+"""
+
 
 #https://opentdb.com/api_count.php?category=9
 
-hostName = "localhost"
-serverPort = 8080
-
 response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
-
 a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard","any"]],["- Type selection:",["multiple","boolean","either"]]]
-
 request_token = ""
-
 catagories = [[],[],[]]
-
 users = []
 active_users = []
-
 questions = ""
+test_results=[]
 
-#Runs on first start, never used again.
+
+
+test_results_mabye=[["John",{
+    "Q1":{
+        "time":1,
+        "catagory":"placeholder",
+        "answered":"correct"
+    },
+    "Q2":{
+        "time":1,
+        "catagory":"placeholder",
+        "answered":"correct"
+    }
+                       
+}],["John"]]
+
+
+
+
+#Runs on first start, never used again. -Final
 def prepare_catagories():
     res = requests.get('https://opentdb.com/api_category.php')
     response = json.loads(res.text)
@@ -42,7 +67,7 @@ def prepare_catagories():
         first_word = x["name"].split()[0]
         if first_word == "Science:":
             catagories[2].append([x["id"],x["name"]])
-#Runs on first start, never used again.
+#Runs on first start, never used again. -Final
 def generate_data_file():
     x = {
         "users": [],
@@ -52,7 +77,7 @@ def generate_data_file():
     f = open("data.json", "w")
     f.write(json.dumps(x))
     f.close()
-#Runs on first start, never used again.
+#Runs on first start, never used again. -Final
 def one_time_start():
     print("Generating Start file")
     generate_data_file()
@@ -62,12 +87,12 @@ def one_time_start():
         request_token = request_token_temp
     save_new([],request_token,catagories)
     data_manager()
-#Runs on first start, never used again.
+#Runs on first start, never used again. -Final
 def get_token():
     res = requests.get('https://opentdb.com/api_token.php?command=request')
     response = json.loads(res.text)
     return response["response_code"] , response["token"]
-#Always runs at on startup
+#Always runs at on startup -Final
 def data_manager():
     try:
         f = open("data.json", "r")
@@ -77,7 +102,7 @@ def data_manager():
     except:
         one_time_start()
         return "o_t_s"
-#Save data
+#Save data -Final
 def save_new(users='',token='',catagories=''):
     with open('data.json') as infile:
         data = json.load(infile)
@@ -91,6 +116,7 @@ def save_new(users='',token='',catagories=''):
     with open('data.json', 'w') as outfile:
         json.dump(data, outfile)
 
+#Utilitys -Final
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 def divider():
@@ -99,36 +125,14 @@ def cd():
     clear()
     divider()
 
+#Makes multilevel arrays useful -Final
 def array_untangler(array,item=0):
     temp_array = []
     for x in array:
         temp_array.append(x[item])
     return temp_array 
 
-def webserver():
-    class MyServer(BaseHTTPRequestHandler):
-        def do_GET(self):
-            self.send_response(200)
-            self.send_header("Content-type", "text/html")
-            self.end_headers()
-            self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title></head>", "utf-8"))
-            self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
-            self.wfile.write(bytes("<body>", "utf-8"))
-            self.wfile.write(bytes("<p>This is an example web server.</p>", "utf-8"))
-            self.wfile.write(bytes("</body></html>", "utf-8"))
-
-    if __name__ == "__main__":        
-        webServer = HTTPServer((hostName, serverPort), MyServer)
-        print("Server started http://%s:%s" % (hostName, serverPort))
-
-        try:
-            webServer.serve_forever()
-        except KeyboardInterrupt:
-            pass
-
-        webServer.server_close()
-        print("Server stopped.")
-
+#Prolly dont need
 def reset_token(token):
     res = requests.get('https://opentdb.com/api_token.php?command=reset&token='+token)
     response = json.loads(res.text)
@@ -153,10 +157,8 @@ def request_questions(amount,catagory='',difficulty='',type='',token=''):
     response = json.loads(res.text)
     return response["response_code"] , response["results"] 
 
-def list_formatter(arrayname,array_name_formatted,instructions=""):
-    if instructions:
-        divider()
-        print(instructions)
+# Join both 
+def list_formatter(arrayname,array_name_formatted):
     divider()
     print(array_name_formatted)
     for idx , array_item in enumerate(arrayname , start=1):
@@ -178,7 +180,7 @@ def format_display_question(questions):
     temp_array = questions["incorrect_answers"]
     temp_array.append(questions["correct_answer"])
     random.shuffle(temp_array)
-    return temp_array , questions["question"]
+    return temp_array , questions["question"] , 
 
 def question_request(amount,change_range=50):
     return random.sample(range(change_range), int(amount))
@@ -193,8 +195,8 @@ def main_question_loop(how_many_questions,questions,change_range):
         y=0
         while y < len(active_users):
             clear()
-            print(active_users[y][0] + " -- Question " + str(x))
-            list_formatter2(thing1,thing2)
+            print(active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions))
+            list_formatter2(html.unescape(thing1),html.unescape(thing2))
             user_choice = input()
             if int(user_choice) == thing1.index(question["correct_answer"])+1:
                 print("\nCorrect")
@@ -280,10 +282,10 @@ def active_users_select():
         beanz = int(beanz) - 1
         active_users.append(users[beanz])
 
-#Does stuff?
+#Does stuff? prolly wont need
 def question_reroll():
-    thing_code , questions =  request_questions(50,request_token,catagory=0)
-    open('1questions.json', 'w').write(json.dumps(questions , ensure_ascii=False, indent=4 ))
+    thing_code , questions =  request_questions(50)
+    open('questions.json', 'w').write(json.dumps(questions , ensure_ascii=False, indent=4 ))
 
 #Custom game setup
 def base_custom_input(array,array_name,misc=''):
@@ -298,7 +300,6 @@ def base_custom_input(array,array_name,misc=''):
         nested_catagory = array_untangler(catagories[misc],0)
         return nested_catagory[chosen_item]
     return array[chosen_item]
-
 def advanced_game():
     clear()
     sub_cat = base_custom_input(a_g_m[0][1],a_g_m[0][0],"num")
@@ -332,20 +333,27 @@ def game_menu():
     list_formatter2(["Quick","Basic","Advanced","Custom"],"Game mode:")
     user_choice = input("-- ")
     if user_choice == "1":
-        MAIN_QUIZ(5)
+        MAIN_QUIZ(5,questions)
     elif user_choice == "2":
-        MAIN_QUIZ(10)
+        MAIN_QUIZ(10,questions)
     elif user_choice == "3":
-        MAIN_QUIZ(20)
+        MAIN_QUIZ(20,questions)
     elif user_choice == "4":
         advanced_game()
+    elif user_choice == '':
+        main_menu()
 
 def MAIN_QUIZ(quastion_amount,questions,change_range=50):
     active_users_select()
     main_question_loop(quastion_amount,questions,change_range)
-    clear()
 
-#Initialization things
+
+
+
+
+
+
+#Initialization things -Final
 clear()
 results = data_manager()
 if results != "o_t_s":
@@ -354,4 +362,83 @@ if results != "o_t_s":
     catagories = results[2]
 
 questions = json.loads(open('questions.json', 'r').read())
-main_menu()
+#main_menu()
+
+
+
+"""
+start = time.time()
+#stuff
+end = time.time()
+length = start - end
+print("It took", length, "seconds!")
+
+
+
+
+class User_tracker:
+    def __init__(self, User_name):
+        self.User_name = User_name
+
+    def __str__(self):
+        return f"{self.User_name}{self.age}"
+
+    def myfunc(self):
+        print("Hello my name is " + self.User_name)
+
+p1 = User_tracker("Bob")
+p1.myfunc()
+
+"""
+
+
+
+
+
+def main_question_loop_test(how_many_questions,questions,change_range=50):
+    requested_quesions = question_request(how_many_questions,int(change_range))
+    current_question=0
+
+
+
+    for x in active_users:
+        test_results.append([x[0]]) 
+    print(test_results)
+    input()
+
+    while current_question < int(how_many_questions):
+        question = questions[requested_quesions[current_question]]
+        thing1 , thing2 = format_display_question(question)
+        current_question=current_question+1
+        y=0
+
+
+        print(question["catagory"])
+        input()
+
+
+        while y < len(active_users):
+            clear()
+            print(active_users[y][0] + " -- Question " + str(current_question) + " of " + str(how_many_questions))
+            list_formatter2(html.unescape(thing1),html.unescape(thing2))
+            user_choice = input()
+            if int(user_choice) == thing1.index(question["correct_answer"])+1:
+                print("\nCorrect")
+                active_users[y][1] += 1
+            else:
+                print("\nIncorrect : " + question["correct_answer"])
+                active_users[y][2] += 1
+            input("")
+            y=y+1
+        clear()
+        print("User \t Correct \t Incorrect\n")
+        for beans, value in enumerate(active_users):
+            print(active_users[beans][0] + " \t " + str(active_users[beans][1]) + " \t \t " + str(active_users[beans][2]))
+        input("")
+
+
+#active_users_select()
+#main_question_loop_test(2,questions)
+        
+
+print(test_results_mabye[0][1]["Q1"])
