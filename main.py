@@ -122,6 +122,32 @@ def cd():
     clear()
     divider()
 
+#Not done?
+def input_manager1(item_list,skip_func=1):
+    chosen_item = None
+    while True:
+        try:
+            number = input("-- ")
+            if number  == '' and skip_func == 1:
+                break
+            elif number  == '' and skip_func == 0:
+                print("\n Required \n")
+            elif number:
+                number=int(number)
+                if number >= 0:
+                    number -=1 
+                    chosen_item = (item_list[number])
+                    return number
+                    break
+                else:
+                    print("\n Input number above 0.\n")
+        except:
+            print("\n Enter valid Number corresponding to choices displayed.\n")
+    return chosen_item
+
+
+
+
 #Makes multilevel arrays useful -Final
 def array_untangler(array,item=0):
     temp_array = []
@@ -319,7 +345,7 @@ def advanced_game():
 def main_menu():
     clear()
     list_formatter2(["Play","User managment"],"Menu:")
-    user_choice = input("-- ")
+    user_choice = input_manager1(["Play","User managment"],0)
     if user_choice == "1":
         game_menu()
     elif user_choice == "2":
@@ -359,7 +385,9 @@ if results != "o_t_s":
     catagories = results[2]
 
 questions = json.loads(open('questions.json', 'r').read())
-#main_menu()
+
+
+main_menu()
 
 
 
@@ -446,34 +474,7 @@ def main_question_loop_test(how_many_questions,questions,change_range=50):
 
 
 
-
-
-
-def input_manager1(item_list,skip_func=1):
-    chosen_item = None
-    while True:
-        try:
-            number = input("-- ")
-            if number  == '' and skip_func == 1:
-                break
-            elif number  == '' and skip_func == 0:
-                print("\n Required \n")
-            elif number:
-                number=int(number)
-                if number >= 0:
-                    number -=1 
-                    chosen_item = (item_list[number])
-                    return number
-                    break
-                else:
-                    print("\n Input number above 0.\n")
-        except:
-            print("\n Enter valid Number corresponding to choices displayed.\n")
-    return chosen_item
-
-
-
-input_manager1(["one","two","three"])
+#print(input_manager1(["one","two","three"]))
 
 
 
