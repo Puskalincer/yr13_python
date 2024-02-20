@@ -45,9 +45,6 @@ test_results_mabye=[["John",{
                        
 }],["John"]]
 
-
-
-
 #Runs on first start, never used again. -Final
 def prepare_catagories():
     res = requests.get('https://opentdb.com/api_category.php')
@@ -441,4 +438,47 @@ def main_question_loop_test(how_many_questions,questions,change_range=50):
 #main_question_loop_test(2,questions)
         
 
-print(test_results_mabye[0][1]["Q1"])
+#print(test_results_mabye[0][1]["Q1"])
+
+
+
+
+
+
+
+
+
+
+def input_manager1(item_list,skip_func=1):
+    chosen_item = None
+    while True:
+        try:
+            number = input("-- ")
+            if number  == '' and skip_func == 1:
+                break
+            elif number  == '' and skip_func == 0:
+                print("\n Required \n")
+            elif number:
+                number=int(number)
+                if number >= 0:
+                    number -=1 
+                    chosen_item = (item_list[number])
+                    return number
+                    break
+                else:
+                    print("\n Input number above 0.\n")
+        except:
+            print("\n Enter valid Number corresponding to choices displayed.\n")
+    return chosen_item
+
+
+
+input_manager1(["one","two","three"])
+
+
+
+
+
+
+
+
