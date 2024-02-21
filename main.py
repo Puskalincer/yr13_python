@@ -5,7 +5,7 @@ import time
 import random
 import os
 import html
-
+import sys
 """
 LOOK AT THIS LATERRR
 
@@ -67,73 +67,150 @@ test_results_mabye=[["John",{
                        
 }],["John"]]
 
-#Runs on first start, never used again. -Final
-def prepare_catagories():
-    res = requests.get('https://opentdb.com/api_category.php')
-    response = json.loads(res.text)
-    response = response["trivia_categories"]
-    for x in response:
-        first_word = x["name"].split()[0]
-        if first_word == "Entertainment:" or first_word == "Science:":
-            pass
-        else:
-            catagories[0].append([ x["id"],x["name"]])
-    for x in response:
-        first_word = x["name"].split()[0]
-        if first_word == "Entertainment:":
-            catagories[1].append([x["id"],x["name"]])
-    for x in response:
-        first_word = x["name"].split()[0]
-        if first_word == "Science:":
-            catagories[2].append([x["id"],x["name"]])
-#Runs on first start, never used again. -Final
-def generate_data_file():
-    x = {
-        "users": [],
-        "token": "",
-        "catagories" : []
-    }
-    f = open("data.json", "w")
-    f.write(json.dumps(x))
-    f.close()
-#Runs on first start, never used again. -Final
-def one_time_start():
-    print("Generating Start file")
-    generate_data_file()
-    prepare_catagories()
-    response_code , request_token_temp = get_token()
-    if response_code == 0:
-        request_token = request_token_temp
-    save_new([],request_token,catagories)
-    data_manager()
-#Runs on first start, never used again. -Final
-def get_token():
-    res = requests.get('https://opentdb.com/api_token.php?command=request')
-    response = json.loads(res.text)
-    return response["response_code"] , response["token"]
-#Always runs at on startup -Final
-def data_manager():
-    try:
-        f = open("data.json", "r")
-        thing = json.loads(f.read())
-        f.close()
-        return [thing["users"] , thing["token"] , thing["catagories"]]
-    except:
-        one_time_start()
-        return "o_t_s"
-#Save data -Final
-def save_new(users='',token='',catagories=''):
-    with open('data.json') as infile:
-        data = json.load(infile)
-    if users:
-        data["users"] = users
-    if token:
-        data["token"] = token
-    if catagories:
-        data["catagories"] = catagories
 
-    with open('data.json', 'w') as outfile:
-        json.dump(data, outfile)
+
+"""
+class SaveFile:
+    save_file = "save.json"
+    save_data = {}
+
+    def __init__(self, save_file: str, auto_load: bool = True) -> None:
+        self.save_file = save_file
+        if auto_load:
+            self.load()
+
+    def load(self) -> None:
+        try:
+            with open(self.save_file, "r") as file:
+                data = file.read().encode('utf-8')
+                try:
+                    data = base64.b64decode(data)
+                except base64.binascii.Error:
+                    debug_message("File is not base64 encoded, must be an older save", "save_file")
+                try:
+                    self.save_data = json.loads(data.decode('utf-8'))
+                except json.decoder.JSONDecodeError:
+                    error("File is corrupt, deleting file automatically")
+                    file.close()
+                    os.remove(self.save_file)
+                    return
+                file.close()
+
+        except FileNotFoundError:
+            return
+
+    def save(self) -> None:
+        if not os.path.exists(DATA_FOLDER):
+            os.mkdir(DATA_FOLDER)
+        with open(self.save_file, "w") as file:
+            save_dict = self.save_data
+            try:
+                del save_dict["save_data"]
+            except KeyError:
+                pass
+            data = json.dumps(save_dict, ensure_ascii=False).encode('utf-8')
+            data = base64.b64encode(data)
+            file.write(data.decode('utf-8'))
+            file.close()
+
+class UserData(SaveFile):
+    # User settings
+    display_mode = None
+    network = None
+    auto_fix_api = None
+
+    def __init__(self) -> None:
+        super().__init__(DATA_FOLDER + "data.json")
+
+        # Load the data from the save file
+        self.display_mode = try_convert(self.save_data.get("display_mode"), str)
+        self.network = try_convert(self.save_data.get("network"), bool)
+        self.auto_fix_api = try_convert(self.save_data.get("auto_fix_api"), bool)
+
+        # Load the default values if the data is not found
+        self.load_defaults()
+
+    def load_defaults(self) -> None:
+        self.display_mode = set_if_none(self.display_mode, "GUI")
+        self.network = set_if_none(self.network, True)
+        self.auto_fix_api = set_if_none(self.auto_fix_api, True)
+
+    def save(self) -> None:
+        self.save_data = self.__dict__
+
+        super().save()
+"""
+
+class SaveFile:
+    save_file = "data.json"
+    save_data = {}
+
+    def __init__(self, save_file: str = None, auto_load: bool = True) -> None:
+        self.save_file = save_file
+
+    def prepare_catagories(self):
+        res = requests.get('https://opentdb.com/api_category.php')
+        response = json.loads(res.text)
+        response = response["trivia_categories"]
+        for x in response:
+            first_word = x["name"].split()[0]
+            if first_word == "Entertainment:" or first_word == "Science:":
+                pass
+            else:
+                catagories[0].append([ x["id"],x["name"]])
+        for x in response:
+            first_word = x["name"].split()[0]
+            if first_word == "Entertainment:":
+                catagories[1].append([x["id"],x["name"]])
+        for x in response:
+            first_word = x["name"].split()[0]
+            if first_word == "Science:":
+                catagories[2].append([x["id"],x["name"]])
+    def generate_data_file(self):
+        x = {
+            "users": [],
+            "token": "",
+            "catagories" : []
+        }
+        f = open("data.json", "w")
+        f.write(json.dumps(x))
+        f.close()
+    def one_time_start(self):
+        print("Generating Start file")
+        self.generate_data_file()
+        self.prepare_catagories()
+        response_code , request_token_temp = self.get_token()
+        if response_code == 0:
+            request_token = request_token_temp
+        self.save_new([],request_token,catagories)
+        self.data_manager()
+    def get_token(self):
+        res = requests.get('https://opentdb.com/api_token.php?command=request')
+        response = json.loads(res.text)
+        return response["response_code"] , response["token"]
+    def data_manager(self):
+        try:
+            f = open("data.json", "r")
+            thing = json.loads(f.read())
+            f.close()
+            return [thing["users"] , thing["token"] , thing["catagories"]]
+        except:
+            self.one_time_start()
+            return "o_t_s"
+    def save_new(self,users='',token='',catagories=''):
+        with open('data.json') as infile:
+            data = json.load(infile)
+        if users:
+            data["users"] = users
+        if token:
+            data["token"] = token
+        if catagories:
+            data["catagories"] = catagories
+
+        with open('data.json', 'w') as outfile:
+            json.dump(data, outfile)
+
+Saveobject = SaveFile()
 
 #Utilitys -Final
 def clear():
@@ -167,9 +244,6 @@ def input_manager1(item_list,skip_func=1):
             print("\n Enter valid Number corresponding to choices displayed.\n")
     return chosen_item
 
-
-
-
 #Makes multilevel arrays useful -Final
 def array_untangler(array,item=0):
     temp_array = []
@@ -184,6 +258,7 @@ def reset_token(token):
     return response_codes[response["response_code"]]
 
 def request_questions(amount,catagory='',difficulty='',type='',token=''):
+    print("harry is better")
     if catagory:
         catagory = '&category=' + catagory
     if difficulty:
@@ -275,13 +350,11 @@ def view_user_data():
         change_user_pin()
     elif user_choice == None:
         main_menu()
-
 def new_user():
     #len(users)
     user = input("user name : ")
     users.append([user , 0, 0, 0, "none", "none" ])
     view_user_data()
-
 def delete_user():
     clear()
     list_formatter(users,"Delete user")
@@ -395,9 +468,36 @@ def MAIN_QUIZ(quastion_amount,questions,change_range=50):
     active_users_select()
     main_question_loop(quastion_amount,questions,change_range)
 
+"""
+#Progress bar
+def start_progress(title):
+    global progress_x
+    sys.stdout.write(title + ": [" + "-"*40 + "]" + chr(8)*41)
+    sys.stdout.flush()
+    progress_x = 0
+
+def progress(x):
+    global progress_x
+    x = int(x * 40 // 100)
+    sys.stdout.write("#" * (x - progress_x))
+    sys.stdout.flush()
+    progress_x = x
+
+def end_progress():
+    sys.stdout.write("#" * (40 - progress_x) + "]\n")
+    sys.stdout.flush()
+
+clear()
+start_progress("Time")
+for x in range(100):
+    time.sleep(0.1)
+    progress(x)
+
+
+"""
 #Initialization things -Final
 clear()
-results = data_manager()
+results = Saveobject.data_manager()
 if results != "o_t_s":
     users = results[0]
     request_token = results[1]
@@ -417,22 +517,6 @@ start = time.time()
 end = time.time()
 length = start - end
 print("It took", length, "seconds!")
-
-
-
-#Wrong
-class User_tracker:
-    def __init__(self, User_name):
-        self.User_name = User_name
-
-    def __str__(self):
-        return f"{self.User_name}{self.age}"
-
-    def myfunc(self):
-        print("Hello my name is " + self.User_name)
-
-p1 = User_tracker("Bob")
-p1.myfunc()
 
 """
 
