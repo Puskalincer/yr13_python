@@ -29,6 +29,8 @@ active_users = []
 questions = ""
 test_results=[]
 
+user_menu = ["New User","Delete User","Change user pin"]
+
 
 
 test_results_mabye=[["John",{
@@ -134,7 +136,7 @@ def input_manager1(item_list,skip_func=1):
                 print("\n Required \n")
             elif number:
                 number=int(number)
-                if number >= 0:
+                if number > 0:
                     number -=1 
                     chosen_item = (item_list[number])
                     return number
@@ -237,26 +239,29 @@ def main_question_loop(how_many_questions,questions,change_range):
 
 #User stuff
 def view_user_data():
+    save_new(users)
     clear()
     divider()
     print("User \t \t Correct \t Incorrect \t W/L Ratio \t Best category \n")
     for beans, value in enumerate(users):
         print(users[beans][0] + " \t \t " + str(users[beans][1]) + " \t \t " + str(users[beans][2]) + " \t \t " + str(users[beans][3]) + " \t \t " + str(users[beans][4]))
-    list_formatter2(["New User","Delete User","Change user pin"],"Options:")
-    user_choice = input("-- ")
-    if user_choice == "1":
+    list_formatter2(user_menu,"Options:")
+    user_choice = input_manager1(user_menu)
+    if user_choice == 0:
         new_user()
-    elif user_choice == "2":
+    elif user_choice == 1:
         delete_user()
-    elif user_choice == "3":
+    elif user_choice == 2:
         change_user_pin()
-    elif user_choice == '':
+    elif user_choice == None:
         main_menu()
+
 def new_user():
-    len(users)
+    #len(users)
     user = input("user name : ")
     users.append([user , 0, 0, 0, "none", "none" ])
     view_user_data()
+
 def delete_user():
     clear()
     list_formatter(users,"Delete user")
@@ -346,35 +351,29 @@ def main_menu():
     clear()
     list_formatter2(["Play","User managment"],"Menu:")
     user_choice = input_manager1(["Play","User managment"],0)
-    if user_choice == "1":
+    if user_choice == 0:
         game_menu()
-    elif user_choice == "2":
+    elif user_choice == 1:
         view_user_data()
 
 def game_menu():
     clear()
     list_formatter2(["Quick","Basic","Advanced","Custom"],"Game mode:")
-    user_choice = input("-- ")
-    if user_choice == "1":
+    user_choice = input_manager1(["Quick","Basic","Advanced","Custom"])
+    if user_choice == 0:
         MAIN_QUIZ(5,questions)
-    elif user_choice == "2":
+    elif user_choice == 1:
         MAIN_QUIZ(10,questions)
-    elif user_choice == "3":
+    elif user_choice == 2:
         MAIN_QUIZ(20,questions)
-    elif user_choice == "4":
+    elif user_choice == 3:
         advanced_game()
-    elif user_choice == '':
+    elif user_choice == None:
         main_menu()
 
 def MAIN_QUIZ(quastion_amount,questions,change_range=50):
     active_users_select()
     main_question_loop(quastion_amount,questions,change_range)
-
-
-
-
-
-
 
 #Initialization things -Final
 clear()
@@ -392,6 +391,7 @@ main_menu()
 
 
 """
+#Timer
 start = time.time()
 #stuff
 end = time.time()
@@ -400,7 +400,7 @@ print("It took", length, "seconds!")
 
 
 
-
+#Wrong
 class User_tracker:
     def __init__(self, User_name):
         self.User_name = User_name
@@ -415,10 +415,6 @@ p1 = User_tracker("Bob")
 p1.myfunc()
 
 """
-
-
-
-
 
 def main_question_loop_test(how_many_questions,questions,change_range=50):
     requested_quesions = question_request(how_many_questions,int(change_range))
@@ -461,25 +457,7 @@ def main_question_loop_test(how_many_questions,questions,change_range=50):
             print(active_users[beans][0] + " \t " + str(active_users[beans][1]) + " \t \t " + str(active_users[beans][2]))
         input("")
 
-
 #active_users_select()
 #main_question_loop_test(2,questions)
-        
 
 #print(test_results_mabye[0][1]["Q1"])
-
-
-
-
-
-
-
-#print(input_manager1(["one","two","three"]))
-
-
-
-
-
-
-
-
