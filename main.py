@@ -6,6 +6,23 @@ import random
 import os
 import html
 import sys
+import socket
+
+#Checks internet connection https://stackoverflow.com/questions/3764291/how-can-i-see-if-theres-an-available-and-active-network-connection-in-python
+def internet(host="8.8.8.8", port=53, timeout=3):
+    """
+    Host: 8.8.8.8 (google-public-dns-a.google.com)
+    OpenPort: 53/tcp
+    Service: domain (DNS/TCP)
+    """
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
+        return True
+    except socket.error as ex:
+        print(ex)
+        return False
+
 """
 LOOK AT THIS LATERRR
 
@@ -24,19 +41,16 @@ server = SocketServer.TCPServer(('0.0.0.0', 8080), Handler)
 server.serve_forever()
 """
 
-
-
 """
 TOO DO LIST
 
-Add error checking to everything.
+Add error checking to everything. Done
 
 Add automatic checking for advanced game choice validity
 
 Make game remember the stuff
 
 """
-
 
 #https://opentdb.com/api_count.php?category=9
 
@@ -45,15 +59,20 @@ a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty s
 request_token = ""
 catagories = [[],[],[]]
 users = []
-active_users = []
-questions = ""
+offline_questions = ""
 test_results=[]
+
+offline = False
+
+active_game = []
+
+
 
 user_menu = ["New User","Delete User","Change user pin"]
 
 
 
-test_results_mabye=[["John",{
+test_results_format=[["John",{
     "Q1":{
         "time":1,
         "catagory":"placeholder",
@@ -222,11 +241,11 @@ def cd():
     divider()
 
 #Not done?
-def input_manager1(item_list,skip_func=1):
+def input_manager1(item_list,skip_func=1,input_text_override="-- ",any_num=0):
     chosen_item = None
     while True:
         try:
-            number = input("-- ")
+            number = input(input_text_override)
             if number  == '' and skip_func == 1:
                 break
             elif number  == '' and skip_func == 0:
@@ -234,8 +253,9 @@ def input_manager1(item_list,skip_func=1):
             elif number:
                 number=int(number)
                 if number > 0:
-                    number -=1 
-                    chosen_item = (item_list[number])
+                    if any_num ==0:
+                        number -=1 
+                        chosen_item = (item_list[number])
                     return number
                     break
                 else:
@@ -258,7 +278,7 @@ def reset_token(token):
     return response_codes[response["response_code"]]
 
 def request_questions(amount,catagory='',difficulty='',type='',token=''):
-    print("harry is better")
+    #print("harry is better")
     if catagory:
         catagory = '&category=' + catagory
     if difficulty:
@@ -277,14 +297,6 @@ def request_questions(amount,catagory='',difficulty='',type='',token=''):
     response = json.loads(res.text)
     return response["response_code"] , response["results"] 
 
-# Join both 
-def list_formatter(arrayname,array_name_formatted):
-    divider()
-    print(array_name_formatted)
-    for idx , array_item in enumerate(arrayname , start=1):
-        print(str(idx) + " - "+ array_item[0])
-    divider()
-
 def list_formatter2(arrayname,array_name_formatted,instructions=""):
     if instructions:
         divider()
@@ -301,9 +313,14 @@ def format_display_question(questions):
     temp_array.append(questions["correct_answer"])
     random.shuffle(temp_array)
     return temp_array , questions["question"] , 
-
 def question_request(amount,change_range=50):
     return random.sample(range(change_range), int(amount))
+
+
+
+
+
+
 
 def main_question_loop(how_many_questions,questions,change_range):
     requested_quesions = question_request(how_many_questions,int(change_range))
@@ -317,8 +334,8 @@ def main_question_loop(how_many_questions,questions,change_range):
             clear()
             print(active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions))
             list_formatter2(html.unescape(thing1),html.unescape(thing2))
-            user_choice = input()
-            if int(user_choice) == thing1.index(question["correct_answer"])+1:
+            user_choice = input_manager1(thing1,0)
+            if int(user_choice) == thing1.index(question["correct_answer"]):
                 print("\nCorrect")
                 active_users[y][1] += 1
             else:
@@ -333,13 +350,15 @@ def main_question_loop(how_many_questions,questions,change_range):
         input("")
 
 #User stuff
-def view_user_data():
-    save_new(users)
+def display_all_user_data(users):
     clear()
     divider()
     print("User \t \t Correct \t Incorrect \t W/L Ratio \t Best category \n")
     for beans, value in enumerate(users):
         print(users[beans][0] + " \t \t " + str(users[beans][1]) + " \t \t " + str(users[beans][2]) + " \t \t " + str(users[beans][3]) + " \t \t " + str(users[beans][4]))
+def view_user_data():
+    Saveobject.save_new(users)
+    display_all_user_data(users)
     list_formatter2(user_menu,"Options:")
     user_choice = input_manager1(user_menu)
     if user_choice == 0:
@@ -351,39 +370,39 @@ def view_user_data():
     elif user_choice == None:
         main_menu()
 def new_user():
-    #len(users)
     user = input("user name : ")
     users.append([user , 0, 0, 0, "none", "none" ])
     view_user_data()
 def delete_user():
     clear()
-    list_formatter(users,"Delete user")
-    beanz = input("-- ")
-    beanz = int(beanz) - 1
-    clear()
-    divider()
-    print("User \t \t Correct \t Incorrect \t W/L Ratio \t Best category \n")
-    print(users[beanz][0] + " \t \t " + str(users[beanz][1]) + " \t \t " + str(users[beanz][2]) + " \t \t " + str(users[beanz][3]) + " \t \t " + str(users[beanz][4]))
-    divider()
-    print("Confirm deletion of user y/n\n")
-    deletion = input("-- ")
-    if deletion == "y":
-        if users[beanz][5] != "none":
-            while True:
-                secure = input("Enter pin : ")
-                if secure == users[beanz][5]:
-                    users.pop(int(beanz))
-                    break
-                elif secure == '':
-                    break
-                else:
-                    print("Pin wrong")
-        else:
-            users.pop(int(beanz))
-    view_user_data()
+    list_formatter2(array_untangler(users),"Delete pin")
+    beanz = input_manager1(array_untangler(users))
+    if beanz >= 0:
+        temp_users=[]
+        temp_users.append(users[beanz])
+        display_all_user_data(temp_users)
+        divider()
+        print("Confirm deletion of user y/n\n")
+        deletion = input("-- ")
+        if deletion == "y":
+            if users[beanz][5] != "none":
+                while True:
+                    secure = input("Enter pin : ")
+                    if secure == users[beanz][5]:
+                        users.pop(int(beanz))
+                        break
+                    elif secure == '':
+                        break
+                    else:
+                        print("Pin wrong")
+            else:
+                users.pop(int(beanz))
+        view_user_data()
+    elif beanz == None:
+        view_user_data()
 def change_user_pin():
     clear()
-    list_formatter(users,"Change pin")
+    list_formatter2(array_untangler(users),"Change pin")
     beanz = input("-- ")
     beanz = int(beanz) - 1
     clear()
@@ -392,16 +411,21 @@ def change_user_pin():
     users[beanz][5] = wanted_pin
     view_user_data()
 def active_users_select():
+    active_users = []
     clear()
-    list_formatter(users,"Users")
+    list_formatter2(array_untangler(users),"Users")
     print("How many players?")
-    x = input("Num : ")
+    x = input_manager1(array_untangler(users),1,"-- ",1)
+    if x == None:
+        game_menu()
     clear()
-    list_formatter(users,"Users")
+    list_formatter2(array_untangler(users),"Users")
     for y in range(int(x)):
-        beanz = input("Num : ")  
-        beanz = int(beanz) - 1
+        beanz = input_manager1(array_untangler(users))  
+        if beanz == None:
+            game_menu()
         active_users.append(users[beanz])
+    return active_users
 
 #Does stuff? prolly wont need
 def question_reroll():
@@ -412,8 +436,9 @@ def question_reroll():
 def base_custom_input(array,array_name,misc=''):
     clear() 
     list_formatter2(array,array_name)
-    chosen_item = int(input())
-    chosen_item = chosen_item - 1
+    chosen_item = input_manager1(array)
+    if chosen_item == None:
+        game_menu()
     if misc == "num":
         return chosen_item
     if misc:
@@ -432,7 +457,7 @@ def advanced_game():
     request_diffuculty = base_custom_input(a_g_m[1][1],a_g_m[1][0])
     request_type = base_custom_input(a_g_m[2][1],a_g_m[2][0])
     cd()
-    request_amount = input("How many questions:")
+    request_amount = input_manager1("How many questions:",1,"-- ",1)
     thing_code , questions =  request_questions(request_amount,str(request_catagory),request_diffuculty,request_type)
     #Temp manuel check response code, make automatic later
     print( response_codes[thing_code])
@@ -467,6 +492,15 @@ def game_menu():
 def MAIN_QUIZ(quastion_amount,questions,change_range=50):
     active_users_select()
     main_question_loop(quastion_amount,questions,change_range)
+    
+
+
+
+
+
+
+
+
 
 """
 #Progress bar
@@ -495,6 +529,7 @@ for x in range(100):
 
 
 """
+
 #Initialization things -Final
 clear()
 results = Saveobject.data_manager()
@@ -504,13 +539,15 @@ if results != "o_t_s":
     catagories = results[2]
 
 questions = json.loads(open('questions.json', 'r').read())
+offline_questions = json.loads(open('questions.json', 'r').read())
 
-
-main_menu()
-
+#main_menu()
 
 
 """
+#print(internet())
+
+
 #Timer
 start = time.time()
 #stuff
@@ -518,7 +555,7 @@ end = time.time()
 length = start - end
 print("It took", length, "seconds!")
 
-"""
+
 
 def main_question_loop_test(how_many_questions,questions,change_range=50):
     requested_quesions = question_request(how_many_questions,int(change_range))
@@ -536,12 +573,6 @@ def main_question_loop_test(how_many_questions,questions,change_range=50):
         thing1 , thing2 = format_display_question(question)
         current_question=current_question+1
         y=0
-
-
-        print(question["catagory"])
-        input()
-
-
         while y < len(active_users):
             clear()
             print(active_users[y][0] + " -- Question " + str(current_question) + " of " + str(how_many_questions))
@@ -565,3 +596,38 @@ def main_question_loop_test(how_many_questions,questions,change_range=50):
 #main_question_loop_test(2,questions)
 
 #print(test_results_mabye[0][1]["Q1"])
+        
+"""
+
+
+
+def quiz_prepare(quastion_amount,questions,question_mode,change_range=50):
+    current_question = []
+    if question_mode == True:
+        change_range = 50
+        questions = offline_questions
+
+
+    #active_users = active_users_select()
+    #print(active_users)
+        
+
+    requested_quesions = question_request(quastion_amount,int(change_range))
+
+    for x , y in enumerate(requested_quesions):
+        current_question.append(questions[requested_quesions[x]])
+
+
+
+
+    print(current_question)
+    
+    #print(question_mode)
+    #print(requested_quesions)
+
+    #main_question_loop(quastion_amount,questions,change_range)
+
+
+
+
+quiz_prepare(5,questions,offline)
