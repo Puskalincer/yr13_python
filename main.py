@@ -197,11 +197,10 @@ def question_request(amount,change_range=50):
     return random.sample(range(change_range), int(amount))
 
 #Fix later
-def main_question_loop(how_many_questions,questions,change_range):
-    requested_quesions = question_request(how_many_questions,int(change_range))
+def main_question_loop(how_many_questions,questions,active_users):
     x=0
     while x < int(how_many_questions):
-        question = questions[requested_quesions[x]]
+        question = questions[x]
         thing1 , thing2 = format_display_question(question)
         x=x+1
         y=0
@@ -223,6 +222,18 @@ def main_question_loop(how_many_questions,questions,change_range):
         for beans, value in enumerate(active_users):
             print(active_users[beans][0] + " \t " + str(active_users[beans][1]) + " \t \t " + str(active_users[beans][2]))
         input("")
+def quiz_prepare(quastion_amount,questions,question_mode,change_range=50):
+    current_question = []
+    if question_mode == True:
+        change_range = 50
+        questions = offline_questions
+
+    requested_quesions = question_request(quastion_amount,int(change_range))
+    for x , y in enumerate(requested_quesions):
+        current_question.append(questions[requested_quesions[x]])
+
+    active_users = active_users_select()
+    main_question_loop(quastion_amount,current_question,active_users)
 
 #Pretty much finished
 def active_users_select():
@@ -241,11 +252,6 @@ def active_users_select():
             game_menu()
         active_users.append(users[beanz])
     return active_users
-
-#Does stuff? prolly wont need
-def question_reroll():
-    thing_code , questions =  request_questions(50)
-    open('questions.json', 'w').write(json.dumps(questions , ensure_ascii=False, indent=4 ))
 
 #Custom game setup
 def base_custom_input(array,array_name,misc_option=''):
@@ -273,12 +279,12 @@ def advanced_game():
     request_type = base_custom_input(a_g_m[2][1],a_g_m[2][0])
     misc.cd()
     request_amount = input_manager("How many questions:",1,"-- ",1)
-    thing_code , questions =  request_questions(request_amount,str(request_catagory),request_diffuculty,request_type)
+    thing_code , questions =  api_com.request_questions(request_amount,str(request_catagory),request_diffuculty,request_type)
     #Temp manuel check response code, make automatic later
-    print( response_codes[thing_code])
+    print(api_com.response_codes[thing_code])
     input()
     #
-    MAIN_QUIZ(request_amount,questions,request_amount)
+    quiz_prepare(request_amount,questions,offline)
 
 #Could do with an exit button.
 def main_menu():
@@ -296,20 +302,15 @@ def game_menu():
     misc.list_formatter(["Quick","Basic","Advanced","Custom"],"Game mode:")
     user_choice = input_manager(["Quick","Basic","Advanced","Custom"])
     if user_choice == 0:
-        MAIN_QUIZ(5,questions)
+        quiz_prepare(5,offline_questions,offline)
     elif user_choice == 1:
-        MAIN_QUIZ(10,questions)
+        quiz_prepare(10,offline_questions,offline)
     elif user_choice == 2:
-        MAIN_QUIZ(20,questions)
+        quiz_prepare(20,offline_questions,offline)
     elif user_choice == 3:
         advanced_game()
     elif user_choice == None:
         main_menu()
-
-#Depreciating, replace with quiz prepare
-def MAIN_QUIZ(quastion_amount,questions,change_range=50):
-    active_users_select()
-    main_question_loop(quastion_amount,questions,change_range)
 
 #Initialization things -Final
 misc.clear()
@@ -321,38 +322,7 @@ if results != "o_t_s":
 else:
     time.sleep(1)
 
-#Change later? i forgor.
-questions = json.loads(open('questions.json', 'r').read())
 offline_questions = json.loads(open('questions.json', 'r').read())
 
 #You need this.
 main_menu()
-
-#Currently working to replace MAIN_QUIZ. Was made to introduce save functionality. 
-#Will also be used for auto offline detection removing certain features.
-def quiz_prepare(quastion_amount,questions,question_mode,change_range=50):
-    current_question = []
-    if question_mode == True:
-        change_range = 50
-        questions = offline_questions
-
-
-    #active_users = active_users_select()
-    #print(active_users)
-        
-
-    requested_quesions = question_request(quastion_amount,int(change_range))
-
-    for x , y in enumerate(requested_quesions):
-        current_question.append(questions[requested_quesions[x]])
-
-
-
-
-    #print(current_question)
-    #print(question_mode)
-    #print(requested_quesions)
-
-    #main_question_loop(quastion_amount,questions,change_range)
-
-#quiz_prepare(5,questions,offline)

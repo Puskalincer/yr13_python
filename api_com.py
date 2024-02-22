@@ -38,3 +38,8 @@ def reset_token(token):
     res = requests.get('https://opentdb.com/api_token.php?command=reset&token='+token)
     response = json.loads(res.text)
     return response_codes[response["response_code"]]
+
+#Does stuff? prolly wont need
+def question_reroll():
+    thing_code , questions =  request_questions(50)
+    open('questions.json', 'w').write(json.dumps(questions , ensure_ascii=False, indent=4 ))
