@@ -1,5 +1,6 @@
 import api_com
 import misc
+
 import json 
 import time
 import random
@@ -284,7 +285,7 @@ def advanced_game():
     print(api_com.response_codes[thing_code])
     input()
     #
-    quiz_prepare(request_amount,questions,offline)
+    quiz_prepare(request_amount,questions,offline,request_amount)
 
 #Could do with an exit button.
 def main_menu():
@@ -325,4 +326,6 @@ else:
 offline_questions = json.loads(open('questions.json', 'r').read())
 
 #You need this.
-main_menu()
+#main_menu()
+
+print(misc.array_untangler(catagories[2],1))
