@@ -1,592 +1,595 @@
-[
-    {
-        "type": "boolean",
-        "difficulty": "easy",
-        "category": "Science &amp; Nature",
-        "question": "A plant that has a life cycle for more than a year is known as an annual.",
-        "correct_answer": "False",
-        "incorrect_answers": [
-            "True"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Television",
-        "question": "What actor portrays Hogan &quot;Wash&quot; Washburne in the TV Show Firefly?",
-        "correct_answer": "Alan Tudyk",
-        "incorrect_answers": [
-            "Adam Baldwin",
-            "Nathan Fillion",
-            "Sean Maher"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "Geography",
-        "question": "Which of these is NOT a real tectonic plate?",
-        "correct_answer": "Atlantic Plate",
-        "incorrect_answers": [
-            "North American Plate",
-            "Eurasian Plate",
-            "Nazca Plate"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Television",
-        "question": "Which track by &quot;Massive Attack&quot; is used for the theme of &quot;House&quot;? ",
-        "correct_answer": "Teardrop",
-        "incorrect_answers": [
-            "Protection",
-            "Angel",
-            "Black Milk"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Entertainment: Video Games",
-        "question": "What is the name of the talking cat in Persona 5?",
-        "correct_answer": "Morgana",
-        "incorrect_answers": [
-            "Teddie",
-            "Marie",
-            "Ryuji"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Entertainment: Video Games",
-        "question": "In Divinity: Original Sin II, what is the name of the skeletal origin character?",
-        "correct_answer": "Fane",
-        "incorrect_answers": [
-            "Lohse",
-            "The Red Prince",
-            "There are no skeletal origin characters"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "History",
-        "question": "With which Greek philosopher would you associate the phrase, &quot;I know that I know nothing&quot;?",
-        "correct_answer": "Socrates",
-        "incorrect_answers": [
-            "Aristotle",
-            "Plato",
-            "Pythagoras"
-        ]
-    },
-    {
-        "type": "boolean",
-        "difficulty": "medium",
-        "category": "Geography",
-        "question": "Antarctica is the largest desert in the world.",
-        "correct_answer": "True",
-        "incorrect_answers": [
-            "False"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "History",
-        "question": "Which one of these was not a beach landing site in the Invasion of Normandy?",
-        "correct_answer": "Silver",
-        "incorrect_answers": [
-            "Gold",
-            "Juno",
-            "Sword"
-        ]
-    },
-    {
-        "type": "boolean",
-        "difficulty": "easy",
-        "category": "Entertainment: Japanese Anime &amp; Manga",
-        "question": "In the &quot;Toaru Kagaku no Railgun&quot; anime,  espers can only reach a maximum of level 6 in their abilities.",
-        "correct_answer": "False",
-        "incorrect_answers": [
-            "True"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Entertainment: Video Games",
-        "question": "What is the name of a popular franchise that includes placing blocks down and surviving in an open world? ",
-        "correct_answer": "Minecraft",
-        "incorrect_answers": [
-            "Unturned",
-            "Roblox",
-            "Grand Theft Auto V"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "Entertainment: Books",
-        "question": "In the Harry Potter universe, who does Draco Malfoy end up marrying?",
-        "correct_answer": "Astoria Greengrass",
-        "incorrect_answers": [
-            "Pansy Parkinson",
-            "Millicent Bulstrode",
-            "Hermione Granger"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "General Knowledge",
-        "question": "Computer manufacturer Compaq was acquired for $25 billion dollars in 2002 by which company?",
-        "correct_answer": "Hewlett-Packard",
-        "incorrect_answers": [
-            "Toshiba",
-            "Asus",
-            "Dell"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "Sports",
-        "question": "Where was the Games of the XXII Olympiad held?",
-        "correct_answer": "Moscow",
-        "incorrect_answers": [
-            "Barcelona",
-            "Tokyo",
-            "Los Angeles"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Celebrities",
-        "question": "Paul McCartney has always used his middle name. What is his real first name? ",
-        "correct_answer": "James",
-        "incorrect_answers": [
-            "John",
-            "Jack",
-            "Justin"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "Entertainment: Television",
-        "question": "What was the UK &quot;Who Wants to be a Millionaire?&quot; cheating scandal known as?",
-        "correct_answer": "Major Fraud",
-        "incorrect_answers": [
-            "Ingram Cheater",
-            "Coughing Major",
-            "Millionaire Crime"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "History",
-        "question": "In what year did Neil Armstrong and Buzz Aldrin land on the moon?",
-        "correct_answer": "1969",
-        "incorrect_answers": [
-            "1965",
-            "1966",
-            "1973"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Entertainment: Film",
-        "question": "Which movie contains the quote, &quot;Say hello to my little friend!&quot;?",
-        "correct_answer": "Scarface",
-        "incorrect_answers": [
-            "Reservoir Dogs",
-            "Heat",
-            "Goodfellas"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "General Knowledge",
-        "question": "What is the romanized Korean word for &quot;heart&quot;?",
-        "correct_answer": "Simjang",
-        "incorrect_answers": [
-            "Aejeong",
-            "Jeongsin",
-            "Segseu"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "Entertainment: Board Games",
-        "question": "In Magic: The Gathering, which of the following was the first publicly released foil card?",
-        "correct_answer": "Lightning Dragon",
-        "incorrect_answers": [
-            "Revenant",
-            "Beast of Burden",
-            "Dirtcowl Wurm"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "History",
-        "question": "Which American civilization is the source of the belief that the world would end or drastically change on December 21st, 2012?",
-        "correct_answer": "The Mayans",
-        "incorrect_answers": [
-            "The Incas",
-            "The Aztecs",
-            "The Navajos"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Celebrities",
-        "question": "What was the name of Marilyn Monroe&#039;s first husband?",
-        "correct_answer": "James Dougherty",
-        "incorrect_answers": [
-            "Joe Dimaggio",
-            "Kirk Douglas",
-            "Arthur Miller"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "Entertainment: Video Games",
-        "question": "How many partners can you obtain in Paper Mario: The Thousand-Year Door?",
-        "correct_answer": "7",
-        "incorrect_answers": [
-            "6",
-            "9",
-            "10"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "History",
-        "question": "How many years did the Hundred Years&#039; War last?",
-        "correct_answer": "116",
-        "incorrect_answers": [
-            "100",
-            "90",
-            "101"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "History",
-        "question": "Which of the following countries was the first to send an object into space?",
-        "correct_answer": "Germany",
-        "incorrect_answers": [
-            "USA",
-            "Russia",
-            "China"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "Geography",
-        "question": "The prefix Sino- (As in Sino-American) is used to refer to what nationality?",
-        "correct_answer": "Chinese",
-        "incorrect_answers": [
-            "Japanese",
-            "Russian",
-            "Indian"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Video Games",
-        "question": "Which was the first video game to be produced by development company Rare?",
-        "correct_answer": "Slalom",
-        "incorrect_answers": [
-            "R.C. Pro-Am",
-            "Donkey Kong Country",
-            "Battletoads"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Entertainment: Video Games",
-        "question": "What is the name of the largest planet in Kerbal Space Program?",
-        "correct_answer": "Jool",
-        "incorrect_answers": [
-            "Eeloo",
-            "Kerbol",
-            "Minmus"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Entertainment: Japanese Anime &amp; Manga",
-        "question": "What is the last name of Edward and Alphonse in the Fullmetal Alchemist series.",
-        "correct_answer": "Elric",
-        "incorrect_answers": [
-            "Ellis",
-            "Eliek",
-            "Elwood"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Video Games",
-        "question": "Which Overwatch character says the line &quot;Heroes never die!&quot;?",
-        "correct_answer": "Mercy",
-        "incorrect_answers": [
-            "Reaper",
-            "Sonic",
-            "Ana"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Geography",
-        "question": "What country is the second largest in the world by area?",
-        "correct_answer": "Canada",
-        "incorrect_answers": [
-            "Russia",
-            "China",
-            "United States of America"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "General Knowledge",
-        "question": "In a 1994 CBS interview, Microsoft co-founder Bill Gates performed what unusual trick on camera?",
-        "correct_answer": "Jumping over an office chair",
-        "incorrect_answers": [
-            "Jumping backwards over a desk",
-            "Standing on his head",
-            "Typing on a keyboard during a handstand"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Entertainment: Cartoon &amp; Animations",
-        "question": "Who created the Cartoon Network series &quot;Regular Show&quot;?",
-        "correct_answer": "J. G. Quintel",
-        "incorrect_answers": [
-            "Ben Bocquelet",
-            "Pendleton Ward",
-            "Rebecca Sugar"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "General Knowledge",
-        "question": "Virtual reality company Oculus VR lost which of it&#039;s co-founders in a freak car accident in 2013?",
-        "correct_answer": "Andrew Scott Reisse",
-        "incorrect_answers": [
-            "Nate Mitchell",
-            "Jack McCauley",
-            "Palmer Luckey"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Music",
-        "question": "Which of these is not an Ed Sheeran album?",
-        "correct_answer": "-",
-        "incorrect_answers": [
-            "+",
-            "X",
-            "&divide;"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "History",
-        "question": "When did the Crisis of the Third Century begin?",
-        "correct_answer": "235 AD",
-        "incorrect_answers": [
-            "235 BC",
-            "242 AD",
-            "210 AD"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Entertainment: Film",
-        "question": "What is the name of the island that &quot;Jurassic Park&quot; is built on?",
-        "correct_answer": "Isla Nublar",
-        "incorrect_answers": [
-            "Isla Sorna",
-            "Isla Muerta",
-            "Isla Pena"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Board Games",
-        "question": "How many points is the Z tile worth in Scrabble?",
-        "correct_answer": "10",
-        "incorrect_answers": [
-            "8",
-            "5",
-            "6"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Entertainment: Video Games",
-        "question": "What year was the game Dishonored released?",
-        "correct_answer": "2012",
-        "incorrect_answers": [
-            "2011",
-            "2008",
-            "2013"
-        ]
-    },
-    {
-        "type": "boolean",
-        "difficulty": "easy",
-        "category": "Geography",
-        "question": "There are no deserts in Europe.",
-        "correct_answer": "True",
-        "incorrect_answers": [
-            "False"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Film",
-        "question": "In the 2014 film &quot;Birdman&quot;, what is the primary instrument in the score?",
-        "correct_answer": "Drums",
-        "incorrect_answers": [
-            "Saxophone",
-            "Violin",
-            "Actual Live Birds Singing"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "Science &amp; Nature",
-        "question": "Which one of these is scientific term for &quot;Brain Freeze&quot;?",
-        "correct_answer": "Sphenopalatine Ganglioneuralgia",
-        "incorrect_answers": [
-            "Hyacinthoides Italica",
-            "Amaranthus Retroflexus",
-            "Amblyomma Americanum"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Science: Gadgets",
-        "question": "In what year was the Oculus Rift revealed to the public through a Kickstarter campaign?",
-        "correct_answer": "2012",
-        "incorrect_answers": [
-            "2010",
-            "2011",
-            "2013"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "General Knowledge",
-        "question": "Frank Lloyd Wright was the architect behind what famous building?",
-        "correct_answer": "The Guggenheim",
-        "incorrect_answers": [
-            "Villa Savoye",
-            "Sydney Opera House",
-            "The Space Needle"
-        ]
-    },
-    {
-        "type": "boolean",
-        "difficulty": "easy",
-        "category": "Entertainment: Film",
-        "question": "The 2010 film &quot;The Social Network&quot; is a biographical drama film about MySpace founder Tom Anderson.",
-        "correct_answer": "False",
-        "incorrect_answers": [
-            "True"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "History",
-        "question": "When was the &quot;Siege of Leningrad&quot; lifted during World War II?",
-        "correct_answer": "January 1944",
-        "incorrect_answers": [
-            "September 1943",
-            "November 1943",
-            "March 1944"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Sports",
-        "question": "Which team won 2014 FIFA World Cup in Brazil?",
-        "correct_answer": "Germany",
-        "incorrect_answers": [
-            "Argentina",
-            "Brazil",
-            "Netherlands"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Video Games",
-        "question": "In the Portal series, Aperture Science was founded under what name in the early 1940s?",
-        "correct_answer": "Aperture Fixtures",
-        "incorrect_answers": [
-            "Aperture Lavatories",
-            "Aperture Science Innovators",
-            "Wheatley Laboratories"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "Entertainment: Video Games",
-        "question": "How many playable characters are there in Super Smash Bros. for Nintendo 3DS and Wii U?",
-        "correct_answer": "58",
-        "incorrect_answers": [
-            "48",
-            "51",
-            "55"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Video Games",
-        "question": "In the game Pok&eacute;mon Conquest, which warlord is able to bond with Zekrom and a shiny Rayquazza?",
-        "correct_answer": "Nobunaga",
-        "incorrect_answers": [
-            "The Player",
-            "Oichi",
-            "Hideyoshi"
-        ]
-    }
-]
+{
+    "counter": 2,
+    "questions": [
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "Science &amp; Nature",
+            "question": "A plant that has a life cycle for more than a year is known as an annual.",
+            "correct_answer": "False",
+            "incorrect_answers": [
+                "True"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Television",
+            "question": "What actor portrays Hogan &quot;Wash&quot; Washburne in the TV Show Firefly?",
+            "correct_answer": "Alan Tudyk",
+            "incorrect_answers": [
+                "Adam Baldwin",
+                "Nathan Fillion",
+                "Sean Maher"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Geography",
+            "question": "Which of these is NOT a real tectonic plate?",
+            "correct_answer": "Atlantic Plate",
+            "incorrect_answers": [
+                "North American Plate",
+                "Eurasian Plate",
+                "Nazca Plate"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Television",
+            "question": "Which track by &quot;Massive Attack&quot; is used for the theme of &quot;House&quot;? ",
+            "correct_answer": "Teardrop",
+            "incorrect_answers": [
+                "Protection",
+                "Angel",
+                "Black Milk"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Video Games",
+            "question": "What is the name of the talking cat in Persona 5?",
+            "correct_answer": "Morgana",
+            "incorrect_answers": [
+                "Teddie",
+                "Marie",
+                "Ryuji"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Video Games",
+            "question": "In Divinity: Original Sin II, what is the name of the skeletal origin character?",
+            "correct_answer": "Fane",
+            "incorrect_answers": [
+                "Lohse",
+                "The Red Prince",
+                "There are no skeletal origin characters"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "History",
+            "question": "With which Greek philosopher would you associate the phrase, &quot;I know that I know nothing&quot;?",
+            "correct_answer": "Socrates",
+            "incorrect_answers": [
+                "Aristotle",
+                "Plato",
+                "Pythagoras"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "medium",
+            "category": "Geography",
+            "question": "Antarctica is the largest desert in the world.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "History",
+            "question": "Which one of these was not a beach landing site in the Invasion of Normandy?",
+            "correct_answer": "Silver",
+            "incorrect_answers": [
+                "Gold",
+                "Juno",
+                "Sword"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "Entertainment: Japanese Anime &amp; Manga",
+            "question": "In the &quot;Toaru Kagaku no Railgun&quot; anime,  espers can only reach a maximum of level 6 in their abilities.",
+            "correct_answer": "False",
+            "incorrect_answers": [
+                "True"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Video Games",
+            "question": "What is the name of a popular franchise that includes placing blocks down and surviving in an open world? ",
+            "correct_answer": "Minecraft",
+            "incorrect_answers": [
+                "Unturned",
+                "Roblox",
+                "Grand Theft Auto V"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Entertainment: Books",
+            "question": "In the Harry Potter universe, who does Draco Malfoy end up marrying?",
+            "correct_answer": "Astoria Greengrass",
+            "incorrect_answers": [
+                "Pansy Parkinson",
+                "Millicent Bulstrode",
+                "Hermione Granger"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "General Knowledge",
+            "question": "Computer manufacturer Compaq was acquired for $25 billion dollars in 2002 by which company?",
+            "correct_answer": "Hewlett-Packard",
+            "incorrect_answers": [
+                "Toshiba",
+                "Asus",
+                "Dell"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Sports",
+            "question": "Where was the Games of the XXII Olympiad held?",
+            "correct_answer": "Moscow",
+            "incorrect_answers": [
+                "Barcelona",
+                "Tokyo",
+                "Los Angeles"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Celebrities",
+            "question": "Paul McCartney has always used his middle name. What is his real first name? ",
+            "correct_answer": "James",
+            "incorrect_answers": [
+                "John",
+                "Jack",
+                "Justin"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Entertainment: Television",
+            "question": "What was the UK &quot;Who Wants to be a Millionaire?&quot; cheating scandal known as?",
+            "correct_answer": "Major Fraud",
+            "incorrect_answers": [
+                "Ingram Cheater",
+                "Coughing Major",
+                "Millionaire Crime"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "History",
+            "question": "In what year did Neil Armstrong and Buzz Aldrin land on the moon?",
+            "correct_answer": "1969",
+            "incorrect_answers": [
+                "1965",
+                "1966",
+                "1973"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Film",
+            "question": "Which movie contains the quote, &quot;Say hello to my little friend!&quot;?",
+            "correct_answer": "Scarface",
+            "incorrect_answers": [
+                "Reservoir Dogs",
+                "Heat",
+                "Goodfellas"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "General Knowledge",
+            "question": "What is the romanized Korean word for &quot;heart&quot;?",
+            "correct_answer": "Simjang",
+            "incorrect_answers": [
+                "Aejeong",
+                "Jeongsin",
+                "Segseu"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Entertainment: Board Games",
+            "question": "In Magic: The Gathering, which of the following was the first publicly released foil card?",
+            "correct_answer": "Lightning Dragon",
+            "incorrect_answers": [
+                "Revenant",
+                "Beast of Burden",
+                "Dirtcowl Wurm"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "History",
+            "question": "Which American civilization is the source of the belief that the world would end or drastically change on December 21st, 2012?",
+            "correct_answer": "The Mayans",
+            "incorrect_answers": [
+                "The Incas",
+                "The Aztecs",
+                "The Navajos"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Celebrities",
+            "question": "What was the name of Marilyn Monroe&#039;s first husband?",
+            "correct_answer": "James Dougherty",
+            "incorrect_answers": [
+                "Joe Dimaggio",
+                "Kirk Douglas",
+                "Arthur Miller"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Entertainment: Video Games",
+            "question": "How many partners can you obtain in Paper Mario: The Thousand-Year Door?",
+            "correct_answer": "7",
+            "incorrect_answers": [
+                "6",
+                "9",
+                "10"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "History",
+            "question": "How many years did the Hundred Years&#039; War last?",
+            "correct_answer": "116",
+            "incorrect_answers": [
+                "100",
+                "90",
+                "101"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "History",
+            "question": "Which of the following countries was the first to send an object into space?",
+            "correct_answer": "Germany",
+            "incorrect_answers": [
+                "USA",
+                "Russia",
+                "China"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Geography",
+            "question": "The prefix Sino- (As in Sino-American) is used to refer to what nationality?",
+            "correct_answer": "Chinese",
+            "incorrect_answers": [
+                "Japanese",
+                "Russian",
+                "Indian"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Video Games",
+            "question": "Which was the first video game to be produced by development company Rare?",
+            "correct_answer": "Slalom",
+            "incorrect_answers": [
+                "R.C. Pro-Am",
+                "Donkey Kong Country",
+                "Battletoads"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Video Games",
+            "question": "What is the name of the largest planet in Kerbal Space Program?",
+            "correct_answer": "Jool",
+            "incorrect_answers": [
+                "Eeloo",
+                "Kerbol",
+                "Minmus"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Japanese Anime &amp; Manga",
+            "question": "What is the last name of Edward and Alphonse in the Fullmetal Alchemist series.",
+            "correct_answer": "Elric",
+            "incorrect_answers": [
+                "Ellis",
+                "Eliek",
+                "Elwood"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Video Games",
+            "question": "Which Overwatch character says the line &quot;Heroes never die!&quot;?",
+            "correct_answer": "Mercy",
+            "incorrect_answers": [
+                "Reaper",
+                "Sonic",
+                "Ana"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Geography",
+            "question": "What country is the second largest in the world by area?",
+            "correct_answer": "Canada",
+            "incorrect_answers": [
+                "Russia",
+                "China",
+                "United States of America"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "General Knowledge",
+            "question": "In a 1994 CBS interview, Microsoft co-founder Bill Gates performed what unusual trick on camera?",
+            "correct_answer": "Jumping over an office chair",
+            "incorrect_answers": [
+                "Jumping backwards over a desk",
+                "Standing on his head",
+                "Typing on a keyboard during a handstand"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Cartoon &amp; Animations",
+            "question": "Who created the Cartoon Network series &quot;Regular Show&quot;?",
+            "correct_answer": "J. G. Quintel",
+            "incorrect_answers": [
+                "Ben Bocquelet",
+                "Pendleton Ward",
+                "Rebecca Sugar"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "General Knowledge",
+            "question": "Virtual reality company Oculus VR lost which of it&#039;s co-founders in a freak car accident in 2013?",
+            "correct_answer": "Andrew Scott Reisse",
+            "incorrect_answers": [
+                "Nate Mitchell",
+                "Jack McCauley",
+                "Palmer Luckey"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Music",
+            "question": "Which of these is not an Ed Sheeran album?",
+            "correct_answer": "-",
+            "incorrect_answers": [
+                "+",
+                "X",
+                "&divide;"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "History",
+            "question": "When did the Crisis of the Third Century begin?",
+            "correct_answer": "235 AD",
+            "incorrect_answers": [
+                "235 BC",
+                "242 AD",
+                "210 AD"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Film",
+            "question": "What is the name of the island that &quot;Jurassic Park&quot; is built on?",
+            "correct_answer": "Isla Nublar",
+            "incorrect_answers": [
+                "Isla Sorna",
+                "Isla Muerta",
+                "Isla Pena"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Board Games",
+            "question": "How many points is the Z tile worth in Scrabble?",
+            "correct_answer": "10",
+            "incorrect_answers": [
+                "8",
+                "5",
+                "6"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Video Games",
+            "question": "What year was the game Dishonored released?",
+            "correct_answer": "2012",
+            "incorrect_answers": [
+                "2011",
+                "2008",
+                "2013"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "Geography",
+            "question": "There are no deserts in Europe.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Film",
+            "question": "In the 2014 film &quot;Birdman&quot;, what is the primary instrument in the score?",
+            "correct_answer": "Drums",
+            "incorrect_answers": [
+                "Saxophone",
+                "Violin",
+                "Actual Live Birds Singing"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Science &amp; Nature",
+            "question": "Which one of these is scientific term for &quot;Brain Freeze&quot;?",
+            "correct_answer": "Sphenopalatine Ganglioneuralgia",
+            "incorrect_answers": [
+                "Hyacinthoides Italica",
+                "Amaranthus Retroflexus",
+                "Amblyomma Americanum"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science: Gadgets",
+            "question": "In what year was the Oculus Rift revealed to the public through a Kickstarter campaign?",
+            "correct_answer": "2012",
+            "incorrect_answers": [
+                "2010",
+                "2011",
+                "2013"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "General Knowledge",
+            "question": "Frank Lloyd Wright was the architect behind what famous building?",
+            "correct_answer": "The Guggenheim",
+            "incorrect_answers": [
+                "Villa Savoye",
+                "Sydney Opera House",
+                "The Space Needle"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "Entertainment: Film",
+            "question": "The 2010 film &quot;The Social Network&quot; is a biographical drama film about MySpace founder Tom Anderson.",
+            "correct_answer": "False",
+            "incorrect_answers": [
+                "True"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "History",
+            "question": "When was the &quot;Siege of Leningrad&quot; lifted during World War II?",
+            "correct_answer": "January 1944",
+            "incorrect_answers": [
+                "September 1943",
+                "November 1943",
+                "March 1944"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Sports",
+            "question": "Which team won 2014 FIFA World Cup in Brazil?",
+            "correct_answer": "Germany",
+            "incorrect_answers": [
+                "Argentina",
+                "Brazil",
+                "Netherlands"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Video Games",
+            "question": "In the Portal series, Aperture Science was founded under what name in the early 1940s?",
+            "correct_answer": "Aperture Fixtures",
+            "incorrect_answers": [
+                "Aperture Lavatories",
+                "Aperture Science Innovators",
+                "Wheatley Laboratories"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Entertainment: Video Games",
+            "question": "How many playable characters are there in Super Smash Bros. for Nintendo 3DS and Wii U?",
+            "correct_answer": "58",
+            "incorrect_answers": [
+                "48",
+                "51",
+                "55"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Video Games",
+            "question": "In the game Pok&eacute;mon Conquest, which warlord is able to bond with Zekrom and a shiny Rayquazza?",
+            "correct_answer": "Nobunaga",
+            "incorrect_answers": [
+                "The Player",
+                "Oichi",
+                "Hideyoshi"
+            ]
+        }
+    ]
+}

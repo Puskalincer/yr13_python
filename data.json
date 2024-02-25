@@ -1,1 +1,141 @@
-{"users": [["John", 0, 0, 0, "none", "none"], ["Jared", 0, 0, 0, "none", "none"], ["bob", 0, 0, 0, "none", "none"]], "token": "2fe1d3d437ef71c589fbc6dd6ea98dca45abe58c4f33708114d4528c058329a6", "catagories": [[[9, "General Knowledge"], [17, "Science & Nature"], [20, "Mythology"], [21, "Sports"], [22, "Geography"], [23, "History"], [24, "Politics"], [25, "Art"], [26, "Celebrities"], [27, "Animals"], [28, "Vehicles"]], [[10, "Entertainment: Books"], [11, "Entertainment: Film"], [12, "Entertainment: Music"], [13, "Entertainment: Musicals & Theatres"], [14, "Entertainment: Television"], [15, "Entertainment: Video Games"], [16, "Entertainment: Board Games"], [29, "Entertainment: Comics"], [31, "Entertainment: Japanese Anime & Manga"], [32, "Entertainment: Cartoon & Animations"]], [[18, "Science: Computers"], [19, "Science: Mathematics"], [30, "Science: Gadgets"]]]}
+{
+    "users": [
+        [
+            "John",
+            0,
+            0,
+            0,
+            "none",
+            "none"
+        ],
+        [
+            "Jared",
+            0,
+            0,
+            0,
+            "none",
+            "none"
+        ],
+        [
+            "bob",
+            0,
+            0,
+            0,
+            "none",
+            "none"
+        ],
+        [
+            "Denis",
+            0,
+            0,
+            0,
+            "none",
+            "none"
+        ]
+    ],
+    "token": "2fe1d3d437ef71c589fbc6dd6ea98dca45abe58c4f33708114d4528c058329a6",
+    "catagories": [
+        [
+            [
+                9,
+                "General Knowledge"
+            ],
+            [
+                17,
+                "Science & Nature"
+            ],
+            [
+                20,
+                "Mythology"
+            ],
+            [
+                21,
+                "Sports"
+            ],
+            [
+                22,
+                "Geography"
+            ],
+            [
+                23,
+                "History"
+            ],
+            [
+                24,
+                "Politics"
+            ],
+            [
+                25,
+                "Art"
+            ],
+            [
+                26,
+                "Celebrities"
+            ],
+            [
+                27,
+                "Animals"
+            ],
+            [
+                28,
+                "Vehicles"
+            ]
+        ],
+        [
+            [
+                10,
+                "Entertainment: Books"
+            ],
+            [
+                11,
+                "Entertainment: Film"
+            ],
+            [
+                12,
+                "Entertainment: Music"
+            ],
+            [
+                13,
+                "Entertainment: Musicals & Theatres"
+            ],
+            [
+                14,
+                "Entertainment: Television"
+            ],
+            [
+                15,
+                "Entertainment: Video Games"
+            ],
+            [
+                16,
+                "Entertainment: Board Games"
+            ],
+            [
+                29,
+                "Entertainment: Comics"
+            ],
+            [
+                31,
+                "Entertainment: Japanese Anime & Manga"
+            ],
+            [
+                32,
+                "Entertainment: Cartoon & Animations"
+            ]
+        ],
+        [
+            [
+                18,
+                "Science: Computers"
+            ],
+            [
+                19,
+                "Science: Mathematics"
+            ],
+            [
+                30,
+                "Science: Gadgets"
+            ]
+        ]
+    ]
+}

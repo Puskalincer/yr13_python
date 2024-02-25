@@ -1,7 +1,21 @@
 from nicegui import ui
+import asyncio
 
+dark = ui.dark_mode()
+#dark.enable()
 
+async def compute():
+    n = ui.notification(timeout=None)
+    for i in range(10):
+        n.message = f'Computing {i/10:.0%}'
+        n.spinner = True
+        await asyncio.sleep(0.2)
+    n.message = 'Done!'
+    n.spinner = False
+    await asyncio.sleep(1)
+    n.dismiss()
 
+ui.button('Compute', on_click=compute)
 
 def on_click1():
     print(catagory_menu.value)
@@ -12,29 +26,11 @@ def on_click1():
     if catagory_menu.value == 3:
         select.set_options(['Science: Computers', 'Science: Mathematics', 'Science: Gadgets'], value='Science: Computers')
 
+with ui.row().style('display:flex;align-items: center;'):
+    catagory_menu = ui.toggle({1: 'Main', 2 :'Entertainment' , 3: 'Science'}, value=1)
+    catagory_menu.on("click", on_click1)
 
-catagory_menu = ui.toggle({1: 'Main', 2 :'Entertainment' , 3: 'Science'}, value=1)
-catagory_menu.on("click", on_click1)
-
-select = ui.select(['General Knowledge', 'Science & Nature', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Vehicles'], value='General Knowledge')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    select = ui.select(['General Knowledge', 'Science & Nature', 'Mythology', 'Sports', 'Geography', 'History', 'Politics', 'Art', 'Celebrities', 'Animals', 'Vehicles'], value='General Knowledge')
 
 toggle2 = ui.toggle({1: 'all', 2 :'easy' , 3: 'medium', 4: 'hard'},value=1)
 toggle4 = ui.toggle({1: 'all', 2 :'mulitple choice' , 3: 'true/false'},value=1)

@@ -94,7 +94,7 @@ class SaveFile:
             data["catagories"] = catagories
 
         with open('data.json', 'w') as outfile:
-            json.dump(data, outfile)
+            json.dump(data, outfile, indent=4)
 
 class user_manager:    
     def display_all_user_data(self,users):
@@ -271,19 +271,24 @@ def base_custom_input(array,array_name,misc_option=''):
 def advanced_game():
     misc.clear()
     sub_cat = base_custom_input(a_g_m[0][1],a_g_m[0][0],"num")
-    #print(main_catagory)
-    #input()
     temp_cat_select = sub_cat + 1
     misc.clear()
     request_catagory = base_custom_input(misc.array_untangler(catagories[sub_cat],1),"- Catagoey selection:",temp_cat_select)
+
+    #Get limits impliment thing.
+    print(api_com.catagory_limit(request_catagory))
+    input()
+
     request_diffuculty = base_custom_input(a_g_m[1][1],a_g_m[1][0])
     request_type = base_custom_input(a_g_m[2][1],a_g_m[2][0])
     misc.cd()
     request_amount = input_manager("How many questions:",1,"-- ",1)
     thing_code , questions =  api_com.request_questions(request_amount,str(request_catagory),request_diffuculty,request_type)
     #Temp manuel check response code, make automatic later
-    print(api_com.response_codes[thing_code])
-    input()
+    if thing_code != 0:
+        print("failed")
+        input()
+        main_menu()
     #
     quiz_prepare(request_amount,questions,offline,request_amount)
 
@@ -323,9 +328,38 @@ if results != "o_t_s":
 else:
     time.sleep(1)
 
-offline_questions = json.loads(open('questions.json', 'r').read())
+
+#Add counter in file, after certain amount of times read get new questions.
+    
+
+
+
+def offline_file_manager(counter='',questions=''):
+    with open('questions.json') as infile:
+        data = json.load(infile)
+    if counter:
+        data["counter"] = counter
+    if questions:
+        data["questions"] = questions
+    with open('questions.json', 'w') as outfile:
+        json.dump(data, outfile , indent=4)
+
+offline_file = json.loads(open('questions.json', 'r').read())
+print(offline_file["counter"])
+
+
+if offline_file["counter"] >= 6:
+    #get new questions
+    pass
+else:
+    offline_file["counter"] += 1
+    offline_file_manager(offline_file["counter"])
+
+
+
+
+
+offline_questions = offline_file["questions"]
 
 #You need this.
-#main_menu()
-
-print(misc.array_untangler(catagories[2],1))
+main_menu()

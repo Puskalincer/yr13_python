@@ -43,3 +43,8 @@ def reset_token(token):
 def question_reroll():
     thing_code , questions =  request_questions(50)
     open('questions.json', 'w').write(json.dumps(questions , ensure_ascii=False, indent=4 ))
+
+def catagory_limit(catagory_id):
+    res = requests.get('https://opentdb.com/api_count.php?category='+ str(catagory_id))
+    response = json.loads(res.text)
+    return response["category_question_count"]
