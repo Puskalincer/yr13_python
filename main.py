@@ -165,23 +165,31 @@ SAVEOBJECT = SaveFile()
 USER_MANAGER = user_manager()
 
 #Not done?
-def input_manager(item_list,skip_func=1,input_text_override="-- ",any_num=0):
+def input_manager(item_list,skip_func=1,input_text_override="-- ",any_num=2,max_override=0,bruhz=0):
     chosen_item = None
     while True:
         try:
             number = input(input_text_override)
-            if number  == '' and skip_func == 1:
-                break
-            elif number  == '' and skip_func == 0:
-                print("\n Required \n")
+            if number  == '':
+                if skip_func == 1:
+                    break
+                else:
+                    print("\n Required \n")
             elif number:
                 number=int(number)
                 if number > 0:
-                    if any_num ==0:
-                        number -=1 
+                    number -=1 
+                    if any_num == 0:
                         chosen_item = (item_list[number])
-                    return number
-                    break
+                    if any_num == 1:
+                        if number >= max_override:
+                            print("\n Number to big, limit "+str(max_override)+"\n")
+                        else:
+                            if bruhz == 1:
+                                number+=1
+                            return number
+                    if any_num == 2:
+                        return number
                 else:
                     print("\n Input number above 0.\n")
         except:
@@ -223,6 +231,8 @@ def main_question_loop(how_many_questions,questions,active_users):
         for beans, value in enumerate(active_users):
             print(active_users[beans][0] + " \t " + str(active_users[beans][1]) + " \t \t " + str(active_users[beans][2]))
         input("")
+    main_menu()
+
 def quiz_prepare(quastion_amount,questions,question_mode,change_range=50):
     current_question = []
     if question_mode == True:
@@ -242,7 +252,8 @@ def active_users_select():
     misc.clear()
     misc.list_formatter(misc.array_untangler(users),"Users")
     print("How many players?")
-    x = input_manager(misc.array_untangler(users),1,"-- ",1)
+    x = input_manager(misc.array_untangler(users))
+    x+=1
     if x == None:
         game_menu()
     misc.clear()
@@ -276,13 +287,22 @@ def advanced_game():
     request_catagory = base_custom_input(misc.array_untangler(catagories[sub_cat],1),"- Catagoey selection:",temp_cat_select)
 
     #Get limits impliment thing.
-    print(api_com.catagory_limit(request_catagory))
-    input()
+    beunos = api_com.catagory_limit(request_catagory)
+    #print(api_com.catagory_limit(request_catagory))
 
+    temp_array_69 = []
+    temp_array_69.append(beunos['total_easy_question_count'])
+    temp_array_69.append(beunos['total_medium_question_count'])
+    temp_array_69.append(beunos['total_hard_question_count'])
+    
     request_diffuculty = base_custom_input(a_g_m[1][1],a_g_m[1][0])
     request_type = base_custom_input(a_g_m[2][1],a_g_m[2][0])
     misc.cd()
-    request_amount = input_manager("How many questions:",1,"-- ",1)
+
+    print("Max "+str(temp_array_69[a_g_m[1][1].index(request_diffuculty)]))
+    request_amount = input_manager("How many questions:",1,"-- ",1,temp_array_69[a_g_m[1][1].index(request_diffuculty)],bruhz=1)
+
+
     thing_code , questions =  api_com.request_questions(request_amount,str(request_catagory),request_diffuculty,request_type)
     #Temp manuel check response code, make automatic later
     if thing_code != 0:
@@ -328,16 +348,10 @@ if results != "o_t_s":
 else:
     time.sleep(1)
 
-
-#Add counter in file, after certain amount of times read get new questions.
-    
-
-
-
 def offline_file_manager(counter='',questions=''):
     with open('questions.json') as infile:
         data = json.load(infile)
-    if counter:
+    if counter >= 0:
         data["counter"] = counter
     if questions:
         data["questions"] = questions
@@ -345,21 +359,16 @@ def offline_file_manager(counter='',questions=''):
         json.dump(data, outfile , indent=4)
 
 offline_file = json.loads(open('questions.json', 'r').read())
-print(offline_file["counter"])
 
-
-if offline_file["counter"] >= 6:
-    #get new questions
-    pass
+if offline_file["counter"] >= 20:
+    offline_questions = api_com.request_questions(50)[1]
+    offline_file_manager(0,offline_questions)
 else:
     offline_file["counter"] += 1
     offline_file_manager(offline_file["counter"])
+    offline_questions = offline_file["questions"]
 
 
-
-
-
-offline_questions = offline_file["questions"]
 
 #You need this.
 main_menu()

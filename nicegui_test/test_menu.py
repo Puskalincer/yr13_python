@@ -4,7 +4,7 @@ import asyncio
 
 
 dark = ui.dark_mode()
-dark.enable()
+#dark.enable()
 
 #ui.spinner('tail',size='lg')
 
