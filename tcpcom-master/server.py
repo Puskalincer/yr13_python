@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import socket
 '''
 Example usage of the TCPServer class from the TCPCOM library
 '''
@@ -7,6 +7,7 @@ Example usage of the TCPServer class from the TCPCOM library
 from tcpcom import TCPServer
 
 # connection configuration settings
+#tcp_ip = socket.gethostbyname(socket.gethostname())
 tcp_ip = "localhost"
 tcp_port = 5005
 tcp_reply = "Server message"
@@ -35,3 +36,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    print(tcp_ip)
