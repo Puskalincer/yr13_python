@@ -1,12 +1,10 @@
 import api_com
 import misc
-
+import os
 import json 
 import time
 import random
-import os
-import html
-import sys
+from datetime import datetime
 
 a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard","any"]],["- Type selection:",["multiple","boolean","either"]]]
 request_token = ""
@@ -175,6 +173,8 @@ def input_manager(item_list,skip_func=1,input_text_override="-- ",any_num=2,max_
                     break
                 else:
                     print("\n Required \n")
+            elif number == "save":
+                return "save"
             elif number:
                 number=int(number)
                 if number > 0:
@@ -205,6 +205,24 @@ def format_display_question(questions):
 def question_request(amount,change_range=50):
     return random.sample(range(change_range), int(amount))
 
+
+def generate_save_file(filename,active_users,questions,current_loop):
+    x = {
+        "active_users": active_users,
+        "questions": questions,
+        "catagories" : current_loop,
+        "time" : datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+    }
+    save_file_directory = './saves/'
+    #filename = "save"+str(id)+".json"
+    filename = filename + ".json"
+    file_path = os.path.join(save_file_directory, filename)
+    if not os.path.isdir(save_file_directory):
+        os.mkdir(save_file_directory)
+    f = open(file_path, "w")
+    f.write(json.dumps(x))
+    f.close()
+
 #Fix later
 def main_question_loop(how_many_questions,questions,active_users):
     x=0
@@ -216,9 +234,15 @@ def main_question_loop(how_many_questions,questions,active_users):
         while y < len(active_users):
             misc.clear()
             print(active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions))
-            misc.list_formatter(html.unescape(thing1),html.unescape(thing2))
-            user_choice = input_manager(thing1,0)
-            if int(user_choice) == thing1.index(question["correct_answer"]):
+            misc.list_formatter(thing1,thing2)
+            user_choice = input_manager(thing1)
+            if user_choice == "save":
+                misc.clear()
+                print("Name for save")
+                name = input("-- ")
+                generate_save_file(name,active_users,questions,[x,y])
+                main_menu()
+            elif int(user_choice) == thing1.index(question["correct_answer"]):
                 print("\nCorrect")
                 active_users[y][1] += 1
             else:
@@ -231,8 +255,10 @@ def main_question_loop(how_many_questions,questions,active_users):
         for beans, value in enumerate(active_users):
             print(active_users[beans][0] + " \t " + str(active_users[beans][1]) + " \t \t " + str(active_users[beans][2]))
         input("")
-    main_menu()
 
+
+    main_menu()
+ 
 def quiz_prepare(quastion_amount,questions,question_mode,change_range=50):
     current_question = []
     if question_mode == True:
@@ -294,6 +320,9 @@ def advanced_game():
     temp_array_69.append(beunos['total_easy_question_count'])
     temp_array_69.append(beunos['total_medium_question_count'])
     temp_array_69.append(beunos['total_hard_question_count'])
+
+
+    temp_array_69.append(beunos['total_easy_question_count']+beunos['total_medium_question_count']+beunos['total_hard_question_count'])
     
     request_diffuculty = base_custom_input(a_g_m[1][1],a_g_m[1][0])
     request_type = base_custom_input(a_g_m[2][1],a_g_m[2][0])
@@ -359,7 +388,7 @@ def offline_file_manager(counter='',questions=''):
         json.dump(data, outfile , indent=4)
 
 offline_file = json.loads(open('questions.json', 'r').read())
-
+'''
 if offline_file["counter"] >= 20:
     offline_questions = api_com.request_questions(50)[1]
     offline_file_manager(0,offline_questions)
@@ -367,8 +396,11 @@ else:
     offline_file["counter"] += 1
     offline_file_manager(offline_file["counter"])
     offline_questions = offline_file["questions"]
-
-
+'''
+offline_questions = offline_file["questions"]
 
 #You need this.
 main_menu()
+    
+
+#generate_save_file(0,[],[],[0,0])

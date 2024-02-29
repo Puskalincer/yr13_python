@@ -1,5 +1,6 @@
 import os
 import socket
+import html
 
 #Utilitys -Final
 def clear():
@@ -30,9 +31,9 @@ def list_formatter(arrayname,array_name_formatted,instructions=""):
         divider()
         print(instructions)
     divider()
-    print(array_name_formatted)
+    print(html.unescape(array_name_formatted))
     for idx , array_item in enumerate(arrayname , start=1):
-        print(str(idx) + " - "+ array_item)
+        print(html.unescape(str(idx) + " - "+ array_item))
     divider()
 
 def array_untangler(array,item=0):
