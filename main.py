@@ -5,6 +5,7 @@ import json
 import time
 import random
 from datetime import datetime
+import glob
 
 a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard","any"]],["- Type selection:",["multiple","boolean","either"]]]
 request_token = ""
@@ -171,6 +172,14 @@ def offline_file_manager(counter='',questions=''):
         data["questions"] = questions
     with open('questions.json', 'w') as outfile:
         json.dump(data, outfile , indent=4)
+
+#Play saved games make a menu that displays them.
+def play_save(name):
+    f = open("saves/"+name, "r")
+    thing = json.loads(f.read())
+    f.close()
+    main_question_loop(thing["how_many_questions"], thing["questions"],thing["active_users"],thing["current_loop"][0],thing["current_loop"][1])
+
 
 #Make better
 def input_manager(item_list,skip_func=1,input_text_override="-- ",any_num=2,max_override=0,bruhz=0):
@@ -354,12 +363,42 @@ def advanced_game():
 #Could do with an exit button.
 def main_menu():
     misc.clear()
-    misc.list_formatter(["Play","User managment"],"Menu:")
+    misc.list_formatter(["Play","User managment","Continue game"],"Menu:")
     user_choice = input_manager(["Play","User managment"],0)
     if user_choice == 0:
         game_menu()
     elif user_choice == 1:
         USER_MANAGER.view_user_data()
+    elif user_choice == 2:
+        misc.clear()
+
+        arr = os.listdir('saves')
+        misc.list_formatter(arr,"Saves:")
+        print("Options:")
+        print("1 - Continue game")
+        print("2 - Delete game")
+        misc.divider()
+        user_choice = input_manager(["Continue game","Delete game"])
+        if user_choice == 0:
+            inpoot = int(input("-- "))
+            inpoot-=1
+            play_save(arr[inpoot])
+        elif user_choice == 1:
+            inpoot = int(input("-- "))
+            inpoot-=1
+            os.remove("saves/"+arr[inpoot])
+            input("Save deleted")
+            main_menu()
+        elif user_choice == None:
+            main_menu()
+
+
+
+
+
+
+
+
 
 #Options not final , menu is.
 def game_menu():
@@ -400,18 +439,7 @@ else:
 offline_questions = offline_file["questions"]
 
 #You need this.
-#main_menu()
+main_menu()
     
 
 #generate_save_file(0,[],[],[0,0])
-
-
-#Play saved games make a menu that displays them.
-def play_save(name):
-    f = open("saves/"+name+".json", "r")
-    thing = json.loads(f.read())
-    f.close()
-    main_question_loop(thing["how_many_questions"], thing["questions"],thing["active_users"],thing["current_loop"][0],thing["current_loop"][1])
-
-
-play_save("brudftgh")
