@@ -162,7 +162,17 @@ class user_manager:
 SAVEOBJECT = SaveFile()
 USER_MANAGER = user_manager()
 
-#Not done?
+def offline_file_manager(counter='',questions=''):
+    with open('questions.json') as infile:
+        data = json.load(infile)
+    if counter >= 0:
+        data["counter"] = counter
+    if questions:
+        data["questions"] = questions
+    with open('questions.json', 'w') as outfile:
+        json.dump(data, outfile , indent=4)
+
+#Make better
 def input_manager(item_list,skip_func=1,input_text_override="-- ",any_num=2,max_override=0,bruhz=0):
     chosen_item = None
     while True:
@@ -205,12 +215,12 @@ def format_display_question(questions):
 def question_request(amount,change_range=50):
     return random.sample(range(change_range), int(amount))
 
-
-def generate_save_file(filename,active_users,questions,current_loop):
+def generate_save_file(filename,active_users,questions,how_many_questions,current_loop):
     x = {
         "active_users": active_users,
         "questions": questions,
-        "catagories" : current_loop,
+        "current_loop" : current_loop,
+        "how_many_questions" : how_many_questions,
         "time" : datetime.today().strftime('%Y-%m-%d %H:%M:%S')
     }
     save_file_directory = './saves/'
@@ -224,24 +234,22 @@ def generate_save_file(filename,active_users,questions,current_loop):
     f.close()
 
 #Fix later
-def main_question_loop(how_many_questions,questions,active_users):
-    x=0
+def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
     while x < int(how_many_questions):
         question = questions[x]
         thing1 , thing2 = format_display_question(question)
-        x=x+1
-        y=0
         while y < len(active_users):
             misc.clear()
             print(active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions))
             misc.list_formatter(thing1,thing2)
-            user_choice = input_manager(thing1)
+            user_choice = input_manager(thing1,0)
             if user_choice == "save":
                 misc.clear()
                 print("Name for save")
                 name = input("-- ")
-                generate_save_file(name,active_users,questions,[x,y])
+                generate_save_file(name,active_users,questions,how_many_questions,[x,y])
                 main_menu()
+                return
             elif int(user_choice) == thing1.index(question["correct_answer"]):
                 print("\nCorrect")
                 active_users[y][1] += 1
@@ -250,6 +258,8 @@ def main_question_loop(how_many_questions,questions,active_users):
                 active_users[y][2] += 1
             input("")
             y=y+1
+        x=x+1
+        y=0
         misc.clear()
         print("User \t Correct \t Incorrect\n")
         for beans, value in enumerate(active_users):
@@ -377,16 +387,6 @@ if results != "o_t_s":
 else:
     time.sleep(1)
 
-def offline_file_manager(counter='',questions=''):
-    with open('questions.json') as infile:
-        data = json.load(infile)
-    if counter >= 0:
-        data["counter"] = counter
-    if questions:
-        data["questions"] = questions
-    with open('questions.json', 'w') as outfile:
-        json.dump(data, outfile , indent=4)
-
 offline_file = json.loads(open('questions.json', 'r').read())
 '''
 if offline_file["counter"] >= 20:
@@ -400,7 +400,18 @@ else:
 offline_questions = offline_file["questions"]
 
 #You need this.
-main_menu()
+#main_menu()
     
 
 #generate_save_file(0,[],[],[0,0])
+
+
+#Play saved games make a menu that displays them.
+def play_save(name):
+    f = open("saves/"+name+".json", "r")
+    thing = json.loads(f.read())
+    f.close()
+    main_question_loop(thing["how_many_questions"], thing["questions"],thing["active_users"],thing["current_loop"][0],thing["current_loop"][1])
+
+
+play_save("brudftgh")
