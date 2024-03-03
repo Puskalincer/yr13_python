@@ -5,7 +5,6 @@ import json
 import time
 import random
 from datetime import datetime
-import glob
 
 a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard","any"]],["- Type selection:",["multiple","boolean","either"]]]
 request_token = ""
@@ -114,13 +113,11 @@ class user_manager:
         elif user_choice == 2:
             self.change_user_pin()
         elif user_choice == None:
-            main_menu()
-            
+            main_menu() 
     def new_user(self):
         user = input("user name : ")
         users.append([user , 0, 0, 0, "none", "none" ])
         self.view_user_data()
-
     def delete_user(self):
         misc.clear()
         misc.list_formatter(misc.array_untangler(users),"Delete pin")
@@ -148,7 +145,6 @@ class user_manager:
             self.view_user_data()
         elif beanz == None:
             self.view_user_data()
-
     def change_user_pin(self):
         misc.clear()
         misc.list_formatter(misc.array_untangler(users),"Change pin")
@@ -192,14 +188,13 @@ def input_manager(item_list,skip_func=1,input_text_override="-- ",any_num=2,max_
                     break
                 else:
                     print("\n Required \n")
-            elif number == "save":
-                return "save"
             elif number:
                 number=int(number)
                 if number > 0:
                     number -=1 
                     if any_num == 0:
                         chosen_item = (item_list[number])
+                        return number
                     if any_num == 1:
                         if number >= max_override:
                             print("\n Number to big, limit "+str(max_override)+"\n")
@@ -242,6 +237,37 @@ def generate_save_file(filename,active_users,questions,how_many_questions,curren
     f.write(json.dumps(x))
     f.close()
 
+def input_manager2(max_override=0,skip_func=1,input_text_override="-- ",any_num=1,bruhz=0):
+    while True:
+        try:
+            number = input(input_text_override)
+            if number  == '':
+                if skip_func == 1:
+                    break
+                else:
+                    print("\n Required \n")
+            elif number == 'save':
+                return "save"
+            elif number == 'menu':
+                return "menu"
+            elif number:
+                number=int(number)
+                if number > 0:
+                    number -=1 
+                    if any_num == 1:
+                        if number >= max_override:
+                            print("\n Number to big, limit "+str(max_override)+"\n")
+                        else:
+                            if bruhz == 1:
+                                number+=1
+                            return number
+                    if any_num == 2:
+                        return number
+                else:
+                    print("\n Input number above 0.\n")
+        except:
+            print("\n Enter valid Number corresponding to choices displayed.\n")
+
 #Fix later
 def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
     while x < int(how_many_questions):
@@ -251,12 +277,15 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
             misc.clear()
             print(active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions))
             misc.list_formatter(thing1,thing2)
-            user_choice = input_manager(thing1,0)
+            user_choice = input_manager2(4,0)
             if user_choice == "save":
                 misc.clear()
                 print("Name for save")
                 name = input("-- ")
                 generate_save_file(name,active_users,questions,how_many_questions,[x,y])
+                main_menu()
+                return
+            elif user_choice == "menu":
                 main_menu()
                 return
             elif int(user_choice) == thing1.index(question["correct_answer"]):
@@ -333,13 +362,11 @@ def advanced_game():
 
     #Get limits impliment thing.
     beunos = api_com.catagory_limit(request_catagory)
-    #print(api_com.catagory_limit(request_catagory))
 
     temp_array_69 = []
     temp_array_69.append(beunos['total_easy_question_count'])
     temp_array_69.append(beunos['total_medium_question_count'])
     temp_array_69.append(beunos['total_hard_question_count'])
-
 
     temp_array_69.append(beunos['total_easy_question_count']+beunos['total_medium_question_count']+beunos['total_hard_question_count'])
     
@@ -360,6 +387,28 @@ def advanced_game():
     #
     quiz_prepare(request_amount,questions,offline,request_amount)
 
+def save_menu():
+    misc.clear()
+    arr = os.listdir('saves')
+    misc.list_formatter(arr,"Saves:")
+    print("Options:")
+    print("1 - Continue game")
+    print("2 - Delete game")
+    misc.divider()
+    user_choice = input_manager(["Continue game","Delete game"])
+    if user_choice == 0:
+        inpoot = int(input("-- "))
+        inpoot-=1
+        play_save(arr[inpoot])
+    elif user_choice == 1:
+        inpoot = int(input("-- "))
+        inpoot-=1
+        os.remove("saves/"+arr[inpoot])
+        input("Save deleted")
+        main_menu()
+    elif user_choice == None:
+        main_menu()
+
 #Could do with an exit button.
 def main_menu():
     misc.clear()
@@ -370,35 +419,7 @@ def main_menu():
     elif user_choice == 1:
         USER_MANAGER.view_user_data()
     elif user_choice == 2:
-        misc.clear()
-
-        arr = os.listdir('saves')
-        misc.list_formatter(arr,"Saves:")
-        print("Options:")
-        print("1 - Continue game")
-        print("2 - Delete game")
-        misc.divider()
-        user_choice = input_manager(["Continue game","Delete game"])
-        if user_choice == 0:
-            inpoot = int(input("-- "))
-            inpoot-=1
-            play_save(arr[inpoot])
-        elif user_choice == 1:
-            inpoot = int(input("-- "))
-            inpoot-=1
-            os.remove("saves/"+arr[inpoot])
-            input("Save deleted")
-            main_menu()
-        elif user_choice == None:
-            main_menu()
-
-
-
-
-
-
-
-
+        save_menu()
 
 #Options not final , menu is.
 def game_menu():
@@ -440,6 +461,3 @@ offline_questions = offline_file["questions"]
 
 #You need this.
 main_menu()
-    
-
-#generate_save_file(0,[],[],[0,0])
