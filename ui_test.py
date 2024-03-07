@@ -216,6 +216,7 @@ def main(page: ft.Page):
     
 
     page.add(   
+        #ft.ProgressBar(width=400, color="blue", bgcolor="#eeeeee"),
         question_counter,
         start_button,
         question_text,
