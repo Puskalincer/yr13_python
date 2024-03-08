@@ -30,7 +30,6 @@ test_results_format=[["John",{
         "catagory":"placeholder",
         "answered":"correct"
     }
-                       
 }],["John"]]
 
 class SaveFile:
