@@ -65,9 +65,9 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
         question = questions[x]
         thing1 , thing2 = format_display_question(question)
         while y < len(active_users):
-            misc.clear()
+            clear()
             print(active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions))
-            misc.list_formatter(thing1,thing2)
+            list_formatter(thing1,thing2)
             user_choice = input_manager2(4,0)
             if int(user_choice) == thing1.index(question["correct_answer"]):
                 print("\nCorrect")
@@ -79,7 +79,7 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
             y=y+1
         x=x+1
         y=0
-        misc.clear()
+        clear()
         print("User \t Correct \t Incorrect\n")
         for beans, value in enumerate(active_users):
             print(active_users[beans][0] + " \t " + str(active_users[beans][1]) + " \t \t " + str(active_users[beans][2]))
