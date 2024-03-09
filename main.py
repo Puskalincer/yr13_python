@@ -7,11 +7,16 @@ import requests
 import socket
 import html
 
+
+
+#Depricate list formatter for renderer.
+
+
+
 request_token = ""
 offline_questions = ""
 catagories = [[],[],[]]
 users = []
-offline = False
 online = True
 
 a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard","any"]],["- Type selection:",["multiple","boolean","either"]]]
@@ -49,9 +54,6 @@ def internet(host="8.8.8.8", port=53, timeout=3):
         return False
 
 def list_formatter(arrayname,array_name_formatted,instructions=""):
-    if instructions:
-        divider()
-        print(instructions)
     divider()
     print(html.unescape(array_name_formatted))
     for idx , array_item in enumerate(arrayname , start=1):
@@ -126,16 +128,9 @@ class SaveFile:
             json.dump(data, outfile, indent=4)
 
 class user_manager:    
-    def display_all_user_data(self,users):
-        clear()
-        divider()
-        print("User \t \t Correct \t Incorrect \t W/L Ratio \t Best category \n")
-        for beans, value in enumerate(users):
-            print(users[beans][0] + " \t \t " + str(users[beans][1]) + " \t \t " + str(users[beans][2]) + " \t \t " + str(users[beans][3]) + " \t \t " + str(users[beans][4]))
     def view_user_data(self):
         SAVEOBJECT.save_new(users)
-        self.display_all_user_data(users)
-        list_formatter(user_menu,"Options:")
+        renderer.option_list(["User \t \t Correct \t Incorrect \t W/L Ratio \t Best category \n",users,"Options:",user_menu],1)
         user_choice = input_manager(user_menu)
         if user_choice == 0:
             self.new_user()
@@ -150,8 +145,7 @@ class user_manager:
         users.append([user , 0, 0, 0, "none", "none" ])
         self.view_user_data()
     def delete_user(self):
-        clear()
-        list_formatter(array_untangler(users),"Delete pin")
+        renderer.list(["Delete pin",array_untangler(users)])
         beanz = input_manager(array_untangler(users))
         if beanz >= 0:
             temp_users=[]
@@ -178,7 +172,7 @@ class user_manager:
             self.view_user_data()
     def change_user_pin(self):
         clear()
-        list_formatter(array_untangler(users),"Change pin")
+        renderer.list(["Change pin",array_untangler(users)])
         beanz = input("-- ")
         beanz = int(beanz) - 1
         clear()
@@ -186,6 +180,33 @@ class user_manager:
         wanted_pin = input("-- ")
         users[beanz][5] = wanted_pin
         self.view_user_data()
+
+class renderer:
+    def list(items):
+        clear()
+        divider()
+        print(html.unescape(items[0]))
+        for idx , array_item in enumerate(items[1] , start=1):
+            print(html.unescape(str(idx) + " - "+ array_item))
+        divider()
+
+    def option_list(items,mode=0):
+        clear()
+        divider()
+        if mode == 0:
+            print(html.unescape(items[0]))
+            for idx , array_item in enumerate(items[1] , start=1):
+                print(html.unescape(str(idx) + " - "+ array_item))
+        elif mode == 1:
+            users = items[1]
+            print(items[0])
+            for beans, value in enumerate(users):
+                print(value[0] + " \t \t " + str(value[1]) + " \t \t " + str(value[2]) + " \t \t " + str(value[3]) + " \t \t " + str(value[4]))
+        divider()
+        print(items[2])
+        for idx , array_item in enumerate(items[3] , start=1):
+            print(html.unescape(str(idx) + " - "+ array_item))
+        divider()
 
 SAVEOBJECT = SaveFile()
 USER_MANAGER = user_manager()
@@ -337,11 +358,8 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
 
     main_menu()
  
-def quiz_prepare(quastion_amount,questions,question_mode,change_range=50):
+def quiz_prepare(quastion_amount,questions,change_range=50):
     current_question = []
-    if question_mode == True:
-        change_range = 50
-        questions = offline_questions
     requested_quesions = question_request(quastion_amount,int(change_range))
     for x , y in enumerate(requested_quesions):
         current_question.append(questions[requested_quesions[x]])
@@ -415,62 +433,83 @@ def advanced_game():
         input("return to menu -- ")
         main_menu()
     #
-    quiz_prepare(request_amount,questions,offline,request_amount)
+    quiz_prepare(request_amount,questions,request_amount)
+
+
+
+
+#everything down is done ish.
+def le_input(range,skip=True):
+    while True:
+        try:
+            user_input = input("-- ")
+            if user_input  == '':
+                if skip == True:
+                    return
+                else:
+                    print("No skipping")
+            else:
+                user_input = int(user_input)
+                if user_input > 0:
+                    if user_input <= range:
+                        user_input-=1
+                        return user_input
+                print("num not in range")
+        except:
+            print("pick number")
 
 def save_menu():
-    clear()
-    arr = os.listdir('saves')
-    list_formatter(arr,"Saves:")
-    print("Options:")
-    print("1 - Continue game")
-    print("2 - Delete game")
-    divider()
-    user_choice = input_manager(["Continue game","Delete game"])
+    saves = os.listdir('saves')
+    magic_array = ["Saves:",saves,"Options:",["Continue game","Delete game"]]
+    renderer.option_list(magic_array)
+    user_choice = le_input(len(magic_array[3]))
     if user_choice == 0:
-        inpoot = int(input("-- "))
-        inpoot-=1
-        play_save(arr[inpoot])
+        renderer.list(["Load Save:",saves])
+        beans = le_input(len(saves))
+        play_save(saves[beans])
     elif user_choice == 1:
-        inpoot = int(input("-- "))
-        inpoot-=1
-        os.remove("saves/"+arr[inpoot])
+        renderer.list(["Delete Save:",saves])
+        os.remove("saves/"+saves[le_input(len(saves))])
         input("Save deleted")
         main_menu()
     elif user_choice == None:
         main_menu()
 
-#Could do with an exit button.
 def main_menu():
-    clear()
-    print("online status -- " + str(online))
-    list_formatter(["Play","User managment","Continue game"],"Menu:")
-    user_choice = input_manager(["Play","User managment"],0)
-    if user_choice == 0:
-        game_menu()
-    elif user_choice == 1:
-        USER_MANAGER.view_user_data()
-    elif user_choice == 2:
-        save_menu()
-        
+    #print("online status -- " + str(online))
+    renderer.list(menu_options["data"])
+    user_choice = le_input(len(menu_options["data"][1]),skip=False)
+    menu_options[user_choice]()
+
 #Options not final , menu is.
 def game_menu():
-    clear()
-    if online == False:
-        game_menu_text = ["Quick","Basic","Advanced"]
-    else:
-        game_menu_text = ["Quick","Basic","Advanced","Custom"]
-    list_formatter(game_menu_text,"Game mode:")
-    user_choice = input_manager(game_menu_text)
-    if user_choice == 0:
-        quiz_prepare(5,offline_questions,offline)
-    elif user_choice == 1:
-        quiz_prepare(10,offline_questions,offline)
-    elif user_choice == 2:
-        quiz_prepare(20,offline_questions,offline)
+    renderer.list(game_menu_options["data"])
+    user_choice = le_input(len(game_menu_options["data"][1]))
+    if user_choice == None:
+        main_menu()
     elif user_choice == 3:
         advanced_game()
-    elif user_choice == None:
-        main_menu()
+    else:
+        game_menu_options[user_choice](game_menu_options["data_2"][user_choice],offline_questions)
+
+game_menu_options = {
+    "data":["Game mode:",["Quick","Basic","Advanced","Custom"]],
+    "data_2":[5,20,30],
+    0:quiz_prepare,
+    1:quiz_prepare,
+    2:quiz_prepare,
+    3:advanced_game
+}
+
+if online == False:
+    game_menu_options["data"] = ["Game mode:",["Quick","Basic","Advanced"]]
+
+menu_options = {
+    "data":["Menu:",["Play","User managment","Continue game"]],
+    0:game_menu,
+    1:USER_MANAGER.view_user_data,
+    2:save_menu
+}
 
 #Initialization things -Final
 clear()
@@ -481,25 +520,19 @@ if results != "o_t_s":
     catagories = results[2]
 else:
     time.sleep(1)
-a
+
 offline_file = json.loads(open('questions.json', 'r').read())
-'''
-if offline_file["counter"] >= 20:
-    offline_questions = api_request('https://opentdb.com/api.php?amount=50')[0]
-    offline_file_manager(0,offline_questions)
-else:
-    offline_file["counter"] += 1
-    offline_file_manager(offline_file["counter"])
-    offline_questions = offline_file["questions"]
-'''
+"""
+online = internet()
+if online == True:
+    if offline_file["counter"] >= 20:
+        offline_questions = api_request('https://opentdb.com/api.php?amount=50')["results"]
+        offline_file_manager(0,offline_questions)
+    else:
+        offline_file["counter"] += 1
+        offline_file_manager(offline_file["counter"])
+        offline_questions = offline_file["questions"]
+"""
 offline_questions = offline_file["questions"]
 
-
-
-online = internet()
-
-
-
-
-#You need this.
 main_menu()
