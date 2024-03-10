@@ -53,13 +53,6 @@ def internet(host="8.8.8.8", port=53, timeout=3):
         #print(ex)
         return False
 
-def list_formatter(arrayname,array_name_formatted,instructions=""):
-    divider()
-    print(html.unescape(array_name_formatted))
-    for idx , array_item in enumerate(arrayname , start=1):
-        print(html.unescape(str(idx) + " - "+ array_item))
-    divider()
-
 def array_untangler(array,item=0):
     temp_array = []
     for x in array:
@@ -130,7 +123,7 @@ class SaveFile:
 class user_manager:    
     def view_user_data(self):
         SAVEOBJECT.save_new(users)
-        renderer.option_list(["User \t \t Correct \t Incorrect \t W/L Ratio \t Best category \n",users,"Options:",user_menu],1)
+        renderer.option_list(["",users,"Options:",user_menu],1)
         user_choice = input_manager(user_menu)
         if user_choice == 0:
             self.new_user()
@@ -148,11 +141,7 @@ class user_manager:
         renderer.list(["Delete pin",array_untangler(users)])
         beanz = input_manager(array_untangler(users))
         if beanz >= 0:
-            temp_users=[]
-            temp_users.append(users[beanz])
-            self.display_all_user_data(temp_users)
-            divider()
-            print("Confirm deletion of user y/n\n")
+            renderer.option_list(["",[users[beanz]],"Confirm deletion of user\n",["delete","cancel"]],mode=1)
             deletion = input("-- ")
             if deletion == "y":
                 if users[beanz][5] != "none":
@@ -182,13 +171,17 @@ class user_manager:
         self.view_user_data()
 
 class renderer:
-    def list(items):
-        clear()
+    def list(items,mode=0,b_t=0):
+        if mode == 0:
+            clear()
         divider()
         print(html.unescape(items[0]))
         for idx , array_item in enumerate(items[1] , start=1):
             print(html.unescape(str(idx) + " - "+ array_item))
         divider()
+        if b_t == 1:
+            print(items[2])
+        return len(items[1])
 
     def option_list(items,mode=0):
         clear()
@@ -199,7 +192,7 @@ class renderer:
                 print(html.unescape(str(idx) + " - "+ array_item))
         elif mode == 1:
             users = items[1]
-            print(items[0])
+            print("User \t \t Correct \t Incorrect \t W/L Ratio \t Best category \n")
             for beans, value in enumerate(users):
                 print(value[0] + " \t \t " + str(value[1]) + " \t \t " + str(value[2]) + " \t \t " + str(value[3]) + " \t \t " + str(value[4]))
         divider()
@@ -207,6 +200,7 @@ class renderer:
         for idx , array_item in enumerate(items[3] , start=1):
             print(html.unescape(str(idx) + " - "+ array_item))
         divider()
+        return len(items[3])
 
 SAVEOBJECT = SaveFile()
 USER_MANAGER = user_manager()
@@ -327,7 +321,7 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
         while y < len(active_users):
             clear()
             print(active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions))
-            list_formatter(thing1,thing2)
+            renderer.list([thing2,thing1],mode=1)
             user_choice = input_manager2(4,0)
             if user_choice == "save":
                 clear()
@@ -369,15 +363,9 @@ def quiz_prepare(quastion_amount,questions,change_range=50):
 #Pretty much finished
 def active_users_select():
     active_users = []
-    clear()
-    list_formatter(array_untangler(users),"Users")
-    print("How many players?")
-    x = input_manager(array_untangler(users))
+    x = le_input(renderer.list(["Users",array_untangler(users),"How many players?"],b_t=1),skip_func=game_menu)
     x+=1
-    if x == None:
-        game_menu()
-    clear()
-    list_formatter(array_untangler(users),"Users")
+    renderer.list(["Users",array_untangler(users)])
     for y in range(int(x)):
         beanz = input_manager(array_untangler(users))  
         if beanz == None:
@@ -386,9 +374,8 @@ def active_users_select():
     return active_users
 
 #Custom game setup
-def base_custom_input(array,array_name,misc_option=''):
-    clear() 
-    list_formatter(array,array_name)
+def base_custom_input(array,array_name,misc_option=''): 
+    renderer.list([array_name,array])
     chosen_item = input_manager(array)
     if chosen_item == None:
         game_menu()
@@ -399,11 +386,10 @@ def base_custom_input(array,array_name,misc_option=''):
         nested_catagory = array_untangler(catagories[misc_option],0)
         return nested_catagory[chosen_item]
     return array[chosen_item]
+
 def advanced_game():
-    clear()
     sub_cat = base_custom_input(a_g_m[0][1],a_g_m[0][0],"num")
     temp_cat_select = sub_cat + 1
-    clear()
     request_catagory = str(base_custom_input(array_untangler(catagories[sub_cat],1),"- Catagoey selection:",temp_cat_select))
 
     #Get limits impliment thing.
@@ -413,7 +399,6 @@ def advanced_game():
     temp_array_69.append(beunos['total_easy_question_count'])
     temp_array_69.append(beunos['total_medium_question_count'])
     temp_array_69.append(beunos['total_hard_question_count'])
-
     temp_array_69.append(beunos['total_easy_question_count']+beunos['total_medium_question_count']+beunos['total_hard_question_count'])
     
     request_diffuculty = base_custom_input(a_g_m[1][1],a_g_m[1][0])
@@ -439,12 +424,13 @@ def advanced_game():
 
 
 #everything down is done ish.
-def le_input(range,skip=True):
+def le_input(range,skip=True,skip_func=""):
     while True:
         try:
             user_input = input("-- ")
             if user_input  == '':
                 if skip == True:
+                    skip_func()
                     return
                 else:
                     print("No skipping")
@@ -461,43 +447,31 @@ def le_input(range,skip=True):
 def save_menu():
     saves = os.listdir('saves')
     magic_array = ["Saves:",saves,"Options:",["Continue game","Delete game"]]
-    renderer.option_list(magic_array)
-    user_choice = le_input(len(magic_array[3]))
+    user_choice = le_input(renderer.option_list(magic_array),skip_func=main_menu)
     if user_choice == 0:
-        renderer.list(["Load Save:",saves])
-        beans = le_input(len(saves))
+        beans = le_input(renderer.list(["Load Save:",saves]),skip_func=save_menu)
         play_save(saves[beans])
     elif user_choice == 1:
-        renderer.list(["Delete Save:",saves])
-        os.remove("saves/"+saves[le_input(len(saves))])
+        os.remove("saves/"+saves[le_input(renderer.list(["Delete Save:",saves]),skip_func=save_menu)])
         input("Save deleted")
-        main_menu()
-    elif user_choice == None:
         main_menu()
 
 def main_menu():
     #print("online status -- " + str(online))
-    renderer.list(menu_options["data"])
-    user_choice = le_input(len(menu_options["data"][1]),skip=False)
+    user_choice = le_input(renderer.list(menu_options["data"]),skip=False)
     menu_options[user_choice]()
 
 #Options not final , menu is.
 def game_menu():
-    renderer.list(game_menu_options["data"])
-    user_choice = le_input(len(game_menu_options["data"][1]))
-    if user_choice == None:
-        main_menu()
-    elif user_choice == 3:
+    user_choice = le_input(renderer.list(game_menu_options["data"]),skip_func=main_menu)
+    if user_choice == 3:
         advanced_game()
     else:
-        game_menu_options[user_choice](game_menu_options["data_2"][user_choice],offline_questions)
+        quiz_prepare(game_menu_options["data_2"][user_choice],offline_questions)
 
 game_menu_options = {
     "data":["Game mode:",["Quick","Basic","Advanced","Custom"]],
     "data_2":[5,20,30],
-    0:quiz_prepare,
-    1:quiz_prepare,
-    2:quiz_prepare,
     3:advanced_game
 }
 
@@ -531,7 +505,6 @@ if online == True:
     else:
         offline_file["counter"] += 1
         offline_file_manager(offline_file["counter"])
-        offline_questions = offline_file["questions"]
 """
 offline_questions = offline_file["questions"]
 
