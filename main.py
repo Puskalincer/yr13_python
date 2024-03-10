@@ -123,23 +123,19 @@ class SaveFile:
 class user_manager:    
     def view_user_data(self):
         SAVEOBJECT.save_new(users)
-        renderer.option_list(["",users,"Options:",user_menu],1)
-        user_choice = input_manager(user_menu)
+        user_choice = le_input(renderer.option_list(["",users,"Options:",user_menu],1),skip_func=main_menu)
         if user_choice == 0:
             self.new_user()
         elif user_choice == 1:
             self.delete_user()
         elif user_choice == 2:
             self.change_user_pin()
-        elif user_choice == None:
-            main_menu() 
     def new_user(self):
         user = input("user name : ")
         users.append([user , 0, 0, 0, "none", "none" ])
         self.view_user_data()
     def delete_user(self):
-        renderer.list(["Delete pin",array_untangler(users)])
-        beanz = input_manager(array_untangler(users))
+        beanz = le_input(renderer.list(["Delete pin",array_untangler(users)]),skip_func=self.view_user_data)
         if beanz >= 0:
             renderer.option_list(["",[users[beanz]],"Confirm deletion of user\n",["delete","cancel"]],mode=1)
             deletion = input("-- ")
@@ -222,39 +218,6 @@ def play_save(name):
     f.close()
     main_question_loop(thing["how_many_questions"], thing["questions"],thing["active_users"],thing["current_loop"][0],thing["current_loop"][1])
 
-#Make better
-def input_manager(item_list,skip_func=1,input_text_override="-- ",any_num=2,max_override=0,bruhz=0):
-    chosen_item = None
-    while True:
-        try:
-            number = input(input_text_override)
-            if number  == '':
-                if skip_func == 1:
-                    break
-                else:
-                    print("\n Required \n")
-            elif number:
-                number=int(number)
-                if number > 0:
-                    number -=1 
-                    if any_num == 0:
-                        chosen_item = (item_list[number])
-                        return number
-                    if any_num == 1:
-                        if number >= max_override:
-                            print("\n Number to big, limit "+str(max_override)+"\n")
-                        else:
-                            if bruhz == 1:
-                                number+=1
-                            return number
-                    if any_num == 2:
-                        return number
-                else:
-                    print("\n Input number above 0.\n")
-        except:
-            print("\n Enter valid Number corresponding to choices displayed.\n")
-    return chosen_item
-
 #Quiz utilitys
 def format_display_question(questions):
     temp_array = questions["incorrect_answers"]
@@ -282,37 +245,6 @@ def generate_save_file(filename,active_users,questions,how_many_questions,curren
     f.write(json.dumps(x))
     f.close()
 
-def input_manager2(max_override=0,skip_func=1,input_text_override="-- ",any_num=1,bruhz=0):
-    while True:
-        try:
-            number = input(input_text_override)
-            if number  == '':
-                if skip_func == 1:
-                    break
-                else:
-                    print("\n Required \n")
-            elif number == 'save':
-                return "save"
-            elif number == 'menu':
-                return "menu"
-            elif number:
-                number=int(number)
-                if number > 0:
-                    number -=1 
-                    if any_num == 1:
-                        if number >= max_override:
-                            print("\n Number to big, limit "+str(max_override)+"\n")
-                        else:
-                            if bruhz == 1:
-                                number+=1
-                            return number
-                    if any_num == 2:
-                        return number
-                else:
-                    print("\n Input number above 0.\n")
-        except:
-            print("\n Enter valid Number corresponding to choices displayed.\n")
-
 #Fix later
 def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
     while x < int(how_many_questions):
@@ -322,7 +254,7 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
             clear()
             print(active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions))
             renderer.list([thing2,thing1],mode=1)
-            user_choice = input_manager2(4,0)
+            user_choice = le_input(len(thing1),skip=False)
             if user_choice == "save":
                 clear()
                 print("Name for save")
@@ -367,18 +299,14 @@ def active_users_select():
     x+=1
     renderer.list(["Users",array_untangler(users)])
     for y in range(int(x)):
-        beanz = input_manager(array_untangler(users))  
-        if beanz == None:
-            game_menu()
+        beanz = le_input(len(array_untangler(users)),skip_func=game_menu)
         active_users.append(users[beanz])
     return active_users
 
 #Custom game setup
 def base_custom_input(array,array_name,misc_option=''): 
     renderer.list([array_name,array])
-    chosen_item = input_manager(array)
-    if chosen_item == None:
-        game_menu()
+    chosen_item = le_input(len(array),skip_func=game_menu)
     if misc_option == "num":
         return chosen_item
     if misc_option:
@@ -407,10 +335,10 @@ def advanced_game():
     divider()
 
     print("Max "+str(temp_array_69[a_g_m[1][1].index(request_diffuculty)]))
-    request_amount = str(input_manager("How many questions:",1,"-- ",1,temp_array_69[a_g_m[1][1].index(request_diffuculty)],bruhz=1))
-
+    request_amount = le_input(temp_array_69[a_g_m[1][1].index(request_diffuculty)],skip_func=main_menu)
+    request_amount+=1
     token=''
-    questions , thing_code = api_request('https://opentdb.com/api.php?amount='+request_amount+'&category='+request_catagory+'&difficulty='+request_diffuculty+'&type='+request_type+token,"results")
+    questions , thing_code = api_request('https://opentdb.com/api.php?amount='+str(request_amount)+'&category='+request_catagory+'&difficulty='+request_diffuculty+'&type='+request_type+token,"results")
 
     #Temp manuel check response code, make automatic later
     if thing_code != 0:
@@ -419,9 +347,6 @@ def advanced_game():
         main_menu()
     #
     quiz_prepare(request_amount,questions,request_amount)
-
-
-
 
 #everything down is done ish.
 def le_input(range,skip=True,skip_func=""):
@@ -434,6 +359,10 @@ def le_input(range,skip=True,skip_func=""):
                     return
                 else:
                     print("No skipping")
+            elif user_input == 'save':
+                return "save"
+            elif user_input == 'menu':
+                return "menu"
             else:
                 user_input = int(user_input)
                 if user_input > 0:
@@ -449,17 +378,16 @@ def save_menu():
     magic_array = ["Saves:",saves,"Options:",["Continue game","Delete game"]]
     user_choice = le_input(renderer.option_list(magic_array),skip_func=main_menu)
     if user_choice == 0:
-        beans = le_input(renderer.list(["Load Save:",saves]),skip_func=save_menu)
-        play_save(saves[beans])
+        play_save(saves[le_input(renderer.list(["Load Save:",saves]),skip_func=save_menu)])
     elif user_choice == 1:
         os.remove("saves/"+saves[le_input(renderer.list(["Delete Save:",saves]),skip_func=save_menu)])
         input("Save deleted")
         main_menu()
 
+#One liner go brrr
 def main_menu():
     #print("online status -- " + str(online))
-    user_choice = le_input(renderer.list(menu_options["data"]),skip=False)
-    menu_options[user_choice]()
+    menu_options[le_input(renderer.list(menu_options["data"]),skip=False)]()
 
 #Options not final , menu is.
 def game_menu():
