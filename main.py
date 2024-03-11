@@ -6,12 +6,7 @@ from datetime import datetime
 import requests
 import socket
 import html
-
-
-
-#Depricate list formatter for renderer.
-
-
+from cryptography.fernet import Fernet
 
 request_token = ""
 offline_questions = ""
@@ -384,12 +379,9 @@ def save_menu():
         input("Save deleted")
         main_menu()
 
-#One liner go brrr
 def main_menu():
-    #print("online status -- " + str(online))
     menu_options[le_input(renderer.list(menu_options["data"]),skip=False)]()
 
-#Options not final , menu is.
 def game_menu():
     user_choice = le_input(renderer.list(game_menu_options["data"]),skip_func=main_menu)
     if user_choice == 3:
@@ -403,6 +395,7 @@ game_menu_options = {
     3:advanced_game
 }
 
+online = internet()
 if online == False:
     game_menu_options["data"] = ["Game mode:",["Quick","Basic","Advanced"]]
 

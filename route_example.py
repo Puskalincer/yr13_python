@@ -1,6 +1,5 @@
 import flet as ft
 import json 
-import misc
 import random
 import html
 
@@ -16,12 +15,6 @@ current_question = magic
 offline_file = json.loads(open('questions.json', 'r').read())
 question = offline_file["questions"]
 
-
-def play_save(name):
-    f = open("saves/"+name, "r")
-    thing = json.loads(f.read())
-    f.close()
-    main_question_loop(thing["how_many_questions"], thing["questions"],thing["active_users"],thing["current_loop"][0],thing["current_loop"][1])
 
 def format_display_question(questions):
     temp_array = questions["incorrect_answers"]
@@ -59,33 +52,6 @@ def input_manager2(max_override=0,skip_func=1,input_text_override="-- ",any_num=
                     print("\n Input number above 0.\n")
         except:
             print("\n Enter valid Number corresponding to choices displayed.\n")
-
-def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
-    while x < int(how_many_questions):
-        question = questions[x]
-        thing1 , thing2 = format_display_question(question)
-        while y < len(active_users):
-            clear()
-            print(active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions))
-            list_formatter(thing1,thing2)
-            user_choice = input_manager2(4,0)
-            if int(user_choice) == thing1.index(question["correct_answer"]):
-                print("\nCorrect")
-                active_users[y][1] += 1
-            else:
-                print("\nIncorrect : " + question["correct_answer"])
-                active_users[y][2] += 1
-            input("")
-            y=y+1
-        x=x+1
-        y=0
-        clear()
-        print("User \t Correct \t Incorrect\n")
-        for beans, value in enumerate(active_users):
-            print(active_users[beans][0] + " \t " + str(active_users[beans][1]) + " \t \t " + str(active_users[beans][2]))
-        input("")
-
-
 
 
 """
