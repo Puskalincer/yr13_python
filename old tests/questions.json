@@ -1,0 +1,597 @@
+{
+    "counter": 0,
+    "questions": [
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Comics",
+            "question": "In the comics, which Sonic character took command of the Dark Legion after Luger&#039;s assassination?",
+            "correct_answer": "Lien-Da",
+            "incorrect_answers": [
+                "Kragok",
+                "Dimitri",
+                "Remington"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Vehicles",
+            "question": "Which supercar company is from Sweden?",
+            "correct_answer": "Koenigsegg",
+            "incorrect_answers": [
+                "Bugatti",
+                "Lamborghini",
+                "McLaren"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Geography",
+            "question": "Which English county will you find the University of East Anglia?",
+            "correct_answer": "Norfolk",
+            "incorrect_answers": [
+                "Suffolk",
+                "Essex",
+                "Cambridgeshire"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "General Knowledge",
+            "question": "In &quot;Resident Evil 3&quot;, how many inventory slots does Jill have at the start of the game?",
+            "correct_answer": "10",
+            "incorrect_answers": [
+                "6",
+                "8",
+                "12"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Vehicles",
+            "question": "In 2014, over 6 million General Motors vehicles were recalled due to what critical flaw?",
+            "correct_answer": "Faulty ignition switch",
+            "incorrect_answers": [
+                "Malfunctioning gas pedal",
+                "Breaking fuel lines",
+                "Faulty brake pads"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Film",
+            "question": "Who plays the Nemesis in the Resident Evil movies?",
+            "correct_answer": "Matthew Taylor",
+            "incorrect_answers": [
+                "Jason Dip",
+                "Eric Mabius",
+                "Jimmy Matts"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Cartoon &amp; Animations",
+            "question": "Nickelodeon is owned by what parent company?",
+            "correct_answer": "Viacom",
+            "incorrect_answers": [
+                "CBS",
+                "FOX",
+                "ABC"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Sports",
+            "question": "How many scoring zones are there on a conventional dart board?",
+            "correct_answer": "82",
+            "incorrect_answers": [
+                "62",
+                "42",
+                "102"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Music",
+            "question": "What genre of EDM is the Dutch DJ, musician, and remixer Armin van Buuren most well-known for?",
+            "correct_answer": "Trance",
+            "incorrect_answers": [
+                "House",
+                "Drum and Bass",
+                "Dubstep"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Mythology",
+            "question": "Which figure from Greek mythology traveled to the underworld to return his wife Eurydice to the land of the living?",
+            "correct_answer": "Orpheus",
+            "incorrect_answers": [
+                "Hercules",
+                "Perseus",
+                "Daedalus"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Science: Computers",
+            "question": "How long is an IPv6 address?",
+            "correct_answer": "128 bits",
+            "incorrect_answers": [
+                "32 bits",
+                "64 bits",
+                "128 bytes"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Science &amp; Nature",
+            "question": "Coulrophobia is the irrational fear of what?",
+            "correct_answer": "Clowns",
+            "incorrect_answers": [
+                "Cemeteries",
+                "Needles",
+                "Tunnels"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Entertainment: Video Games",
+            "question": "In Xenoblade Chronicles X, which class has a sniper rifle as it&#039;s primary weapon?",
+            "correct_answer": "Partisan Eagle",
+            "incorrect_answers": [
+                "Blast Fencer",
+                "Winged Viper",
+                "Bastion Warrior"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Video Games",
+            "question": "In the &quot;Ace Attorney&quot; series, what is the relationship between Apollo Justice and Trucy Wright?",
+            "correct_answer": "They&#039;re half-siblings",
+            "incorrect_answers": [
+                "They&#039;re co-workers",
+                "They&#039;re friends",
+                "They&#039;re both attorneys"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Entertainment: Japanese Anime &amp; Manga",
+            "question": "In &quot;One Piece&quot;, what does &quot;the Pirate King&quot; mean to the captain of the Straw Hat Pirates?",
+            "correct_answer": "Freedom",
+            "incorrect_answers": [
+                "Promise",
+                "Adventure",
+                "Friendship"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Mythology",
+            "question": "Which of the following is not one of the Greek Fates?",
+            "correct_answer": "Narcissus",
+            "incorrect_answers": [
+                "Clotho",
+                "Atropos",
+                "Lachesis"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Video Games",
+            "question": "In what year were achivements added to Steam?",
+            "correct_answer": "2007",
+            "incorrect_answers": [
+                "2008",
+                "2009",
+                "2006"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Cartoon &amp; Animations",
+            "question": "What is Scooby-Doo&#039;s real name?",
+            "correct_answer": "Scoobert",
+            "incorrect_answers": [
+                "Scooter",
+                "Scrappy",
+                "Shooby"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Music",
+            "question": "What was Rage Against the Machine&#039;s debut album?",
+            "correct_answer": "Rage Against the Machine",
+            "incorrect_answers": [
+                "Evil Empire",
+                "Bombtrack",
+                "The Battle Of Los Angeles"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "General Knowledge",
+            "question": "In 2013 how much money was lost by Nigerian scams?",
+            "correct_answer": "$12.7 Billion",
+            "incorrect_answers": [
+                "$95 Million",
+                "$956 Million",
+                "$2.7 Billion"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Television",
+            "question": "Which show is known for the songs &quot;You are a Pirate&quot;, &quot;Cooking by the Book&quot; and &quot;We Are Number One&quot;?",
+            "correct_answer": "LazyTown",
+            "incorrect_answers": [
+                "Sofia the First",
+                "DuckTales",
+                "Tom and Jerry"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Television",
+            "question": "How many seasons did the TV show &quot;Donkey Kong Country&quot; last?",
+            "correct_answer": "2",
+            "incorrect_answers": [
+                "1",
+                "4",
+                "5"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Mythology",
+            "question": "What animal did Queen Pasipahe sleep with before she gave birth to the Minotaur in Greek Mythology?",
+            "correct_answer": "Bull",
+            "incorrect_answers": [
+                "Pig",
+                "Ox",
+                "Horse"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Geography",
+            "question": "Harvard University is located in which city?",
+            "correct_answer": "Cambridge",
+            "incorrect_answers": [
+                "Providence",
+                "New York",
+                "Washington D.C."
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "medium",
+            "category": "Geography",
+            "question": "There are no roads in/out of Juneau, Alaska.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Video Games",
+            "question": "Which car is NOT featured in &quot;Need for Speed: Hot Pursuit 2&quot;?",
+            "correct_answer": "Toyota MR2",
+            "incorrect_answers": [
+                "Ford Crown Victoria",
+                "BMW Z8",
+                "McLaren F1"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "medium",
+            "category": "Entertainment: Cartoon &amp; Animations",
+            "question": "Nutcracker Suite was one of the musical pieces featured in Disney&#039;s 1940&#039;s film Fantasia.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Japanese Anime &amp; Manga",
+            "question": "Which Japanese music group was formed to produce theme music for the anime &quot;Guilty Crown&quot;?",
+            "correct_answer": "Egoist",
+            "incorrect_answers": [
+                "Goose house",
+                "Babymetal",
+                "Garnidelia"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Geography",
+            "question": "Which of the following countries is within the Eurozone but outside of the Schengen Area?",
+            "correct_answer": "Cyprus",
+            "incorrect_answers": [
+                "Malta",
+                "Greece",
+                "Portugal"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Film",
+            "question": "Which of the following movies was not based on a novel by Stephen King? ",
+            "correct_answer": "The Thing",
+            "incorrect_answers": [
+                "Carrie",
+                "Misery",
+                "The Green Mile"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "History",
+            "question": "How old was Lyndon B. Johnson when he assumed the role of President of the United States?",
+            "correct_answer": "55",
+            "incorrect_answers": [
+                "50",
+                "60",
+                "54"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science &amp; Nature",
+            "question": "All the following metal elements are liquids at or near room temperature EXCEPT:",
+            "correct_answer": "Beryllium",
+            "incorrect_answers": [
+                "Gallium",
+                "Caesium",
+                "Mercury"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Entertainment: Music",
+            "question": "Which Elton John hit starts with the line &quot;When are you gonna come down&quot;?",
+            "correct_answer": "Goodbye Yellow Brick Road",
+            "incorrect_answers": [
+                "Rocket Man",
+                "Bennie and the Jets",
+                "Crocodile Rock"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Science &amp; Nature",
+            "question": "What does the letter &#039;S&#039; stand for in &#039;NASA&#039;?",
+            "correct_answer": "Space",
+            "incorrect_answers": [
+                "Science",
+                "Society",
+                "Star"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Vehicles",
+            "question": "Jaguar Cars was previously owned by which car manfacturer?",
+            "correct_answer": "Ford",
+            "incorrect_answers": [
+                "Chrysler",
+                "General Motors",
+                "Fiat"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Film",
+            "question": "Which 1958 movie starred Kirk Douglas and Tony Curtis as half-brothers Einar and Eric?",
+            "correct_answer": "The Vikings ",
+            "incorrect_answers": [
+                "The Long Ships",
+                "Prince Valiant",
+                "Spartacus"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "History",
+            "question": "To what political party did Abraham Lincoln belong when elected POTUS?",
+            "correct_answer": "Republican",
+            "incorrect_answers": [
+                "Democrat",
+                "Independent",
+                "Whig"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "History",
+            "question": "Which king was killed at the Battle of Bosworth Field in 1485? ",
+            "correct_answer": "Richard III",
+            "incorrect_answers": [
+                "Edward V",
+                "Henry VII",
+                "James I"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "General Knowledge",
+            "question": "What is the German word for &quot;spoon&quot;?",
+            "correct_answer": "L&ouml;ffel",
+            "incorrect_answers": [
+                "Gabel",
+                "Messer",
+                "Essst&auml;bchen"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "History",
+            "question": "During World War I, which nation&#039;s monarchs were blood related?",
+            "correct_answer": "England, Germany, Russia",
+            "incorrect_answers": [
+                "France, Russia, Germany",
+                "Serbia, Russia, Croatia",
+                "Germany, Spain, Austria"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science &amp; Nature",
+            "question": "What is the Linnean name of the domestic apple tree?",
+            "correct_answer": "Malus pumila",
+            "incorrect_answers": [
+                "Malus americana",
+                "Pomus domestica",
+                "Appelus delectica"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Celebrities",
+            "question": "Which radio personality calls himself &quot;The King of All Media&quot;?",
+            "correct_answer": "Howard Stern",
+            "incorrect_answers": [
+                "Rush Limbaugh",
+                "Pete Tong",
+                "Ryan Seacrest"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Entertainment: Books",
+            "question": "Which of the following is NOT a work done by Shakespeare?",
+            "correct_answer": "Trial of Temperance",
+            "incorrect_answers": [
+                "Measure For Measure",
+                "Titus Andronicus",
+                "Cymbeline"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Science &amp; Nature",
+            "question": "What is the atomic mass of Carbon?",
+            "correct_answer": "12",
+            "incorrect_answers": [
+                "14",
+                "16",
+                "10"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "medium",
+            "category": "Entertainment: Music",
+            "question": "&quot;Neutral Milk Hotel&quot; is a real band.",
+            "correct_answer": "True",
+            "incorrect_answers": [
+                "False"
+            ]
+        },
+        {
+            "type": "boolean",
+            "difficulty": "easy",
+            "category": "Politics",
+            "question": "The S in Harry S. Truman stands for &quot;Samuel&quot;.",
+            "correct_answer": "False",
+            "incorrect_answers": [
+                "True"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Music",
+            "question": "Which of these is the name of a song by Tears for Fears?",
+            "correct_answer": "Shout",
+            "incorrect_answers": [
+                "Scream",
+                "Yell",
+                "Shriek"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "History",
+            "question": "After his loss at the Battle of Waterloo, Napoleon Bonaparte was exiled to which island?",
+            "correct_answer": "St. Helena",
+            "incorrect_answers": [
+                "Elba",
+                "Corsica",
+                "Canary"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Entertainment: Video Games",
+            "question": "What is the homeworld of the Elites from Halo?",
+            "correct_answer": "Sanghelios",
+            "incorrect_answers": [
+                "Te",
+                "Doisac",
+                "Eayn"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "History",
+            "question": "On which day did the attempted coup d&#039;etat of 1991 in the Soviet Union begin?",
+            "correct_answer": "August 19",
+            "incorrect_answers": [
+                "August 21",
+                "December 26",
+                "December 24"
+            ]
+        }
+    ]
+}
