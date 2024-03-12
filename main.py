@@ -18,6 +18,19 @@ a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty s
 user_menu = ["New User","Delete User","Change user pin"]
 response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
 
+test_results_format=[["John",{
+    "Q1":{
+        "time":1,
+        "catagory":"placeholder",
+        "answered":"correct"
+    },
+    "Q2":{
+        "time":1,
+        "catagory":"placeholder",
+        "answered":"correct"
+    }
+}],["John"]]
+
 def api_request(request_string,specify_thingy=''):
     res = requests.get(request_string)
     response = json.loads(res.text)

@@ -1,6 +1,5 @@
 import flet as ft
 import json 
-import misc
 import random
 import html
 import time
