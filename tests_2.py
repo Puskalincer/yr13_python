@@ -1,7 +1,6 @@
 import os
 import json 
 import time
-from datetime import datetime
 import requests
 import html
 
@@ -10,6 +9,7 @@ offline_questions = ""
 catagories = []
 users = []
 
+user_menu = ["New User","Delete User","Change user pin"]
 response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
 
 def api_request(request_string,specify_thingy='',mode=0):
@@ -17,10 +17,6 @@ def api_request(request_string,specify_thingy='',mode=0):
     response = json.loads(res.text)
     if mode == 1:
         return response[specify_thingy]
-
-
-
-
     try:
         return response[specify_thingy] , response["response_code"]
     except:
@@ -121,18 +117,16 @@ class renderer:
 
 USER_MANAGER = user_manager()
 
-#Pretty much finished
 def active_users_select():
     active_users = []
-    x = le_input(renderer.list(["Users",array_untangler(users),"How many players?"],b_t=1),skip_func=game_menu)
+    x = le_input(renderer.list(["Users",array_untangler(users),"How many players?"],b_t=1),skip_func=main_menu)
     x+=1
     renderer.list(["Users",array_untangler(users)])
     for y in range(int(x)):
-        beanz = le_input(len(array_untangler(users)),skip_func=game_menu)
+        beanz = le_input(len(array_untangler(users)),skip_func=main_menu)
         active_users.append(users[beanz])
     return active_users
 
-#everything down is done ish.
 def le_input(range,skip=True,skip_func=""):
     while True:
         try:
@@ -199,7 +193,6 @@ def data_manager():
     try:
         data = json.loads(open("test_data.json", "r").read())
         return data
-        return [data["users"] , data["token"] , data["catagories"]]
     except:
         one_time_start()
         return "o_t_s"
@@ -241,36 +234,20 @@ menu_options = {
 
 clear()
 results = data_manager()
-"""
-if results != "o_t_s":
-    users = results[0]
-    request_token = results[1]
-    catagories = results[2]
-else:
-    time.sleep(1)
-"""
-
-
 if results != "o_t_s":
     users = results["users"]
     request_token = results["token"]
     catagories = results["catagories"]
     if results["counter"]>20:
-        pass
+        questions = api_request('https://opentdb.com/api.php?amount=50')["results"]
+        generate_data_file(questions,"test_question")
+        number = 0
     else:
         number = results["counter"]+1
-        generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},"test_data")
+    generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},"test_data")
 else:
     time.sleep(1)
-
-
-
-
-
-
-
 offline_file = json.loads(open('test_question.json', 'r').read())
-offline_questions = offline_file["questions"]
 
 
 #main_menu()
