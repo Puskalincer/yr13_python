@@ -1,39 +1,26 @@
 import os
 import json 
 import time
-import random
 from datetime import datetime
 import requests
-import socket
 import html
-from cryptography.fernet import Fernet
 
 request_token = ""
 offline_questions = ""
-catagories = [[],[],[]]
+catagories = []
 users = []
-online = True
 
-a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard","any"]],["- Type selection:",["multiple","boolean","either"]]]
-user_menu = ["New User","Delete User","Change user pin"]
 response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
 
-test_results_format=[["John",{
-    "Q1":{
-        "time":1,
-        "catagory":"placeholder",
-        "answered":"correct"
-    },
-    "Q2":{
-        "time":1,
-        "catagory":"placeholder",
-        "answered":"correct"
-    }
-}],["John"]]
-
-def api_request(request_string,specify_thingy=''):
+def api_request(request_string,specify_thingy='',mode=0):
     res = requests.get(request_string)
     response = json.loads(res.text)
+    if mode == 1:
+        return response[specify_thingy]
+
+
+
+
     try:
         return response[specify_thingy] , response["response_code"]
     except:
@@ -210,111 +197,71 @@ def le_input(range,skip=True,skip_func=""):
 
 
 
-save_file = "data.json"
-save_data = {}
-
 def prepare_catagories():
+    temp_array = [[],[],[]]
     response = api_request('https://opentdb.com/api_category.php',"trivia_categories")
     for x in response:
         first_word = x["name"].split()[0]
         if first_word == "Entertainment:" or first_word == "Science:":
             pass
         else:
-            catagories[0].append([ x["id"],x["name"]])
+            temp_array[0].append([ x["id"],x["name"]])
     for x in response:
         first_word = x["name"].split()[0]
         if first_word == "Entertainment:":
-            catagories[1].append([x["id"],x["name"]])
+            temp_array[1].append([x["id"],x["name"]])
     for x in response:
         first_word = x["name"].split()[0]
         if first_word == "Science:":
-            catagories[2].append([x["id"],x["name"]])
-
-def generate_data_file():
-    x = {
-        "users": [],
-        "token": "",
-        "catagories" : []
-    }
-    f = open("data.json", "w")
-    f.write(json.dumps(x))
-    f.close()
+            temp_array[2].append([x["id"],x["name"]])
+    return temp_array
 
 def one_time_start():
     print("Generating Start file")
-    generate_data_file()
-    prepare_catagories()
-    request_token_temp , response_code = api_request('https://opentdb.com/api_token.php?command=request',"token") 
-    if response_code == 0:
-        request_token = request_token_temp
-    save_new([],request_token,catagories)
+    catagories = prepare_catagories()
+    request_token = api_request('https://opentdb.com/api_token.php?command=request',"token",1) 
+    generate_data_file({"users": [],"token": request_token,"catagories" : catagories},"test_data")
     data_manager()
 
 def data_manager():
     try:
-        f = open("data.json", "r")
-        thing = json.loads(f.read())
-        f.close()
+        file = open("test_data.json", "r")
+        thing = json.loads(file.read())
+        file.close()
         return [thing["users"] , thing["token"] , thing["catagories"]]
     except:
         one_time_start()
         return "o_t_s"
 
-def save_new(users='',token='',catagories=''):
-    with open('data.json') as infile:
-        data = json.load(infile)
-    if users:
-        data["users"] = users
-    if token:
-        data["token"] = token
-    if catagories:
-        data["catagories"] = catagories
-
-    with open('data.json', 'w') as outfile:
-        json.dump(data, outfile, indent=4)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def generate_save_file(filename,active_users,questions,how_many_questions,current_loop):
+def generate_save_file(filename,active_users,questions,question_amount,current_loop):
     x = {
         "active_users": active_users,
         "questions": questions,
         "current_loop" : current_loop,
-        "how_many_questions" : how_many_questions
+        "question_amount" : question_amount
     }
-    save_file_directory = './saves/'
-    #filename = "save"+str(id)+".json"
-    file_path = os.path.join(save_file_directory, filename)
-    
-
-    if not os.path.isdir(save_file_directory):
-        os.mkdir(save_file_directory)
-
-
+    file_path = "saves/"+filename
     generate_data_file(x,file_path)
-
 
 def generate_data_file(info,name):
     file = open(name+".json", "w")
     json.dump(info,file,indent=4)
 
-
-#generate_data_file({"users": [],"token": "","catagories" : []},"buenos")
-generate_save_file("test",[],[],0,[0,0])
+#generate_save_file("test",[],[],0,[0,0])
 
 
 
+
+
+
+
+
+
+
+response = api_request('https://opentdb.com/api_category.php',"trivia_categories")
+print(response)
+for x in response:
+    print(x["name"])
 
 
 
@@ -337,17 +284,9 @@ if results != "o_t_s":
 else:
     time.sleep(1)
 
+
+
 offline_file = json.loads(open('questions.json', 'r').read())
-
-online = internet()
-if online == True:
-    if offline_file["counter"] >= 20:
-        offline_questions = api_request('https://opentdb.com/api.php?amount=50')["results"]
-        offline_file_manager(0,offline_questions)
-    else:
-        offline_file["counter"] += 1
-        offline_file_manager(offline_file["counter"])
-
 offline_questions = offline_file["questions"]
 """
 
