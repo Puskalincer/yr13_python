@@ -121,34 +121,6 @@ class renderer:
 
 USER_MANAGER = user_manager()
 
-def offline_file_manager(counter='',questions=''):
-    with open('questions.json') as infile:
-        data = json.load(infile)
-    if counter >= 0:
-        data["counter"] = counter
-    if questions:
-        data["questions"] = questions
-    with open('questions.json', 'w') as outfile:
-        json.dump(data, outfile , indent=4)
-
-def generate_save_file(filename,active_users,questions,how_many_questions,current_loop):
-    x = {
-        "active_users": active_users,
-        "questions": questions,
-        "current_loop" : current_loop,
-        "how_many_questions" : how_many_questions,
-        "time" : datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-    }
-    save_file_directory = './saves/'
-    #filename = "save"+str(id)+".json"
-    filename = filename + ".json"
-    file_path = os.path.join(save_file_directory, filename)
-    if not os.path.isdir(save_file_directory):
-        os.mkdir(save_file_directory)
-    f = open(file_path, "w")
-    f.write(json.dumps(x))
-    f.close()
-
 #Pretty much finished
 def active_users_select():
     active_users = []
@@ -220,15 +192,14 @@ def one_time_start():
     print("Generating Start file")
     catagories = prepare_catagories()
     request_token = api_request('https://opentdb.com/api_token.php?command=request',"token",1) 
-    generate_data_file({"users": [],"token": request_token,"catagories" : catagories},"test_data")
+    generate_data_file({"users": [],"token": request_token,"catagories" : catagories,"counter":0},"test_data")
     data_manager()
 
 def data_manager():
     try:
-        file = open("test_data.json", "r")
-        thing = json.loads(file.read())
-        file.close()
-        return [thing["users"] , thing["token"] , thing["catagories"]]
+        data = json.loads(open("test_data.json", "r").read())
+        return data
+        return [data["users"] , data["token"] , data["catagories"]]
     except:
         one_time_start()
         return "o_t_s"
@@ -258,13 +229,6 @@ def generate_data_file(info,name):
 
 
 
-response = api_request('https://opentdb.com/api_category.php',"trivia_categories")
-print(response)
-for x in response:
-    print(x["name"])
-
-
-
 
 def main_menu():
     menu_options[le_input(renderer.list(menu_options["data"]),skip=False)]()
@@ -274,20 +238,39 @@ menu_options = {
     0:USER_MANAGER.view_user_data,
 }
 
-"""
+
 clear()
 results = data_manager()
+"""
 if results != "o_t_s":
     users = results[0]
     request_token = results[1]
     catagories = results[2]
 else:
     time.sleep(1)
-
-
-
-offline_file = json.loads(open('questions.json', 'r').read())
-offline_questions = offline_file["questions"]
 """
+
+
+if results != "o_t_s":
+    users = results["users"]
+    request_token = results["token"]
+    catagories = results["catagories"]
+    if results["counter"]>20:
+        pass
+    else:
+        number = results["counter"]+1
+        generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},"test_data")
+else:
+    time.sleep(1)
+
+
+
+
+
+
+
+offline_file = json.loads(open('test_question.json', 'r').read())
+offline_questions = offline_file["questions"]
+
 
 #main_menu()
