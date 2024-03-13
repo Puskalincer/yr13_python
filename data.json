@@ -1,5 +1,14 @@
 {
-    "users": [],
+    "users": [
+        [
+            "bob",
+            0,
+            0,
+            0,
+            "none",
+            "none"
+        ]
+    ],
     "token": "4874f2ee08a828e17c4671e88f4996f68d1dcc6fd1bdec07cebbeb0bc7ba18ae",
     "catagories": [
         [
@@ -105,5 +114,5 @@
             ]
         ]
     ],
-    "counter": 4
+    "counter": 10
 }

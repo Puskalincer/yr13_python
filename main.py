@@ -198,11 +198,9 @@ def generate_data_file(info,name):
 
 #Play saved games make a menu that displays them.
 def play_save(name):
-    f = open(save_filepath+name, "r")
-    thing = json.loads(f.read())
-    f.close()
+    save_data = json.loads(open(save_filepath+name, "r").read())
     #The old saves didnt work cause the quesion amount was still called how many questions lel -- fixed
-    main_question_loop(thing["question_amount"], thing["questions"],thing["active_users"],thing["current_loop"][0],thing["current_loop"][1])
+    main_question_loop(save_data["question_amount"], save_data["questions"],save_data["active_users"],save_data["current_loop"][0],save_data["current_loop"][1])
 
 #Quiz utilitys
 def format_display_question(questions):
@@ -316,6 +314,9 @@ def advanced_game():
     #
     quiz_prepare(request_amount,questions,request_amount)
 
+
+bullcrap = {"save","menu"}
+
 #everything down is done ish.
 def le_input(range,skip=True,skip_func=""):
     while True:
@@ -327,10 +328,8 @@ def le_input(range,skip=True,skip_func=""):
                     return
                 else:
                     print("No skipping")
-            elif user_input == 'save':
-                return "save"
-            elif user_input == 'menu':
-                return "menu"
+            elif user_input in bullcrap:
+                return user_input
             else:
                 user_input = int(user_input)
                 if user_input > 0:
