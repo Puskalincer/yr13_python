@@ -34,12 +34,23 @@ def query_server():
         print("Failed to connect")
         return
 
+
+
+
+
 clear()
-client = CommandClient("localhost", 5435)
+try:
+    client = CommandClient("192.168.20.13", 5435)
+    print("Connected")
+except ConnectionError:
+    print("Failed to connect")
+    exit()
+
 
 client.send(ClientCommand(NetworkFlag.CONNECTED, data=0))
 com = client.recv()
 question_amount = com.args["data"]
+
 
 
 magic_aahh_loop = 0

@@ -1,15 +1,32 @@
+from py_mp import ServerCommand
+
 from py_mp import CommandServer
 from py_mp import ServerSideServerCommand
 from py_mp.commands import NetworkFlag
+
+
 import json
 import random
 import os
 import time
 import html
+import socket
+
+def get_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.settimeout(0)
+    try:
+        # doesn't even have to be reachable
+        s.connect(('10.254.254.254', 1))
+        IP = s.getsockname()[0]
+    except Exception:
+        IP = '127.0.0.1'
+    finally:
+        s.close()
+    return IP
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
-clear()
 
 class storage:
     current_question = []
@@ -25,32 +42,6 @@ def quiz_setup(question_amount: int,questions,change_range=50):
     storage.question_amount=question_amount
     #main_question_loop(quastion_amount,current_question,active_users)
 
-local_questions = json.loads(open('questions.json', 'r').read())
-
-def greeting(name: str) -> str:
-    return 'Hello ' + name
-
-quiz_setup(50,local_questions)
-
-
-
-
-port = 7000
-
-def goodstuff():
-    while True:
-        try:
-            server = CommandServer("localhost", port)
-            print(port)
-            return server
-        except:
-            print("fail") 
-            time.sleep(1)  
-            port = print(random.randint(7000,8000))
-            
-
-
-
 def setup_question(question):
     temp_array2=[]
     current_question = storage.current_questions[question]
@@ -64,6 +55,23 @@ def setup_question(question):
 
 
 
+
+def goodstuff():
+    while True:
+        try:
+            server = CommandServer("localhost", port)
+            print(port)
+            return server
+        except:
+            print("fail") 
+            time.sleep(1)  
+            port = print(random.randint(7000,8000))
+def greeting(name: str) -> str:
+    return 'Hello ' + name
+
+#menu_options[com.args['data']]()
+#server = goodstuff()
+
 def beans():
     print("BEaF")
 
@@ -71,19 +79,45 @@ menu_options = {
     0:beans,
     1:beans
 }
-#menu_options[com.args['data']]()
-#server = goodstuff()
 
 
 
 
 
-server = CommandServer("localhost", 5435)
-server.accept()
+clear()
+
+port = 5435
+ip = get_ip()
+
+print("ip "+ip+":"+str(port))
+
+try:
+    local_questions = json.loads(open('questions.json', 'r').read())
+    print("Local questions loaded")
+except:
+    print("Local quesitons failed to load")
+    exit()
+
+try:
+    quiz_setup(50,local_questions)
+    print("Basic quiz prepared")
+except:
+    print("Basic quiz failed to prepared")
+    exit()
+
+
+
+
+
+server = CommandServer(ip, port)
+server.accept(amount=1)
+print(server.clients)
+
+
 
 com = server.recv(server.clients[0])
 server.send(
-    ServerSideServerCommand(NetworkFlag.CONNECTED, server.clients[0], data=storage.question_amount), 
+    ServerCommand(NetworkFlag.CONNECTED, data=storage.question_amount),
     server.clients[0]
 )
 
