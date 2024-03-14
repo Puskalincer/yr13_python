@@ -5,6 +5,7 @@ import random
 import requests
 import socket
 import html
+from pyboxen import boxen
 
 request_token = ""
 local_questions = ""
@@ -114,16 +115,30 @@ class user_manager:
         self.view_user_data()
 
 class renderer:
-    def list(items,mode=0,b_t=0):
+    def list(items,mode=0,b_t=0,question='',sub=0,sub_txt=''):
+        title = html.unescape(items[0])
         if mode == 0:
             clear()
-        divider()
-        print(html.unescape(items[0]))
+        temp_array = []
         for idx , array_item in enumerate(items[1] , start=1):
-            print(html.unescape(str(idx) + " - "+ array_item))
-        divider()
-        if b_t == 1:
-            print(items[2])
+            temp_array.append(html.unescape(str(idx) + " - "+ array_item))
+        
+        b = '\n'.join(temp_array)
+        s=question+b
+        if sub == 1:
+            l=sub_txt
+        else:
+            l=title
+        print(
+            boxen(
+                html.unescape(s),
+                title=title,
+                subtitle=l,
+                subtitle_alignment="right",
+                color="cyan",
+                padding=(1,5),
+            )
+        )
         return len(items[1])
 
     def option_list(items,mode=0):
@@ -217,9 +232,11 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
         question = questions[x]
         thing1 , thing2 = format_display_question(question)
         while y < len(active_users):
-            clear()
-            print(active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions))
-            renderer.list([thing2,thing1],mode=1)
+
+
+            renderer.list([active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions),thing1],question=thing2+"\n")
+
+
             user_choice = le_input(len(thing1),skip=False)
             if user_choice == "save":
                 clear()
@@ -261,7 +278,7 @@ def quiz_prepare(quastion_amount,questions,change_range=50):
 #Pretty much finished
 def active_users_select():
     active_users = []
-    x = le_input(renderer.list(["Users",array_untangler(users),"How many players?"],b_t=1),skip_func=game_menu)
+    x = le_input(renderer.list(["Users",array_untangler(users)],sub=1,sub_txt="Player amount"),skip_func=game_menu)
     x+=1
     renderer.list(["Users",array_untangler(users)])
     for y in range(int(x)):
@@ -355,6 +372,10 @@ def save_menu():
 def main_menu():
     menu_options[le_input(renderer.list(menu_options["data"]),skip=False)]()
 
+
+
+
+
 def game_menu():
     user_choice = le_input(renderer.list(game_menu_options["data"]),skip_func=main_menu)
     if user_choice == 3:
@@ -363,17 +384,17 @@ def game_menu():
         quiz_prepare(game_menu_options["data_2"][user_choice],local_questions)
 
 game_menu_options = {
-    "data":["Game mode:",["Quick","Basic","Advanced","Custom"]],
+    "data":["Game menu",["Quick","Basic","Advanced","Custom"]],
     "data_2":[5,20,30],
     3:advanced_game
 }
 
 online = internet()
 if online == False:
-    game_menu_options["data"] = ["Game mode:",["Quick","Basic","Advanced"]]
+    game_menu_options["data"] = ["Game mode",["Quick","Basic","Advanced"]]
 
 menu_options = {
-    "data":["Menu:",["Play","User managment","Continue game"]],
+    "data":["Menu",["Play","User managment","Continue game"]],
     0:game_menu,
     1:USER_MANAGER.view_user_data,
     2:save_menu

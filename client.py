@@ -37,10 +37,9 @@ def query_server():
 
 
 
-
 clear()
 try:
-    client = CommandClient("192.168.20.13", 5435)
+    client = CommandClient("10.48.4.69", 5435)
     print("Connected")
 except ConnectionError:
     print("Failed to connect")

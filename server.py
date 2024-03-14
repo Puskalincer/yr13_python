@@ -105,15 +105,13 @@ except:
     print("Basic quiz failed to prepared")
     exit()
 
-
+player_amount = input("player amount : ")
 
 
 
 server = CommandServer(ip, port)
-server.accept(amount=1)
-print(server.clients)
-
-
+server.accept(amount=player_amount)
+#print(server.clients)
 
 com = server.recv(server.clients[0])
 server.send(

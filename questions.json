@@ -1,105 +1,19 @@
 [
     {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Science: Gadgets",
-        "question": "Which of the following is not a type of computer mouse?",
-        "correct_answer": "Smoothie mouse",
-        "incorrect_answers": [
-            "Drum mouse",
-            "Trackball mouse",
-            "Optical mouse"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Entertainment: Television",
-        "question": "Which of these Disney shows is classified as an anime?",
-        "correct_answer": "Stitch!",
-        "incorrect_answers": [
-            "Cory in the House",
-            "The Emperor&#039;s New School",
-            "Hannah Montana"
-        ]
-    },
-    {
-        "type": "multiple",
+        "type": "boolean",
         "difficulty": "medium",
-        "category": "Entertainment: Music",
-        "question": "In the song &ldquo;The Ultimate Showdown of Ultimate Destiny,&rdquo; who is the only one to survive the battle?",
-        "correct_answer": "Mr. Rogers",
+        "category": "Sports",
+        "question": "Skateboarding was included in the 2020 Summer Olympics in Tokyo.",
+        "correct_answer": "True",
         "incorrect_answers": [
-            "Batman",
-            "Chuck Norris",
-            "Godzilla"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Video Games",
-        "question": "Along with Gabe Newell, who co-founded Valve?",
-        "correct_answer": "Mike Harrington",
-        "incorrect_answers": [
-            "Robin Walker",
-            "Marc Laidlaw",
-            "Stephen Bahl"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "General Knowledge",
-        "question": "What alcoholic drink is made from molasses?",
-        "correct_answer": "Rum",
-        "incorrect_answers": [
-            "Gin",
-            "Vodka",
-            "Whisky"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "History",
-        "question": "Joseph Stalin had a criminal past doing what?",
-        "correct_answer": "Robbing Trains",
-        "incorrect_answers": [
-            "Murder for Hire",
-            "Tax Evasion",
-            "Identity Fraud"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Video Games",
-        "question": "Which survivor in Left 4 Dead sacrificed themself to save the other survivors?",
-        "correct_answer": "Bill",
-        "incorrect_answers": [
-            "Louis",
-            "Francis",
-            "Zoey"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Television",
-        "question": "What is Meg&#039;s full name in &quot;Family Guy&quot;?",
-        "correct_answer": "Megatron Griffin",
-        "incorrect_answers": [
-            "Who-Cares Griffin",
-            "Neil Griffin",
-            "Megan Griffin"
+            "False"
         ]
     },
     {
         "type": "boolean",
         "difficulty": "medium",
-        "category": "Entertainment: Film",
-        "question": "There aren&#039;t any live-action clones in &quot;Star Wars: Episode III - Revenge of the Sith&quot;.",
+        "category": "Entertainment: Music",
+        "question": "Scottish producer Calvin Harris is from the town of Dumfries, Scotland.",
         "correct_answer": "True",
         "incorrect_answers": [
             "False"
@@ -108,244 +22,32 @@
     {
         "type": "multiple",
         "difficulty": "medium",
-        "category": "Science &amp; Nature",
-        "question": "Au on the Periodic Table refers to which element?",
-        "correct_answer": "Gold",
-        "incorrect_answers": [
-            "Silver",
-            "Oxygen",
-            "Nickel"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Entertainment: Music",
-        "question": "Which of these is NOT the name of an album released by English singer-songwriter Adele?",
-        "correct_answer": "12",
-        "incorrect_answers": [
-            "19",
-            "21",
-            "25"
-        ]
-    },
-    {
-        "type": "boolean",
-        "difficulty": "easy",
-        "category": "Science &amp; Nature",
-        "question": "An average human can go two weeks without water.",
-        "correct_answer": "False",
-        "incorrect_answers": [
-            "True"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Geography",
-        "question": "What is Canada&#039;s smallest province?",
-        "correct_answer": "Prince Edward Island",
-        "incorrect_answers": [
-            "New Brunswick",
-            "Nova Scotia",
-            "Yukon"
-        ]
-    },
-    {
-        "type": "boolean",
-        "difficulty": "easy",
         "category": "Entertainment: Video Games",
-        "question": "Faust is a playable character in &quot;Guilty Gear Xrd Revelator&quot;.",
-        "correct_answer": "True",
+        "question": "In &quot;Paper Mario: The Thousand Year Door&quot;, what is Hooktail&#039;s weakness?",
+        "correct_answer": "The Sound of Crickets",
         "incorrect_answers": [
-            "False"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "General Knowledge",
-        "question": "What do the letters in the GMT time zone stand for?",
-        "correct_answer": "Greenwich Mean Time",
-        "incorrect_answers": [
-            "Global Meridian Time",
-            "General Median Time",
-            "Glasgow Man Time"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "History",
-        "question": "In which year did the First World War begin?",
-        "correct_answer": "1914",
-        "incorrect_answers": [
-            "1930",
-            "1917",
-            "1939"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "Art",
-        "question": "What year was the Mona Lisa finished?",
-        "correct_answer": "1504",
-        "incorrect_answers": [
-            "1487",
-            "1523",
-            "1511"
+            "Attacks from Koopas",
+            "The &quot;Ice Storm&quot; Item",
+            "The Hammer"
         ]
     },
     {
         "type": "multiple",
         "difficulty": "medium",
         "category": "Entertainment: Video Games",
-        "question": "Which of these Counter-Strike maps is a bomb defuse scenario?",
-        "correct_answer": "Prodigy",
+        "question": "Which one of these games came out first?",
+        "correct_answer": "Terraria",
         "incorrect_answers": [
-            "747",
-            "Havana",
-            "Oilrig"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Science &amp; Nature",
-        "question": "Which is the longest bone in the human body? ",
-        "correct_answer": "Femur",
-        "incorrect_answers": [
-            "Scapula",
-            "Fibula",
-            "Ulna"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "History",
-        "question": "The ancient city of Chich&eacute;n Itz&aacute; was built by which civilization?",
-        "correct_answer": "Mayans",
-        "incorrect_answers": [
-            "Aztecs",
-            "Incas",
-            "Toltecs"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Comics",
-        "question": "Which of the following superheros did Wonder Woman NOT have a love interest in?",
-        "correct_answer": "Green Arrow",
-        "incorrect_answers": [
-            "Superman",
-            "Batman",
-            "Steve Trevor"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Music",
-        "question": "The &#039;In the Flesh&#039; tour was used in support of what Pink Floyd album?",
-        "correct_answer": "Animals",
-        "incorrect_answers": [
-            "The Wall",
-            "Wish You Were Here",
-            "The Final Cut"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Music",
-        "question": "Which famous 90&#039;s rap album is commonly referred to as &quot;The Bible of Hip Hop&quot;?",
-        "correct_answer": "Illmatic",
-        "incorrect_answers": [
-            "The Low End Theory",
-            "The Chronic",
-            "Enter The Wu-Tang (36 Chambers)"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "Entertainment: Video Games",
-        "question": "Which of these weapon classes DO NOT appear in the first Monster Hunter game?",
-        "correct_answer": "Bow ",
-        "incorrect_answers": [
-            "Hammer",
-            "Heavy Bowgun",
-            "Light Bowgun"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "General Knowledge",
-        "question": "What is the romanized Russian word for &quot;winter&quot;?",
-        "correct_answer": "Zima",
-        "incorrect_answers": [
-            "Leto",
-            "Vesna",
-            "Osen&#039;"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Science &amp; Nature",
-        "question": "All the following metal elements are liquids at or near room temperature EXCEPT:",
-        "correct_answer": "Beryllium",
-        "incorrect_answers": [
-            "Gallium",
-            "Caesium",
-            "Mercury"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Geography",
-        "question": "In the 2016 Global Peace Index poll, out of 163 countries, what was the United States of America ranked?",
-        "correct_answer": "103",
-        "incorrect_answers": [
-            "10",
-            "59",
-            "79"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Film",
-        "question": "How much money did the 2019 Marvel movie &quot;Avengers: Endgame&quot; grossed for it&#039;s record-breaking worldwide opening weekend?",
-        "correct_answer": "1.2 billion USD",
-        "incorrect_answers": [
-            "640 million USD",
-            "456 million USD",
-            "392 million USD"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "History",
-        "question": "Who was the first explorer to sail to North America?",
-        "correct_answer": "Leif Erikson",
-        "incorrect_answers": [
-            "Christopher Columbus",
-            "Amerigo Vespucci",
-            "Ferdinand Magellan"
+            "Minecraft",
+            "Starbound",
+            "Factorio"
         ]
     },
     {
         "type": "boolean",
         "difficulty": "easy",
-        "category": "Celebrities",
-        "question": "Tupac Shakur died due to complications from being stabbed in 1996.",
+        "category": "Science: Mathematics",
+        "question": "A scalene triangle has two sides of equal length.",
         "correct_answer": "False",
         "incorrect_answers": [
             "True"
@@ -355,77 +57,271 @@
         "type": "multiple",
         "difficulty": "medium",
         "category": "Entertainment: Japanese Anime &amp; Manga",
-        "question": "Who wrote and directed the animated movie &quot;Spirited Away&quot; (2001)?",
-        "correct_answer": "Hayao Miyazaki",
+        "question": "Who is the main character in One Piece?",
+        "correct_answer": "Luffy",
         "incorrect_answers": [
-            "Isao Takahata",
-            "Mamoru Hosoda",
-            "Hidetaka Miyazaki"
+            "Shanks",
+            "Zoro",
+            "Smoker"
         ]
     },
     {
         "type": "multiple",
         "difficulty": "hard",
-        "category": "Geography",
-        "question": "Llanfair&shy;pwllgwyngyll&shy;gogery&shy;chwyrn&shy;drobwll&shy;llan&shy;tysilio&shy;gogo&shy;goch is located on which Welsh island?",
-        "correct_answer": "Anglesey",
+        "category": "Entertainment: Video Games",
+        "question": "What is the name of the main character in the video game VA-11 HALL-A: Cyberpunk Bartender Action?",
+        "correct_answer": "Jill",
         "incorrect_answers": [
-            "Barry",
-            "Bardsey",
-            "Caldey"
+            "Dana",
+            "Alma",
+            "Anna"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Entertainment: Video Games",
+        "question": "Which of these Pok&eacute;mon cannot learn Surf?",
+        "correct_answer": "Arbok",
+        "incorrect_answers": [
+            "Linoone",
+            "Tauros",
+            "Nidoking"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Film",
+        "question": "Which iconic character is featured in movies such as &quot;The Enforcer&quot;, &quot;Sudden Impact&quot;, and &quot;The Dead Pool&quot;?",
+        "correct_answer": "Dirty Harry",
+        "incorrect_answers": [
+            "Indiana Jones",
+            "James Bond",
+            "Harry Potter"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Science &amp; Nature",
+        "question": "What is the molecular formula of the active component of chili peppers(Capsaicin)?",
+        "correct_answer": "C18H27NO3",
+        "incorrect_answers": [
+            "C21H23NO3",
+            "C6H4Cl2",
+            "C13H25NO4"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Entertainment: Music",
+        "question": "Which song in rapper Kanye West&#039;s album &quot;The Life of Pablo&quot; features Rihanna?",
+        "correct_answer": "Famous",
+        "incorrect_answers": [
+            "Wolves",
+            "Ultralight Beam",
+            "Highlights"
         ]
     },
     {
         "type": "multiple",
         "difficulty": "medium",
         "category": "General Knowledge",
-        "question": "In ancient Greece, if your job were a &quot;hippeus&quot; which of these would you own?",
-        "correct_answer": "Horse",
+        "question": "Which of the following carbonated soft drinks were introduced first?",
+        "correct_answer": "Dr. Pepper",
         "incorrect_answers": [
-            "Weave",
-            "Guitar",
-            "Boat"
+            "Coca-Cola",
+            "Sprite",
+            "Mountain Dew"
         ]
     },
     {
         "type": "multiple",
         "difficulty": "easy",
         "category": "Entertainment: Video Games",
-        "question": "Which of these Starbound races has a Wild West culture?",
-        "correct_answer": "Novakid",
+        "question": "Which game did NOT get financed via Crowdfunding?",
+        "correct_answer": "Enter the Gungeon",
         "incorrect_answers": [
-            "Avian",
-            "Human",
-            "Hylotl"
-        ]
-    },
-    {
-        "type": "boolean",
-        "difficulty": "medium",
-        "category": "Entertainment: Music",
-        "question": "The cover of The Beatles album &quot;Abbey Road&quot; featured a Volkswagen Beetle in the background.",
-        "correct_answer": "True",
-        "incorrect_answers": [
-            "False"
+            "Town of Salem",
+            "Undertale",
+            "Tower Unite"
         ]
     },
     {
         "type": "multiple",
         "difficulty": "hard",
-        "category": "Entertainment: Video Games",
-        "question": "Which one of the following titles by Valve is not based on a Community Mod?",
-        "correct_answer": "Ricochet",
+        "category": "Science &amp; Nature",
+        "question": "On the Beaufort Scale of wind force, what wind name is given to number 8?",
+        "correct_answer": "Gale",
         "incorrect_answers": [
-            "Day of Defeat",
-            "Counter-Strike",
-            "Alien Swarm"
+            "Storm",
+            "Hurricane",
+            "Breeze"
         ]
     },
     {
-        "type": "boolean",
-        "difficulty": "hard",
+        "type": "multiple",
+        "difficulty": "medium",
         "category": "Science: Mathematics",
-        "question": "L&#039;H&ocirc;pital was the mathematician who created the homonymous rule that uses derivatives to evaluate limits with indeterminations.",
+        "question": "What type of function is x&sup2;+2x+1?",
+        "correct_answer": "Quadratic",
+        "incorrect_answers": [
+            "Rational",
+            "Linear",
+            "Exponential"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Science: Computers",
+        "question": "On which computer hardware device is the BIOS chip located?",
+        "correct_answer": "Motherboard",
+        "incorrect_answers": [
+            "Hard Disk Drive",
+            "Central Processing Unit",
+            "Graphics Processing Unit"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "General Knowledge",
+        "question": "How long did it take the motorized window washers of the original World Trade Center to clean the entire exterior of the building?",
+        "correct_answer": "1 Month",
+        "incorrect_answers": [
+            "3 Weeks",
+            "1 Week",
+            "2 Months"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "History",
+        "question": "The seed drill was invented by which British inventor?",
+        "correct_answer": "Jethro Tull",
+        "incorrect_answers": [
+            "Charles Babbage",
+            "Isaac Newton",
+            "J.J Thomson"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Comics",
+        "question": "In the Hellboy universe, who founded the BPRD?",
+        "correct_answer": "Trevor Bruttenholm",
+        "incorrect_answers": [
+            "Kate Corrigan",
+            "Johann Kraus",
+            "Benjamin Daimio"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Science &amp; Nature",
+        "question": "Folic acid is the synthetic form of which vitamin?",
+        "correct_answer": "Vitamin B",
+        "incorrect_answers": [
+            "Vitamin A",
+            "Vitamin C",
+            "Vitamin D"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Music",
+        "question": "The song &quot;Twin Size Mattress&quot; was written by which band?",
+        "correct_answer": "The Front Bottoms",
+        "incorrect_answers": [
+            "Twenty One Pilots",
+            "The Wonder Years",
+            "The Smith Street Band"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Entertainment: Music",
+        "question": "Which member of the Wu-Tang Clan had only one verse in their debut album Enter the Wu-Tang (36 Chambers)?",
+        "correct_answer": "Masta Killa",
+        "incorrect_answers": [
+            "Method Man",
+            "Inspectah Deck",
+            "GZA"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Music",
+        "question": "Which band released songs such as &quot;Electric Feel&quot;, &quot;Kids&quot;, and &quot;Time to Pretend&quot;?",
+        "correct_answer": "MGMT",
+        "incorrect_answers": [
+            "Passion Pit",
+            "Phoenix",
+            "Franz Ferdinand"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Science &amp; Nature",
+        "question": "Which of these is NOT a part of the structure of a typical neuron?",
+        "correct_answer": "Islets of Langerhans",
+        "incorrect_answers": [
+            "Node of Ranvier",
+            "Schwann cell",
+            "Myelin sheath"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Entertainment: Video Games",
+        "question": "In the Team Fortress 2 canon, what did Shakespearicles NOT invent?",
+        "correct_answer": "Stairs",
+        "incorrect_answers": [
+            "Two-Story Building",
+            "Rocket Launcher",
+            "Stage Play"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Geography",
+        "question": "Which of the following Inuit languages was the FIRST to use a unique writing system not based on the Latin alphabet?",
+        "correct_answer": "Inuktitut",
+        "incorrect_answers": [
+            "Inuinnaqtun",
+            "Greenlandic",
+            "Inupiat"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Film",
+        "question": "Which one of these films are shot entirely in one-take?",
+        "correct_answer": "Russian Ark",
+        "incorrect_answers": [
+            "Good Will Hunting",
+            "Birdman",
+            "Schindler&#039;s List"
+        ]
+    },
+    {
+        "type": "boolean",
+        "difficulty": "hard",
+        "category": "History",
+        "question": "The Kingdom of Prussia briefly held land in Estonia.",
         "correct_answer": "False",
         "incorrect_answers": [
             "True"
@@ -434,32 +330,92 @@
     {
         "type": "multiple",
         "difficulty": "medium",
-        "category": "Entertainment: Video Games",
-        "question": "What is the name of the first boss the player encounters in the 2017 game, &quot;Little Nightmares&quot;?",
-        "correct_answer": "The Janitor",
+        "category": "Animals",
+        "question": "What does &quot;hippopotamus&quot; mean and in what langauge?",
+        "correct_answer": "River Horse (Greek)",
         "incorrect_answers": [
-            "The Warden",
-            "The Caretaker",
-            "The Overseer"
+            "River Horse (Latin)",
+            "Fat Pig (Greek)",
+            "Fat Pig (Latin)"
         ]
     },
     {
         "type": "multiple",
         "difficulty": "medium",
-        "category": "Entertainment: Video Games",
-        "question": "In Fallout 4, which type of power armor is first encountered in the early mission &quot;When Freedom Calls&quot; in a crashed Vertibird?",
-        "correct_answer": "T-45",
+        "category": "Sports",
+        "question": "What is the highest belt you can get in Taekwondo?",
+        "correct_answer": "Black",
         "incorrect_answers": [
-            "T-51",
-            "T-60",
-            "X-01"
+            "White",
+            "Red",
+            "Green"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Japanese Anime &amp; Manga",
+        "question": "Which studio made Cowboy Bebop?",
+        "correct_answer": "Sunrise",
+        "incorrect_answers": [
+            "Bones",
+            "Madhouse",
+            "Pierriot"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "History",
+        "question": "Which of these countries was NOT a part of the Soviet Union?",
+        "correct_answer": "Afghanistan",
+        "incorrect_answers": [
+            "Turkmenistan",
+            "Kazakhstan",
+            "Uzbekistan"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "General Knowledge",
+        "question": "If you planted the seeds of Quercus robur, what would grow?",
+        "correct_answer": "Trees",
+        "incorrect_answers": [
+            "Grains",
+            "Vegetables",
+            "Flowers"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Music",
+        "question": "Typically, how many keys are on a piano?",
+        "correct_answer": "88",
+        "incorrect_answers": [
+            "24",
+            "12",
+            "96"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Entertainment: Video Games",
+        "question": "What minimum level in the Defence skill is needed to equip Dragon Armour in the MMO RuneScape?",
+        "correct_answer": "60",
+        "incorrect_answers": [
+            "65",
+            "55",
+            "70"
         ]
     },
     {
         "type": "boolean",
-        "difficulty": "easy",
-        "category": "Geography",
-        "question": "A group of islands is called an &#039;archipelago&#039;.",
+        "difficulty": "medium",
+        "category": "Entertainment: Video Games",
+        "question": "The character that would eventually become Dr. Eggman was considered for the role of Sega&#039;s new flagship mascot before Sonic was.",
         "correct_answer": "True",
         "incorrect_answers": [
             "False"
@@ -467,118 +423,168 @@
     },
     {
         "type": "multiple",
-        "difficulty": "hard",
-        "category": "Entertainment: Video Games",
-        "question": "Which variant of the MP5 is depicted in Counter-Strike 1.6?",
-        "correct_answer": "MP5N",
-        "incorrect_answers": [
-            "MP5SD",
-            "MP5K",
-            "MP5RAS"
-        ]
-    },
-    {
-        "type": "boolean",
         "difficulty": "medium",
-        "category": "Entertainment: Music",
-        "question": "Pink Guy&#039;s debut album was &quot;Pink Season&quot;.",
-        "correct_answer": "False",
+        "category": "Geography",
+        "question": "In which English county is the city of Portsmouth?",
+        "correct_answer": "Hampshire",
         "incorrect_answers": [
-            "True"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Politics",
-        "question": "What year did Gerald Ford Become President?",
-        "correct_answer": "1974",
-        "incorrect_answers": [
-            "1977",
-            "1973",
-            "1969"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "hard",
-        "category": "Entertainment: Music",
-        "question": "Who was not in the band &quot;The Smiths&quot;?",
-        "correct_answer": "Martin Chambers",
-        "incorrect_answers": [
-            "Morrissey",
-            "Andy Rourke",
-            "Mike Joyce"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "easy",
-        "category": "Mythology",
-        "question": "In Greek mythology, who is the god of wine?",
-        "correct_answer": "Dionysus",
-        "incorrect_answers": [
-            "Hephaestus",
-            "Demeter",
-            "Apollo"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Music",
-        "question": "What was Radiohead&#039;s first album?",
-        "correct_answer": "Pablo Honey",
-        "incorrect_answers": [
-            "The Bends",
-            "Kid A",
-            "A Moon Shaped Pool"
-        ]
-    },
-    {
-        "type": "multiple",
-        "difficulty": "medium",
-        "category": "Entertainment: Video Games",
-        "question": "In vanilla Minecraft, you can make armor out of all BUT which of the following?",
-        "correct_answer": "Emeralds",
-        "incorrect_answers": [
-            "Diamonds",
-            "Iron",
-            "Leather"
+            "Oxfordshire",
+            "Buckinghamshire",
+            "Surrey"
         ]
     },
     {
         "type": "multiple",
         "difficulty": "easy",
         "category": "General Knowledge",
-        "question": "How would one say goodbye in Spanish?",
-        "correct_answer": "Adi&oacute;s",
+        "question": "Which one of the following rhythm games was made by Harmonix?",
+        "correct_answer": "Rock Band",
         "incorrect_answers": [
-            " Hola",
-            "Au Revoir",
-            "Salir"
-        ]
-    },
-    {
-        "type": "boolean",
-        "difficulty": "easy",
-        "category": "General Knowledge",
-        "question": "Bulls are attracted to the color red.",
-        "correct_answer": "False",
-        "incorrect_answers": [
-            "True"
+            "Meat Beat Mania",
+            "Guitar Hero Live",
+            "Dance Dance Revolution"
         ]
     },
     {
         "type": "multiple",
         "difficulty": "medium",
-        "category": "Entertainment: Video Games",
-        "question": "In the &quot;Ace Attorney&quot; series, what is the relationship between Apollo Justice and Trucy Wright?",
-        "correct_answer": "They&#039;re half-siblings",
+        "category": "Entertainment: Music",
+        "question": "What is the name of the 2016 studio album by the French electronic music duo Justice?",
+        "correct_answer": "Woman",
         "incorrect_answers": [
-            "They&#039;re co-workers",
-            "They&#039;re friends",
-            "They&#039;re both attorneys"
+            "Randy",
+            "Safe and Sound",
+            "Pleasure"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Film",
+        "question": "In Finding Nemo, what was the name of Nemo&#039;s mom?",
+        "correct_answer": "Coral",
+        "incorrect_answers": [
+            "Sandy",
+            "Pearl",
+            "Shelly"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "History",
+        "question": "Which one of these tanks was designed and operated by the United Kingdom?",
+        "correct_answer": "Tog II",
+        "incorrect_answers": [
+            "M4 Sherman",
+            "Tiger H1",
+            "T-34"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Film",
+        "question": "Which famous singer was portrayed by actor Kevin Spacey in the 2004 biographical film &quot;Beyond the Sea&quot;?",
+        "correct_answer": "Bobby Darin",
+        "incorrect_answers": [
+            "Louis Armstrong",
+            "Frank Sinatra",
+            "Dean Martin"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Entertainment: Video Games",
+        "question": "In Diablo lore, this lesser evil spawned from one of the seven heads of Tathamet, and was known as the Maiden of Anguish.",
+        "correct_answer": "Andariel",
+        "incorrect_answers": [
+            "Valla",
+            "Malthael",
+            "Kashya"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Entertainment: Video Games",
+        "question": "In Monster Hunter Generations, which of these hunter arts are exclusive to the Longsword?",
+        "correct_answer": "Unhinged Spirit",
+        "incorrect_answers": [
+            "Shoryugeki",
+            "Provoke",
+            "Demon Riot"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Sports",
+        "question": "Which English football team is nicknamed &#039;The Tigers&#039;?",
+        "correct_answer": "Hull City",
+        "incorrect_answers": [
+            "Cardiff City",
+            "Bristol City",
+            "Manchester City"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "General Knowledge",
+        "question": "When did the website &quot;Facebook&quot; launch?",
+        "correct_answer": "2004",
+        "incorrect_answers": [
+            "2005",
+            "2003",
+            "2006"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Science &amp; Nature",
+        "question": "How many degrees Fahrenheit is 100 degrees Celsius? ",
+        "correct_answer": "212",
+        "incorrect_answers": [
+            "326",
+            "100",
+            "451"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Entertainment: Video Games",
+        "question": "Before Super Smash Bros. contained Nintendo characters, what was it known as internally?",
+        "correct_answer": "Dragon King: The Fighting Game",
+        "incorrect_answers": [
+            "Contest of Champions",
+            "Smash and Pummel",
+            "Fighter of the Ages: Conquest"
+        ]
+    },
+    {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Science &amp; Nature",
+        "question": "What is radiation measured in?",
+        "correct_answer": "Gray ",
+        "incorrect_answers": [
+            "Watt",
+            "Decibel",
+            "Kelvin"
+        ]
+    },
+    {
+        "type": "boolean",
+        "difficulty": "hard",
+        "category": "History",
+        "question": "The Battle of Trafalgar took place on October 23rd, 1805",
+        "correct_answer": "False",
+        "incorrect_answers": [
+            "True"
         ]
     }
 ]

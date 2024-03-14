@@ -7,6 +7,22 @@
             0,
             "none",
             "none"
+        ],
+        [
+            "beans",
+            0,
+            0,
+            0,
+            "none",
+            "none"
+        ],
+        [
+            "lulz",
+            0,
+            0,
+            0,
+            "none",
+            "none"
         ]
     ],
     "token": "4874f2ee08a828e17c4671e88f4996f68d1dcc6fd1bdec07cebbeb0bc7ba18ae",
@@ -114,5 +130,5 @@
             ]
         ]
     ],
-    "counter": 10
+    "counter": 13
 }
