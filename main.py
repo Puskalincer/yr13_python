@@ -122,7 +122,6 @@ class renderer:
         temp_array = []
         for idx , array_item in enumerate(items[1] , start=1):
             temp_array.append(html.unescape(str(idx) + " - "+ array_item))
-        
         b = '\n'.join(temp_array)
         s=question+b
         if sub == 1:
@@ -222,7 +221,9 @@ def format_display_question(questions):
     temp_array = questions["incorrect_answers"]
     temp_array.append(questions["correct_answer"])
     random.shuffle(temp_array)
-    return temp_array , questions["question"] , 
+    return temp_array , questions["question"]
+
+
 def question_request(amount,change_range=50):
     return random.sample(range(change_range), int(amount))
 
@@ -362,10 +363,10 @@ def save_menu():
     magic_array = ["Saves:",saves,"Options:",["Continue game","Delete game"]]
     user_choice = le_input(renderer.option_list(magic_array),skip_func=main_menu)
     if user_choice == 0:
-        user_choice = le_input(renderer.list(["Load Save:",saves]),skip_func=save_menu)
+        user_choice = le_input(renderer.list(["Load Save",saves]),skip_func=save_menu)
         play_save(saves[user_choice])
     elif user_choice == 1:
-        os.remove("saves/"+saves[le_input(renderer.list(["Delete Save:",saves]),skip_func=save_menu)])
+        os.remove("saves/"+saves[le_input(renderer.list(["Delete Save",saves]),skip_func=save_menu)])
         input("Save deleted")
         main_menu()
 
