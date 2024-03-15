@@ -71,7 +71,7 @@ def array_untangler(array,item=0):
 class user_manager:    
     def view_user_data(self):
         generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},data_file)
-        user_choice = le_input(renderer.option_list(["",users,"Options:",user_menu],1),skip_func=main_menu)
+        user_choice = le_input(renderer.option_list(["Users",users,"Options:",user_menu],1),skip_func=main_menu)
         if user_choice == 0:
             self.new_user()
         elif user_choice == 1:
@@ -140,24 +140,96 @@ class renderer:
         )
         return len(items[1])
 
+    def option_list(items):
+        clear()
+        temp_array = []
+        title = items[0]
+        for array_item in items[1]:
+            temp_array.append(array_item)
+        temp_array.append("\n"+items[2])
+        for idx , array_item in enumerate(items[3] , start=1):
+            temp_array.append(html.unescape(str(idx) + " - "+ array_item))
+        text = '\n'.join(temp_array)
+        print(
+            boxen(
+                html.unescape(text),
+                title=title,
+                subtitle=title,
+                subtitle_alignment="right",
+                color="cyan",
+                padding=(1,5),
+            )
+        )
+        return len(items[3])
+
+
+
+
+    """
     def option_list(items,mode=0):
         clear()
-        divider()
         if mode == 0:
-            print(html.unescape(items[0]))
+            temp_array = []
+            title = html.unescape(items[0])
             for idx , array_item in enumerate(items[1] , start=1):
-                print(html.unescape(str(idx) + " - "+ array_item))
+                temp_array.append(html.unescape(str(idx) + " - "+ array_item))
+            text = '\n'.join(temp_array)
+            print(
+                boxen(
+                    html.unescape(text),
+                    title=title,
+                    subtitle=title,
+                    subtitle_alignment="right",
+                    color="cyan",
+                    padding=(1,5),
+                )
+            )
+
+
+
         elif mode == 1:
             users = items[1]
-            print("User \t \t Correct \t Incorrect \t W/L Ratio \t Best category \n")
+            temp_array = []
+            title = html.unescape(items[0])
+
+
+
+            
+            question = "User \t \t Correct \t Incorrect \t W/L Ratio \t Best category \n"
             for beans, value in enumerate(users):
-                print(value[0] + " \t \t " + str(value[1]) + " \t \t " + str(value[2]) + " \t \t " + str(value[3]) + " \t \t " + str(value[4]))
+                temp_array.append(value[0] + " \t  " + str(value[1]) + " \t  " + str(value[2]) + " \t  " + str(value[3]) + " \t  " + str(value[4]))
+        
+
+                
+            text = '\n'.join(temp_array)
+
+            text=question+text
+
+            print(
+                boxen(
+                    html.unescape(text),
+                    title=title,
+                    subtitle=title,
+                    subtitle_alignment="right",
+                    color="cyan",
+                    padding=(1,5),
+                )
+            )
+
+
+
+
+
+
+            
+        
         divider()
         print(items[2])
         for idx , array_item in enumerate(items[3] , start=1):
             print(html.unescape(str(idx) + " - "+ array_item))
         divider()
         return len(items[3])
+    """
 
 USER_MANAGER = user_manager()
 
@@ -360,7 +432,7 @@ def le_input(range,skip=True,skip_func=""):
 
 def save_menu():
     saves = os.listdir('saves')
-    magic_array = ["Saves:",saves,"Options:",["Continue game","Delete game"]]
+    magic_array = ["Saves",saves,"\nOptions:",["Continue game","Delete game"]]
     user_choice = le_input(renderer.option_list(magic_array),skip_func=main_menu)
     if user_choice == 0:
         user_choice = le_input(renderer.list(["Load Save",saves]),skip_func=save_menu)
@@ -413,7 +485,8 @@ if results != "o_t_s":
         generate_data_file(questions,question_file)
         number = 0
     else:
-        number = results["counter"]+1
+        #number = results["counter"]+1
+        pass
     generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},data_file)
 else:
     time.sleep(1)
