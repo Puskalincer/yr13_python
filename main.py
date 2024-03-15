@@ -6,6 +6,16 @@ import requests
 import socket
 import html
 from pyboxen import boxen
+from timeit import default_timer as timer
+
+
+#Make timer affectr score and stuff, remacke user menu
+
+score_modifier_base = 50
+score_modifier_win = 10
+score_modifier_lose = 0
+score_modifier_time = 0
+
 
 request_token = ""
 local_questions = ""
@@ -115,7 +125,7 @@ class user_manager:
         self.view_user_data()
 
 class renderer:
-    def list(items,mode=0,b_t=0,question='',sub=0,sub_txt=''):
+    def list(items,mode=0,question='',sub=0,sub_txt=''):
         title = html.unescape(items[0])
         if mode == 0:
             clear()
@@ -126,14 +136,16 @@ class renderer:
         s=question+b
         if sub == 1:
             l=sub_txt
+            sub_align="left"
         else:
             l=title
+            sub_align="right"
         print(
             boxen(
                 html.unescape(s),
                 title=title,
                 subtitle=l,
-                subtitle_alignment="right",
+                subtitle_alignment=sub_align,
                 color="cyan",
                 padding=(1,5),
             )
@@ -162,6 +174,25 @@ class renderer:
         )
         return len(items[3])
 
+    def list_result(items):
+        title = items[0]
+        clear()
+        temp_array = []
+        for idx , array_item in enumerate(items[1]):
+            temp_array.append(' {left:<7}    {right:>7}'.format(left= array_item, right=str(items[2][idx])))
+        text = '\n'.join(temp_array)
+        text = ' {left:<7}    {right:>7}'.format(left= "user", right="score\n") + text
+        print(
+            boxen(
+                text,
+                title=title,
+                subtitle=title,
+                subtitle_alignment="right",
+                color="cyan",
+                padding=(1,5),
+            )
+        )
+        return len(items[1])
 
 
 
@@ -300,7 +331,7 @@ def question_request(amount,change_range=50):
     return random.sample(range(change_range), int(amount))
 
 #Fix later
-def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
+def main_question_loop_old(how_many_questions,questions,active_users,x=0,y=0):
     while x < int(how_many_questions):
         question = questions[x]
         thing1 , thing2 = format_display_question(question)
@@ -339,7 +370,66 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
 
 
     main_menu()
- 
+
+current_score = [0,0]
+
+def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
+    while x < int(how_many_questions):
+        question = questions[x]
+        thing1 , thing2 = format_display_question(question)
+        while y < len(active_users):
+
+
+            renderer.list([active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions),thing1],question=thing2+"\n",sub=1,sub_txt="10 secs")
+
+            start = timer()
+            
+
+            user_choice = le_input(len(thing1),skip=False)
+            if user_choice == "save":
+                clear()
+                print("Name for save")
+                name = input("-- ")
+                generate_save_file(name,active_users,questions,how_many_questions,[x,y])
+                main_menu()
+                return
+            elif user_choice == "menu":
+                main_menu()
+                return
+            elif int(user_choice) == thing1.index(question["correct_answer"]):
+                print("\nCorrect")
+                current_score[y] = current_score[y] + 50
+            else:
+                print("\nIncorrect : " + question["correct_answer"])
+
+
+
+            end = timer()
+            print(int(end - start)) 
+
+            input("")
+            y=y+1
+        x=x+1
+        y=0
+        clear()
+
+
+        renderer.list_result(["scores",array_untangler(active_users,0),current_score])
+
+
+
+        input("")
+
+
+    main_menu()
+
+
+
+
+
+
+
+
 def quiz_prepare(quastion_amount,questions,change_range=50):
     current_question = []
     requested_quesions = question_request(quastion_amount,int(change_range))
