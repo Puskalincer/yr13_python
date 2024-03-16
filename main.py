@@ -9,13 +9,13 @@ from pyboxen import boxen
 from timeit import default_timer as timer
 
 
-#Make timer affectr score and stuff, remacke user menu
+#Make timer affect score and stuff, remake user menu
 
+score_time_limit = 10
 score_modifier_base = 50
 score_modifier_win = 10
 score_modifier_lose = 0
-score_modifier_time = 0
-
+score_modifier_time = 5
 
 request_token = ""
 local_questions = ""
@@ -405,7 +405,10 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
 
 
             end = timer()
-            print(int(end - start)) 
+            final_time = int(end - start)
+            print(final_time) 
+            print(final_time*score_modifier_time)
+            print(score_modifier_base-(final_time*score_modifier_time))
 
             input("")
             y=y+1
@@ -533,21 +536,30 @@ def save_menu():
         main_menu()
 
 def main_menu():
-    menu_options[le_input(renderer.list(menu_options["data"]),skip=False)]()
+    menu_options[menu(menu_options["items"],menu_options["title"])]()
+
+
+def setting_menu():
+    le_input(renderer.list(["Settings",["Gui mode = console","score_time_limit = " + str(score_time_limit),"score_modifier_base = " + str(score_modifier_base),"score_modifier_win = "+str(score_modifier_win),"score_modifier_lose = "+str(score_modifier_lose),"score_modifier_time = "+str(score_modifier_time),"request_token = "+request_token,"online = "+str(online),"question_file_name = "+question_file,"data_file_name = "+data_file,"save_filepath_name = "+save_filepath]]),skip_func=main_menu)
+
+
+
+
 
 
 
 
 
 def game_menu():
-    user_choice = le_input(renderer.list(game_menu_options["data"]),skip_func=main_menu)
+    user_choice = menu(g_m_o["items"],g_m_o["title"],main_menu)
     if user_choice == 3:
         advanced_game()
     else:
-        quiz_prepare(game_menu_options["data_2"][user_choice],local_questions)
+        quiz_prepare(g_m_o["data_2"][user_choice],local_questions)
 
-game_menu_options = {
-    "data":["Game menu",["Quick","Basic","Advanced","Custom"]],
+g_m_o = {
+    "items":["Quick","Basic","Advanced","Custom"],
+    "title":"Game menu",
     "data_2":[5,20,30],
     3:advanced_game
 }
@@ -557,10 +569,12 @@ if online == False:
     game_menu_options["data"] = ["Game mode",["Quick","Basic","Advanced"]]
 
 menu_options = {
-    "data":["Menu",["Play","User managment","Continue game"]],
+    "items":["Play","User managment","Continue game","settings"],
+    "title":"Menu",
     0:game_menu,
     1:USER_MANAGER.view_user_data,
-    2:save_menu
+    2:save_menu,
+    3:setting_menu
 }
 
 #Initialization things -Final
@@ -581,4 +595,24 @@ if results != "o_t_s":
 else:
     time.sleep(1)
 local_questions = json.loads(open(question_file+'.json', 'r').read())
+
+
+
+
+def menu(menu_items,title,back_func=None):
+    if back_func == None:
+        skip=False
+    else:
+        skip=True
+    return le_input(renderer.list([title,menu_items]),skip=skip,skip_func=back_func)
+
+
+
+
+
+        
+
+#print(menu(["thing1","thing2","thing3"],"things",back_func=main_menu))
+
+
 main_menu()
