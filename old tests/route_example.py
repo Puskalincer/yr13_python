@@ -13,7 +13,7 @@ current_question = magic
 
 
 offline_file = json.loads(open('questions.json', 'r').read())
-question = offline_file["questions"]
+question = offline_file
 
 
 def format_display_question(questions):

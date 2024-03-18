@@ -8,7 +8,6 @@ import html
 from pyboxen import boxen
 from timeit import default_timer as timer
 
-
 #Make timer affect score and stuff, remake user menu
 
 score_time_limit = 10
@@ -16,6 +15,18 @@ score_modifier_base = 50
 score_modifier_win = 10
 score_modifier_lose = 0
 score_modifier_time = 5
+
+
+"""
+score_time_limit = 10
+score_modifier_base = 73
+score_modifier_win = 2
+score_modifier_lose = 0
+score_modifier_time = 5
+"""
+
+
+
 
 request_token = ""
 local_questions = ""
@@ -133,7 +144,7 @@ class renderer:
         for idx , array_item in enumerate(items[1] , start=1):
             temp_array.append(html.unescape(str(idx) + " - "+ array_item))
         b = '\n'.join(temp_array)
-        s=question+b
+        text=html.unescape(question)+b
         if sub == 1:
             l=sub_txt
             sub_align="left"
@@ -142,7 +153,7 @@ class renderer:
             sub_align="right"
         print(
             boxen(
-                html.unescape(s),
+                text,
                 title=title,
                 subtitle=l,
                 subtitle_alignment=sub_align,
@@ -386,6 +397,7 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
             
 
             user_choice = le_input(len(thing1),skip=False)
+            end = timer()
             if user_choice == "save":
                 clear()
                 print("Name for save")
@@ -398,17 +410,15 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
                 return
             elif int(user_choice) == thing1.index(question["correct_answer"]):
                 print("\nCorrect")
-                current_score[y] = current_score[y] + 50
+                final_time = int(end - start)
+                if final_time < 10:
+                    le_numbers = score_modifier_base-(final_time*score_modifier_time)
+                    current_score[y] = current_score[y] + le_numbers
             else:
                 print("\nIncorrect : " + question["correct_answer"])
-
-
-
-            end = timer()
-            final_time = int(end - start)
-            print(final_time) 
-            print(final_time*score_modifier_time)
-            print(score_modifier_base-(final_time*score_modifier_time))
+            #print(final_time) 
+            #print(final_time*score_modifier_time)
+            #print(score_modifier_base-(final_time*score_modifier_time))
 
             input("")
             y=y+1
@@ -539,10 +549,11 @@ def main_menu():
     menu_options[menu(menu_options["items"],menu_options["title"])]()
 
 
+setting_items = ["Gui mode = console","score_time_limit = " + str(score_time_limit),"score_modifier_base = " + str(score_modifier_base),"score_modifier_win = "+str(score_modifier_win),"score_modifier_lose = "+str(score_modifier_lose),"score_modifier_time = "+str(score_modifier_time),"request_token = "+request_token,"online = "+str(online),"question_file_name = "+question_file,"data_file_name = "+data_file,"save_filepath_name = "+save_filepath]
+
+
 def setting_menu():
-    le_input(renderer.list(["Settings",["Gui mode = console","score_time_limit = " + str(score_time_limit),"score_modifier_base = " + str(score_modifier_base),"score_modifier_win = "+str(score_modifier_win),"score_modifier_lose = "+str(score_modifier_lose),"score_modifier_time = "+str(score_modifier_time),"request_token = "+request_token,"online = "+str(online),"question_file_name = "+question_file,"data_file_name = "+data_file,"save_filepath_name = "+save_filepath]]),skip_func=main_menu)
-
-
+    menu(setting_items,"Settings",main_menu)
 
 
 
@@ -566,7 +577,7 @@ g_m_o = {
 
 online = internet()
 if online == False:
-    game_menu_options["data"] = ["Game mode",["Quick","Basic","Advanced"]]
+    g_m_o["data"] = ["Game mode",["Quick","Basic","Advanced"]]
 
 menu_options = {
     "items":["Play","User managment","Continue game","settings"],
@@ -600,19 +611,13 @@ local_questions = json.loads(open(question_file+'.json', 'r').read())
 
 
 def menu(menu_items,title,back_func=None):
+    clear()
     if back_func == None:
         skip=False
     else:
         skip=True
     return le_input(renderer.list([title,menu_items]),skip=skip,skip_func=back_func)
 
-
-
-
-
-        
-
 #print(menu(["thing1","thing2","thing3"],"things",back_func=main_menu))
-
 
 main_menu()

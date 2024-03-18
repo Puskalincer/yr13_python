@@ -13,7 +13,7 @@ current_question = magic
 
 
 offline_file = json.loads(open('questions.json', 'r').read())
-question = offline_file["questions"]
+question = offline_file
 
 
 def play_save(name):
@@ -103,9 +103,7 @@ def main(page: ft.Page):
 
     page.add(b, t)
     """
-
-
-
+ 
     def start(e):
         answer_1.visible = True
         answer_2.visible = True
@@ -176,7 +174,6 @@ def main(page: ft.Page):
         question_text.value = html.unescape(thing2)
         page.update()
 
-
     def answer(e):
         print(e.control.text)
         print(question[current_question.x]["correct_answer"])
@@ -192,14 +189,6 @@ def main(page: ft.Page):
         update_button.visible=True
         current_question.x+=1
         page.update()
-
-            
-        
-
-
-
-
-
 
     answer_1 = ft.ElevatedButton( visible=False , text="Answer 1", color="blue" , on_click=answer)
     answer_2 = ft.ElevatedButton( visible=False , text="Answer 2", color="red" , on_click=answer)
