@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Quiz</title>
+    <script type="text/javascript" src="/eel.js"></script>
+
     <style>
 
         *{
@@ -17,13 +19,61 @@
             background-color: #070F2B;
             margin: 0;
             color: white;
+            font-family: 'Times New Roman', Times, serif;
         }
 
         .top_txt{
-            display: flex;
-            width: 800px; 
-            justify-content: space-between;
+            width: 90%; 
             margin: auto;
+            font-size: 1.2rem;
+        }
+
+        .flex{
+            justify-content: space-between;
+            display: flex;
+        }
+
+        .top_text_center{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            font-size: 1.5rem;
+            line-height: 0;
+        }
+
+        .choice_buttons>button{
+            aspect-ratio: 16/9;
+            font-size: 1.9rem;
+            color: var(--txt);
+        }
+
+        .parent {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            grid-column-gap: 0px;
+            grid-row-gap: 0px;
+            grid-gap: 20px;
+            /*margin: 50px 50px 0 50px;*/
+            width: 75%;
+            margin: auto;
+            margin-top: 50px;
+        }
+
+        .b1{
+            background-color: #2376ff;
+        }
+
+        .b2{
+            background-color: red;
+        }
+
+        .b3{
+            background-color: green;
+        }
+
+        .b4{
+            background-color: orange;
         }
 
 
@@ -36,18 +86,21 @@
 
     <div>
         <div>
-            <div class="top_txt">
+            <div class="top_txt flex">
                 <p>User name</p>
-                <p>Question</p>
+                
                 <p>Timer</p>
+            </div>
+            <div class="top_text_center" >
+                <p>Question</p>
             </div>
 
         </div>
-        <div>
-            <button>answer 1</button>
-            <button>answer 2</button>
-            <button>answer 3</button>
-            <button>answer 4</button>
+        <div class="choice_buttons parent" >
+            <button class="b1" >answer 1</button>
+            <button class="b2" >answer 2</button>
+            <button class="b3" >answer 3</button>
+            <button class="b4" >answer 4</button>
         </div>
 
 
