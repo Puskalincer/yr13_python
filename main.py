@@ -7,6 +7,7 @@ import socket
 import html
 from pyboxen import boxen
 from timeit import default_timer as timer
+from inputimeout import inputimeout, TimeoutOccurred
 
 #Make timer affect score and stuff, remake user menu
 
@@ -389,13 +390,8 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
         question = questions[x]
         thing1 , thing2 = format_display_question(question)
         while y < len(active_users):
-
-
             renderer.list([active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions),thing1],question=thing2+"\n",sub=1,sub_txt="10 secs")
-
             start = timer()
-            
-
             user_choice = le_input(len(thing1),skip=False)
             end = timer()
             if user_choice == "save":
@@ -425,15 +421,8 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
         x=x+1
         y=0
         clear()
-
-
         renderer.list_result(["scores",array_untangler(active_users,0),current_score])
-
-
-
         input("")
-
-
     main_menu()
 
 
