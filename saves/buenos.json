@@ -1,0 +1,80 @@
+{
+    "active_users": [
+        [
+            "bob",
+            2,
+            4,
+            0,
+            "none",
+            "none"
+        ]
+    ],
+    "questions": [
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Science &amp; Nature",
+            "question": "How many degrees Fahrenheit is 100 degrees Celsius? ",
+            "correct_answer": "212",
+            "incorrect_answers": [
+                "100",
+                "326",
+                "451",
+                "212"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "General Knowledge",
+            "question": "When did the website &quot;Facebook&quot; launch?",
+            "correct_answer": "2004",
+            "incorrect_answers": [
+                "2005",
+                "2003",
+                "2006"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Geography",
+            "question": "In which English county is the city of Portsmouth?",
+            "correct_answer": "Hampshire",
+            "incorrect_answers": [
+                "Oxfordshire",
+                "Buckinghamshire",
+                "Surrey"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Entertainment: Video Games",
+            "question": "What is the name of the main character in the video game VA-11 HALL-A: Cyberpunk Bartender Action?",
+            "correct_answer": "Jill",
+            "incorrect_answers": [
+                "Dana",
+                "Alma",
+                "Anna"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "History",
+            "question": "Which one of these tanks was designed and operated by the United Kingdom?",
+            "correct_answer": "Tog II",
+            "incorrect_answers": [
+                "M4 Sherman",
+                "Tiger H1",
+                "T-34"
+            ]
+        }
+    ],
+    "current_loop": [
+        0,
+        0
+    ],
+    "question_amount": 5
+}

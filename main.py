@@ -7,7 +7,7 @@ import socket
 import html
 from pyboxen import boxen
 from timeit import default_timer as timer
-from inputimeout import inputimeout, TimeoutOccurred
+from pathlib import Path
 
 #Make timer affect score and stuff, remake user menu
 
@@ -25,9 +25,6 @@ score_modifier_win = 2
 score_modifier_lose = 0
 score_modifier_time = 5
 """
-
-
-
 
 request_token = ""
 local_questions = ""
@@ -137,13 +134,18 @@ class user_manager:
         self.view_user_data()
 
 class renderer:
-    def list(items,mode=0,question='',sub=0,sub_txt=''):
+    def list(items,mode=0,question='',sub=0,sub_txt='',no_num=0):
         title = html.unescape(items[0])
         if mode == 0:
             clear()
         temp_array = []
-        for idx , array_item in enumerate(items[1] , start=1):
-            temp_array.append(html.unescape(str(idx) + " - "+ array_item))
+        if no_num == 0:
+            for idx , array_item in enumerate(items[1] , start=1):
+                temp_array.append(html.unescape(str(idx) + " - "+ array_item))
+        else:
+            for array_item in items[1]:
+                temp_array.append(array_item)
+
         b = '\n'.join(temp_array)
         text=html.unescape(question)+b
         if sub == 1:
@@ -328,7 +330,6 @@ def generate_data_file(info,name):
 #Play saved games make a menu that displays them.
 def play_save(name):
     save_data = json.loads(open(save_filepath+name, "r").read())
-    #The old saves didnt work cause the quesion amount was still called how many questions lel -- fixed
     main_question_loop(save_data["question_amount"], save_data["questions"],save_data["active_users"],save_data["current_loop"][0],save_data["current_loop"][1])
 
 #Quiz utilitys
@@ -337,10 +338,6 @@ def format_display_question(questions):
     temp_array.append(questions["correct_answer"])
     random.shuffle(temp_array)
     return temp_array , questions["question"]
-
-
-def question_request(amount,change_range=50):
-    return random.sample(range(change_range), int(amount))
 
 #Fix later
 def main_question_loop_old(how_many_questions,questions,active_users,x=0,y=0):
@@ -383,22 +380,34 @@ def main_question_loop_old(how_many_questions,questions,active_users,x=0,y=0):
 
     main_menu()
 
-current_score = [0,0]
 
-def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
+
+def main_question_loop(how_many_questions,questions,active_users,x=0,y=0,sub_text="10 secs"):
+    current_score = []
+    for users in active_users:
+        current_score.append(0)
+
     while x < int(how_many_questions):
         question = questions[x]
         thing1 , thing2 = format_display_question(question)
         while y < len(active_users):
-            renderer.list([active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions),thing1],question=thing2+"\n",sub=1,sub_txt="10 secs")
+            renderer.list([active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions),thing1],question=thing2+"\n",sub=1,sub_txt=sub_text)
             start = timer()
             user_choice = le_input(len(thing1),skip=False)
             end = timer()
             if user_choice == "save":
-                clear()
-                print("Name for save")
-                name = input("-- ")
-                generate_save_file(name,active_users,questions,how_many_questions,[x,y])
+                saves = os.listdir('saves')
+                name = menu(saves,"Saves",sub_txt="Save name",no_index=1,text_mode=True)
+                
+                for x in saves:
+                    save = Path(x).stem
+                    if save == name:
+                        print("Overwrite save? y/n")
+                        user_choice = le_input(text_mode='specify',bullcrap={"y","n"})
+                        if user_choice == "n":
+                            main_menu()
+                            return
+                generate_save_file(name,active_users,questions,how_many_questions,[x,y])           
                 main_menu()
                 return
             elif user_choice == "menu":
@@ -415,7 +424,6 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
             #print(final_time) 
             #print(final_time*score_modifier_time)
             #print(score_modifier_base-(final_time*score_modifier_time))
-
             input("")
             y=y+1
         x=x+1
@@ -434,7 +442,7 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0):
 
 def quiz_prepare(quastion_amount,questions,change_range=50):
     current_question = []
-    requested_quesions = question_request(quastion_amount,int(change_range))
+    requested_quesions = random.sample(range(change_range), int(quastion_amount))
     for x , y in enumerate(requested_quesions):
         current_question.append(questions[requested_quesions[x]])
     active_users = active_users_select()
@@ -464,6 +472,9 @@ def base_custom_input(array,array_name,misc_option=''):
     return array[chosen_item]
 
 def advanced_game():
+    if online == False:
+        input("Internet required")
+        game_menu()
     sub_cat = base_custom_input(a_g_m[0][1],a_g_m[0][0],"num")
     temp_cat_select = sub_cat + 1
     request_catagory = str(base_custom_input(array_untangler(catagories[sub_cat],1),"- Catagoey selection:",temp_cat_select))
@@ -500,7 +511,7 @@ def advanced_game():
 bullcrap = {"save","menu"}
 
 #everything down is done ish.
-def le_input(range,skip=True,skip_func=""):
+def le_input(range=0,skip=True,skip_func="",text_mode=False,specific=None):
     while True:
         try:
             user_input = input("-- ")
@@ -510,8 +521,14 @@ def le_input(range,skip=True,skip_func=""):
                     return
                 else:
                     print("No skipping")
+            elif text_mode == True:
+                return user_input
             elif user_input in bullcrap:
                 return user_input
+            elif text_mode == 'specify':
+                if user_input in specific:
+                    return user_input
+                print("not valid")
             else:
                 user_input = int(user_input)
                 if user_input > 0:
@@ -565,8 +582,6 @@ g_m_o = {
 }
 
 online = internet()
-if online == False:
-    g_m_o["data"] = ["Game mode",["Quick","Basic","Advanced"]]
 
 menu_options = {
     "items":["Play","User managment","Continue game","settings"],
@@ -599,13 +614,17 @@ local_questions = json.loads(open(question_file+'.json', 'r').read())
 
 
 
-def menu(menu_items,title,back_func=None):
+def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False):
     clear()
     if back_func == None:
         skip=False
     else:
         skip=True
-    return le_input(renderer.list([title,menu_items]),skip=skip,skip_func=back_func)
+    if sub_txt == None:
+        sub=0
+    else:
+        sub=1
+    return le_input(renderer.list([title,menu_items],sub=sub,sub_txt=sub_txt,no_num=no_index),skip=skip,skip_func=back_func,text_mode=text_mode)
 
 #print(menu(["thing1","thing2","thing3"],"things",back_func=main_menu))
 
