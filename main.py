@@ -339,54 +339,10 @@ def format_display_question(questions):
     random.shuffle(temp_array)
     return temp_array , questions["question"]
 
-#Fix later
-def main_question_loop_old(how_many_questions,questions,active_users,x=0,y=0):
-    while x < int(how_many_questions):
-        question = questions[x]
-        thing1 , thing2 = format_display_question(question)
-        while y < len(active_users):
-
-
-            renderer.list([active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions),thing1],question=thing2+"\n")
-
-
-            user_choice = le_input(len(thing1),skip=False)
-            if user_choice == "save":
-                clear()
-                print("Name for save")
-                name = input("-- ")
-                generate_save_file(name,active_users,questions,how_many_questions,[x,y])
-                main_menu()
-                return
-            elif user_choice == "menu":
-                main_menu()
-                return
-            elif int(user_choice) == thing1.index(question["correct_answer"]):
-                print("\nCorrect")
-                active_users[y][1] += 1
-            else:
-                print("\nIncorrect : " + question["correct_answer"])
-                active_users[y][2] += 1
-            input("")
-            y=y+1
-        x=x+1
-        y=0
-        clear()
-        print("User \t Correct \t Incorrect\n")
-        for beans, value in enumerate(active_users):
-            print(active_users[beans][0] + " \t " + str(active_users[beans][1]) + " \t \t " + str(active_users[beans][2]))
-        input("")
-
-
-    main_menu()
-
-
-
 def main_question_loop(how_many_questions,questions,active_users,x=0,y=0,sub_text="10 secs"):
     current_score = []
     for users in active_users:
         current_score.append(0)
-
     while x < int(how_many_questions):
         question = questions[x]
         thing1 , thing2 = format_display_question(question)
@@ -397,13 +353,14 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0,sub_tex
             end = timer()
             if user_choice == "save":
                 saves = os.listdir('saves')
-                name = menu(saves,"Saves",sub_txt="Save name",no_index=1,text_mode=True)
-                
+                if len(saves) == 0:
+                    saves = ["No saves"]
+                name = menu(saves,"Saves",sub_txt="Save name",no_index=1,text_mode=True,back_func=main_menu)
                 for x in saves:
                     save = Path(x).stem
                     if save == name:
                         print("Overwrite save? y/n")
-                        user_choice = le_input(text_mode='specify',bullcrap={"y","n"})
+                        user_choice = le_input(text_mode='specify',specific={"y","n"})
                         if user_choice == "n":
                             main_menu()
                             return
@@ -432,13 +389,6 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0,sub_tex
         renderer.list_result(["scores",array_untangler(active_users,0),current_score])
         input("")
     main_menu()
-
-
-
-
-
-
-
 
 def quiz_prepare(quastion_amount,questions,change_range=50):
     current_question = []
@@ -507,9 +457,6 @@ def advanced_game():
     #
     quiz_prepare(request_amount,questions,request_amount)
 
-
-bullcrap = {"save","menu"}
-
 #everything down is done ish.
 def le_input(range=0,skip=True,skip_func="",text_mode=False,specific=None):
     while True:
@@ -523,7 +470,7 @@ def le_input(range=0,skip=True,skip_func="",text_mode=False,specific=None):
                     print("No skipping")
             elif text_mode == True:
                 return user_input
-            elif user_input in bullcrap:
+            elif user_input in {"save","menu"}:
                 return user_input
             elif text_mode == 'specify':
                 if user_input in specific:
@@ -541,6 +488,9 @@ def le_input(range=0,skip=True,skip_func="",text_mode=False,specific=None):
 
 def save_menu():
     saves = os.listdir('saves')
+    if len(saves) == 0:
+        menu(["No Saves"],"Saves",main_menu,no_index=1,text_mode=True)
+        main_menu()
     magic_array = ["Saves",saves,"\nOptions:",["Continue game","Delete game"]]
     user_choice = le_input(renderer.option_list(magic_array),skip_func=main_menu)
     if user_choice == 0:
@@ -554,18 +504,10 @@ def save_menu():
 def main_menu():
     menu_options[menu(menu_options["items"],menu_options["title"])]()
 
-
 setting_items = ["Gui mode = console","score_time_limit = " + str(score_time_limit),"score_modifier_base = " + str(score_modifier_base),"score_modifier_win = "+str(score_modifier_win),"score_modifier_lose = "+str(score_modifier_lose),"score_modifier_time = "+str(score_modifier_time),"request_token = "+request_token,"online = "+str(online),"question_file_name = "+question_file,"data_file_name = "+data_file,"save_filepath_name = "+save_filepath]
-
 
 def setting_menu():
     menu(setting_items,"Settings",main_menu)
-
-
-
-
-
-
 
 def game_menu():
     user_choice = menu(g_m_o["items"],g_m_o["title"],main_menu)
@@ -581,8 +523,6 @@ g_m_o = {
     3:advanced_game
 }
 
-online = internet()
-
 menu_options = {
     "items":["Play","User managment","Continue game","settings"],
     "title":"Menu",
@@ -592,6 +532,7 @@ menu_options = {
     3:setting_menu
 }
 
+online = internet()
 #Initialization things -Final
 clear()
 results = data_manager()
@@ -611,8 +552,8 @@ else:
     time.sleep(1)
 local_questions = json.loads(open(question_file+'.json', 'r').read())
 
-
-
+if not os.path.exists(Path(save_filepath)):
+    Path(save_filepath).mkdir(parents=True, exist_ok=True)
 
 def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False):
     clear()
@@ -626,6 +567,8 @@ def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False
         sub=1
     return le_input(renderer.list([title,menu_items],sub=sub,sub_txt=sub_txt,no_num=no_index),skip=skip,skip_func=back_func,text_mode=text_mode)
 
-#print(menu(["thing1","thing2","thing3"],"things",back_func=main_menu))
-
 main_menu()
+
+#print(menu(["thing1","thing2","thing3"],"things",back_func=main_menu))
+#gets current file path, kinda cool
+#print(Path().resolve())
