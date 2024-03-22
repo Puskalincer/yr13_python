@@ -96,6 +96,10 @@
             </div>
 
         </div>
+        <div id="result_wrapper" style="display: none;justify-content: center;" >
+            <p id="result" >ejfew</p>
+
+        </div>
         <div class="choice_buttons parent" >
             <button class="b1" >answer 1</button>
             <button class="b2" >answer 2</button>
@@ -125,24 +129,35 @@
 
 
 
-    eel.expose(js_random);
-    function js_random() {
-        return Math.random();
-    }
-    
 
     buttons = document.getElementsByClassName("choice_buttons")[0];
     question_text = document.getElementById("Question");
 
+    eel.expose(hide_button);
+    function hide_button() {
+        buttons.style.opacity="0"
+    }
+
     eel.expose(update_page);
     function update_page(question,choices) {
+        document.getElementById("result_wrapper").style.display="none"
+        buttons.style.opacity="1"
         question_text.innerText = question
-
-
-        
         for (let i = 0; i < 4; i++) {
             buttons.children[i].innerText = choices[i]
         }
+    }
+
+    for (let i = 0; i < 4; i++) {
+        buttons.children[i].addEventListener("click", function(){ 
+            console.log(buttons.children[i].innerText); 
+            eel.check_answer(buttons.children[i].innerText)});
+        }
+
+    eel.expose(result);
+    function result(result){
+        document.getElementById("result_wrapper").style.display="flex"
+        document.getElementById("result").innerHTML=result
     }
 
 

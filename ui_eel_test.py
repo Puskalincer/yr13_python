@@ -2,8 +2,11 @@ import eel
 import json
 import random
 import html
+import time
 
 local_questions = json.loads(open('questions.json', 'r').read())
+
+
 
 class storage:
     current_question = []
@@ -33,13 +36,22 @@ quiz_setup(50,local_questions)
 
 eel.init('web')
 
-
-
 setup_question(storage.current_num)
 eel.update_page(storage.current_question['question'],storage.current_question['choices'])
 
-#def check_answer(choice):
-
+@eel.expose
+def check_answer(choice):
+    eel.hide_button()
+    if choice == storage.current_questions[storage.current_num]["correct_answer"]:
+        print("yes")
+        eel.result("Correct")
+    else:
+        print("no")
+        eel.result("wrong")
+    time.sleep(1)
+    storage.current_num+=1
+    setup_question(storage.current_num)
+    eel.update_page(storage.current_question['question'],storage.current_question['choices'])
 
 
 
@@ -47,6 +59,8 @@ eel.update_page(storage.current_question['question'],storage.current_question['c
 
 
 eel.start('main.html')
+
+
 
 """
 
