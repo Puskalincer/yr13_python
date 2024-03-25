@@ -356,8 +356,8 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0,sub_tex
                 if len(saves) == 0:
                     saves = ["No saves"]
                 name = menu(saves,"Saves",sub_txt="Save name",no_index=1,text_mode=True,back_func=main_menu)
-                for x in saves:
-                    save = Path(x).stem
+                for save_item in saves:
+                    save = Path(save_item).stem
                     if save == name:
                         print("Overwrite save? y/n")
                         user_choice = le_input(text_mode='specify',specific={"y","n"})
@@ -447,7 +447,18 @@ def advanced_game():
     request_amount = le_input(temp_array_69[a_g_m[1][1].index(request_diffuculty)],skip_func=main_menu)
     request_amount+=1
     token=''
-    questions , thing_code = api_request('https://opentdb.com/api.php?amount='+str(request_amount)+'&category='+request_catagory+'&difficulty='+request_diffuculty+'&type='+request_type+token,"results")
+
+
+
+
+    if request_type == 'either':
+        request_type=''
+    else:
+        request_type='&type='+request_type
+
+
+
+    questions , thing_code = api_request('https://opentdb.com/api.php?amount='+str(request_amount)+'&category='+request_catagory+'&difficulty='+request_diffuculty+request_type+token,"results")
 
     #Temp manuel check response code, make automatic later
     if thing_code != 0:
@@ -455,6 +466,7 @@ def advanced_game():
         input("return to menu -- ")
         main_menu()
     #
+    #generate_data_file(questions,question_file)
     quiz_prepare(request_amount,questions,request_amount)
 
 #everything down is done ish.

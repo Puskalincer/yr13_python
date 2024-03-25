@@ -88,8 +88,7 @@
         <div>
             <div class="top_txt flex">
                 <p>User name</p>
-                
-                <p>Timer</p>
+                <p id="time" ></p>
             </div>
             <div class="top_text_center" >
                 <p id="Question" >Question</p>
@@ -106,26 +105,62 @@
             <button class="b3" >answer 3</button>
             <button class="b4" >answer 4</button>
         </div>
-
-
-
     </div>
 
 
 
-    
+
+
 </body>
 </html>
 <script type="text/javascript">
-    /*
-    eel.expose(say_hello_js); // Expose this function to Python
-    function say_hello_js(x) {
-      console.log("Hello from " + x);
+
+    var time_display = document.querySelector('#time');
+
+    function startTimer(duration) {
+        time_display.textContent = duration
+        var timer = duration, minutes, seconds;
+        intervalId = setInterval(function () {
+            minutes = parseInt(timer / 60, 10)
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            if (minutes == '00'){
+                time_display.textContent = seconds;
+            }else{
+                time_display.textContent = minutes + ":" + seconds;
+            };
+
+            if (--timer < 0) {
+                timer = duration;
+                stop_countdown();
+                eel.check_answer("")
+            }
+        }, 1000);
     }
 
-    say_hello_js("Javascript World!");
-    eel.say_hello_py("Javascript World!"); // Call a Python function
-    */
+
+    function start_countdown(count){
+        startTimer(count);      
+    }
+
+    function stop_countdown(){
+        clearInterval(intervalId);
+        time_display.textContent=''
+    }
+            
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -135,27 +170,44 @@
 
     eel.expose(hide_button);
     function hide_button() {
-        buttons.style.opacity="0"
+        buttons.style.display="none"
     }
 
     eel.expose(update_page);
     function update_page(question,choices) {
         document.getElementById("result_wrapper").style.display="none"
-        buttons.style.opacity="1"
+        buttons.style.display="grid"
         question_text.innerText = question
-        for (let i = 0; i < 4; i++) {
-            buttons.children[i].innerText = choices[i]
+        for (let i = 2; i < 4; i++) {
+            buttons.children[i].style.display = 'block'
         }
+
+
+        if (choices.length == 4){
+            for (let i = 0; i < 4; i++) {
+                buttons.children[i].innerText = choices[i]
+            }
+        }else{
+            for (let i = 0; i < 2; i++) {
+                buttons.children[i].innerText = choices[i]
+            }
+            for (let i = 2; i < 4; i++) {
+                buttons.children[i].style.display = 'none'
+            }
+        };
+        start_countdown(30)
     }
 
     for (let i = 0; i < 4; i++) {
         buttons.children[i].addEventListener("click", function(){ 
             console.log(buttons.children[i].innerText); 
-            eel.check_answer(buttons.children[i].innerText)});
+            eel.check_answer(buttons.children[i].innerText)
+        });
         }
 
     eel.expose(result);
     function result(result){
+        stop_countdown()
         document.getElementById("result_wrapper").style.display="flex"
         document.getElementById("result").innerHTML=result
     }

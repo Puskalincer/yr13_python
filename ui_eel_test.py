@@ -32,7 +32,7 @@ def setup_question(question):
     storage.current_question = {"question":html.unescape(current_question["question"]),'choices':temp_array2}
 
 
-quiz_setup(50,local_questions)
+quiz_setup(37,local_questions,37)
 
 eel.init('web')
 
@@ -42,12 +42,12 @@ eel.update_page(storage.current_question['question'],storage.current_question['c
 @eel.expose
 def check_answer(choice):
     eel.hide_button()
-    if choice == storage.current_questions[storage.current_num]["correct_answer"]:
+    if choice == html.unescape(storage.current_questions[storage.current_num]["correct_answer"]):
         print("yes")
         eel.result("Correct")
     else:
         print("no")
-        eel.result("wrong")
+        eel.result("wrong - " + storage.current_questions[storage.current_num]["correct_answer"])
     time.sleep(1)
     storage.current_num+=1
     setup_question(storage.current_num)
