@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body{
+            margin: 0;
+            background-color: black;
+        }
+
+        p{
+            color: white;
+        }
+
+
+        .load{
+            height: 10px;
+            width: 200px;
+            border: 1px solid white;
+            background-color: black;
+        }
+
+        .load_fill{
+            height: 100%;
+            width: 20px;
+            background-color: white;
+        }
+
+        .b_l_marg{
+            margin: 50px;
+        }
+
+        .load_con{
+            align-items: flex-end;
+        }
+
+        .question_self{
+            justify-content: center;
+            align-items: center;
+        }
+
+
+
+
+        @keyframes fadeInUp {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0%);
+                opacity: 1;
+            }
+        }
+
+        .fadeInUp-animation {
+            animation: 0.4s fadeInUp;
+        }
+
+        .question_txt{
+            font-size: 2rem;
+            line-height: 0;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+
+    <div id="main_container" style="width: 100%;height: 100vh;display: flex;" >
+
+        <div id="question_strt" style="display: none;flex-direction: column;align-items: center;" class="fadeInUp-animation" >
+            <p class="question_txt" >In "Little Witch Academia", what is Shiny Chariot's alias at Luna Nova Academy?</p>
+            <div style="width: 600px;margin-top: 20px;" class="load" ><div id="loadin_thing_question" class="load_fill" ></div></div>
+        </div>
+        
+        <div id="load_thing" class="b_l_marg">
+            <p>Loading</p>
+            <div class="load" >
+                <div id="loadin_thing_thing" class="load_fill" ></div>
+            </div>
+        </div>
+        
+
+
+    </div>
+
+
+</body>
+</html>
+<script>
+
+
+
+main_con = document.getElementById("main_container")
+
+question_strt = document.getElementById("question_strt")
+
+load_thing = document.getElementById("load_thing")
+
+main_con.className = 'load_con'
+
+loadin_thing_thing = document.getElementById("loadin_thing_thing")
+loadin_thing_question = document.getElementById("loadin_thing_question")
+
+
+
+
+setTimeout(() => {
+    load_thing.style.display = 'none'
+    
+    main_con.className = 'question_self'
+    question_strt.style.display='flex'
+    clearInterval(beanzz)
+    width_thing = 0
+    beanzz = setInterval(() => {
+        loadin_thing_question.style.width = width_thing + '%'
+        width_thing = width_thing + 1
+        if (width_thing == 100) {
+            clearInterval(beanzz)
+        }
+    }, 10);
+
+
+
+}, 1000);
+
+width_thing = 0
+beanzz = setInterval(() => {
+    loadin_thing_thing.style.width = width_thing + '%'
+    width_thing  = width_thing+1
+}, 10);
+
+
+
+
+</script>
