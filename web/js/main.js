@@ -1,4 +1,4 @@
-import { CountUp } from '../js/countUp.min.js';
+import { CountUp } from './countUp.min.js';
 
 
 

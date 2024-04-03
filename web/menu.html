@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <script src="../js/main.js" type="module"></script>
+    <script type="text/javascript" src="/eel.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="/js/main.js" type="module"></script>
 
 
     <script type="module">
@@ -18,18 +19,22 @@
         import { update_score_ob } from "../js/main.js";
         window.update_score_ob_module = update_score_ob;
     </script>
-      
 
+    
 
 </head>
 <body>
+
+    <div style="position: absolute;top: 0;left: 0;width: 100%;height: 10px;" >
+        <div id="top_o_page_load" class="load_fill" style="width: 0;transition: width 0.2s;" ></div>
+    </div>
 
     <div id="main_container" style="width: 100%;height: 100vh;display: flex;">
 
 
 
 
-        <div id="scorezz" style="width: 100%;height: 100%;display: flex;justify-content: center;">
+        <div id="scorezz" class="fadeInUp-animation" style=" margin-top: 50px; width: 100%;height: 100%;display: none;justify-content: center;">
             <div>
                 <p style="text-align: center;font-size: 1.2em;" >Scoreboard</p>
                 <div class="score_card">
@@ -87,7 +92,7 @@
 </html>
 <script>
 
-
+scorezz = document.getElementById("scorezz")
 
 main_con = document.getElementById("main_container")
 
@@ -102,40 +107,92 @@ main_con.className = 'load_con'
 loadin_thing_thing = document.getElementById("loadin_thing_thing")
 loadin_thing_question = document.getElementById("loadin_thing_question")
 
+top_o_page_load = document.getElementById("top_o_page_load")
 
 
 
-
-
-
-
-
-function question_timed(){
-    question_txt.innerHTML = 'test'
+eel.expose(question_timed);
+function question_timed(question,choices){
+    question_txt.innerHTML = question
 
     load_thing.style.display = 'none'
     main_con.className = 'question_self'
     question_strt.style.display='flex'
-    clearInterval(beanzz)
+    move_bar(question,choices)
+}
+
+
+buttons = document.getElementsByClassName("choice_buttons")[0];
+question_text = document.getElementById("Question");
+
+
+
+function move_bar(question,choices){
     width_thing = 0
-    beanzz = setInterval(() => {
+    question_bar = setInterval(() => {
         loadin_thing_question.style.width = width_thing + '%'
         if (width_thing == 100) {
-            clearInterval(beanzz)
+            clearInterval(question_bar)
             question_strt.style.display='none'
             choices_menuz.style.display='block'
+
+
+            question_text.innerText = question
+            if (choices.length == 4){
+            for (let i = 0; i < 4; i++) {
+                buttons.children[i].innerText = choices[i]
+            }
+            }else{
+                for (let i = 0; i < 2; i++) {
+                    buttons.children[i].innerText = choices[i]
+                }
+                for (let i = 2; i < 4; i++) {
+                    buttons.children[i].style.display = 'none'
+                }
+            };
+
+
+
+
+
             setTimeout(() => {
                 choices_menuz.style.display='none'
+                scorezz.style.display='flex'
+                update_score_ob_module([50000,200])
 
-            }, 1000);
+
+
+                width_thing = 0
+                top_o_page_tima = setInterval(() => {
+                    top_o_page_load.style.width = width_thing + '%'
+                    if (width_thing == 100) {
+                        clearInterval(top_o_page_tima)
+                    }
+                    width_thing = width_thing + 1
+                }, 40);
+
+
+
+
+
+            }, 10000);
         }
         width_thing = width_thing + 1
     }, 50);
 }
 
 
+for (let i = 0; i < 4; i++) {
+    buttons.children[i].addEventListener("click", function(){ 
+        console.log(buttons.children[i].innerText); 
+        eel.check_answer(buttons.children[i].innerText)
+    });
+}
 
+
+/*
 width_thing = 0
+load_thing.style.display='block'
 beanzz = setInterval(() => {
     loadin_thing_thing.style.width = width_thing + '%'
     if (width_thing == 100) {
@@ -144,8 +201,11 @@ beanzz = setInterval(() => {
     }
     width_thing  =  width_thing+1
 }, 10);
+*/
 
 
-
+window.onload = function() {
+    generate_score_ob_module("2")
+}
 
 </script>
