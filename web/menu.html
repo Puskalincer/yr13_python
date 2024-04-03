@@ -4,155 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <style>
-        body{
-            margin: 0;
-            background-color: black;
-        }
-
-        p{
-            color: white;
-        }
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/main.js" type="module"></script>
 
 
-        .load{
-            height: 10px;
-            width: 200px;
-            border: 1px solid white;
-            background-color: black;
-        }
-
-        .load_fill{
-            height: 100%;
-            width: 20px;
-            background-color: white;
-        }
-
-        .b_l_marg{
-            margin: 50px;
-        }
-
-        .load_con{
-            align-items: flex-end;
-        }
-
-        .question_self{
-            justify-content: center;
-            align-items: center;
-        }
+    <script type="module">
+        import { generate_score_ob } from "../js/main.js";
+        window.generate_score_ob_module = generate_score_ob;
+    </script>
 
 
+    <script type="module">
+        import { update_score_ob } from "../js/main.js";
+        window.update_score_ob_module = update_score_ob;
+    </script>
+      
 
 
-        @keyframes fadeInUp {
-            0% {
-                transform: translateY(-10%);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0%);
-                opacity: 1;
-            }
-        }
-
-        .fadeInUp-animation {
-            animation: 0.4s fadeInUp;
-        }
-
-        .question_txt{
-            font-size: 2rem;
-            line-height: 0;
-        }
-
-        #loadin_thing_question{
-            transition: width 0.2s;
-        }
-
-
-
-        
-
-
-
-
-
-        *{
-            --secondary: #1B1A55;
-            --main_alt: #535C91;
-            --main: #9290C3;
-            --txt: white;
-        }
-
-
-
-        .top_txt{
-            width: 90%; 
-            margin: auto;
-            font-size: 1.2rem;
-        }
-
-        .flex{
-            justify-content: space-between;
-            display: flex;
-        }
-
-        .top_text_center{
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            font-size: 1.5rem;
-            line-height: 0;
-        }
-
-        .choice_buttons>button{
-            aspect-ratio: 16/9;
-            font-size: 1.9rem;
-            color: var(--txt);
-        }
-
-        .parent {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            grid-column-gap: 0px;
-            grid-row-gap: 0px;
-            grid-gap: 20px;
-            /*margin: 50px 50px 0 50px;*/
-            width: 75%;
-            max-width: 1600px;
-            margin: auto;
-            margin-top: 50px;
-        }
-
-        .b1{
-            background-color: #2376ff;
-        }
-
-        .b2{
-            background-color: red;
-        }
-
-        .b3{
-            background-color: green;
-        }
-
-        .b4{
-            background-color: orange;
-        }
-
-
-
-
-
-
-
-
-
-    </style>
 </head>
 <body>
 
     <div id="main_container" style="width: 100%;height: 100vh;display: flex;">
+
+
+
+
+        <div id="scorezz" style="width: 100%;height: 100%;display: flex;justify-content: center;">
+            <div>
+                <p style="text-align: center;font-size: 1.2em;" >Scoreboard</p>
+                <div class="score_card">
+                    <p>Name</p>
+                    <p id="score_0" >100</p>
+                </div>
+                <div class="score_card">
+                    <p>Name</p>
+                    <p id="score_1" >100</p>
+                </div>
+            </div>
+        </div>
+
+
 
         <div id="choices_menuz" style="display: none;width: 100%;height: 100%;" class="fadeInUp-animation">
             <div>
@@ -182,7 +73,7 @@
             <div style="width: 600px;margin-top: 20px;" class="load" ><div id="loadin_thing_question" class="load_fill" ></div></div>
         </div>
         
-        <div id="load_thing" class="b_l_marg">
+        <div style="display: none;" id="load_thing" class="b_l_marg">
             <p>Loading</p>
             <div class="load" >
                 <div id="loadin_thing_thing" class="load_fill" ></div>
@@ -216,29 +107,6 @@ loadin_thing_question = document.getElementById("loadin_thing_question")
 
 
 
-/*
-setTimeout(() => {
-    load_thing.style.display = 'none'
-    
-    main_con.className = 'question_self'
-    question_strt.style.display='flex'
-    clearInterval(beanzz)
-    width_thing = 0
-    beanzz = setInterval(() => {
-        loadin_thing_question.style.width = width_thing + '%'
-        if (width_thing == 100) {
-            clearInterval(beanzz)
-        }
-        width_thing = width_thing + 1
-    }, 50);
-
-
-
-}, 1000);
-*/
-
-
-
 
 
 
@@ -256,6 +124,10 @@ function question_timed(){
             clearInterval(beanzz)
             question_strt.style.display='none'
             choices_menuz.style.display='block'
+            setTimeout(() => {
+                choices_menuz.style.display='none'
+
+            }, 1000);
         }
         width_thing = width_thing + 1
     }, 50);
