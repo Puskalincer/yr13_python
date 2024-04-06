@@ -1,0 +1,65 @@
+#menu button{
+    font-size: 1.8em;
+    padding: 4px;
+    margin-bottom: 8px;
+    color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    cursor: pointer; 
+    transition: all 1s;
+    min-width: 390px;
+}
+
+#menu_back{
+    all: unset;
+    cursor: pointer;
+    transition: scale 0.2s;
+}
+
+#menu_back:hover{
+    scale: 1.2;
+}
+
+@property --myColor1 {
+syntax: '<color>';
+initial-value: black;
+inherits: false;
+}
+
+@property --myColor2 {
+syntax: '<color>';
+initial-value: black;
+inherits: false;
+}
+
+#menu button {
+/* Optional: change initial value of the variables */
+/* --myColor1: #f64; --myColor2: brown; */
+
+background: linear-gradient(120deg, var(--myColor1), var(--myColor2));
+transition: --myColor1 0.2s, --myColor2 0.2s;
+}
+
+#menu button:hover {  
+--myColor1: #4267d4;
+--myColor2: #ad36a7;
+background-size: 120% 120%;
+animation: gradient-animation 14s ease infinite;
+}
+
+@keyframes gradient-animation {
+0% {
+background-position: 0% 50%;
+}
+50% {
+background-position: 100% 50%;
+}
+100% {
+background-position: 0% 50%;
+}
+}
+
+
+
+
+

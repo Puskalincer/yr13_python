@@ -35,16 +35,8 @@
 
 
         <div id="scorezz" class="fadeInUp-animation" style=" margin-top: 50px; width: 100%;height: 100%;display: none;justify-content: center;">
-            <div>
+            <div id="insrt_scrs" >
                 <p style="text-align: center;font-size: 1.2em;" >Scoreboard</p>
-                <div class="score_card">
-                    <p>Name</p>
-                    <p id="score_0" >100</p>
-                </div>
-                <div class="score_card">
-                    <p>Name</p>
-                    <p id="score_1" >100</p>
-                </div>
             </div>
         </div>
 
@@ -91,6 +83,8 @@
 </body>
 </html>
 <script>
+
+insrt_scrs = document.getElementById("insrt_scrs")
 
 scorezz = document.getElementById("scorezz")
 
@@ -153,23 +147,10 @@ function move_bar(question,choices){
 
 
 
+            
+            question_countdown = setTimeout(() => {
+                score_screen([50000,200,0,2413])
 
-
-            setTimeout(() => {
-                choices_menuz.style.display='none'
-                scorezz.style.display='flex'
-                update_score_ob_module([50000,200])
-
-
-
-                width_thing = 0
-                top_o_page_tima = setInterval(() => {
-                    top_o_page_load.style.width = width_thing + '%'
-                    if (width_thing == 100) {
-                        clearInterval(top_o_page_tima)
-                    }
-                    width_thing = width_thing + 1
-                }, 40);
 
 
 
@@ -182,9 +163,35 @@ function move_bar(question,choices){
 }
 
 
+
+eel.expose(score_screen);
+function score_screen(scores){
+    choices_menuz.style.display='none'
+    scorezz.style.display='flex'
+    
+
+
+
+    width_thing = 0
+    top_o_page_tima = setInterval(() => {
+        top_o_page_load.style.width = width_thing + '%'
+        if (width_thing == 100) {
+            clearInterval(top_o_page_tima)
+        }
+        width_thing = width_thing + 1
+    }, 40);
+    update_score_ob_module(scores)
+}
+
+
+
+
+
+
+
 for (let i = 0; i < 4; i++) {
     buttons.children[i].addEventListener("click", function(){ 
-        console.log(buttons.children[i].innerText); 
+        clearTimeout(question_countdown)
         eel.check_answer(buttons.children[i].innerText)
     });
 }
@@ -204,8 +211,21 @@ beanzz = setInterval(() => {
 */
 
 
+function setup_users(user_names){
+    for (let i = 0; i < user_names.length; i++) {
+        stroing = '<div class="score_card"><p>'+user_names[i]+'</p><p id="score_'+i+'">0</p></div>'
+        insrt_scrs.insertAdjacentHTML( 'beforeend', stroing );
+    }
+    generate_score_ob_module(user_names.length)
+}
+
+
+
+
+
+
 window.onload = function() {
-    generate_score_ob_module("2")
+    setup_users(["test","test1","test2","test3"])
 }
 
 </script>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script type="text/javascript" src="/eel.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <script src="/js/main.js" type="module"></script>
+
+    <script type="module">
+        import { generate_score_ob } from "../js/main.js";
+        window.generate_score_ob_module = generate_score_ob;
+    </script>
+
+    <script type="module">
+        import { update_score_ob } from "../js/main.js";
+        window.update_score_ob_module = update_score_ob;
+    </script>
+
+</head>
+<body>
+
+    <div style="position: absolute;top: 0;left: 0;width: 100%;height: 10px;" >
+        <div id="top_o_page_load" class="load_fill" style="width: 0;transition: width 0.2s;" ></div>
+    </div>
+
+    <div id="main_container" style="width: 100%;height: 100vh;display: flex;">
+
+
+        <div style="width: 100%;height: 100%;display: flex;justify-content: center;align-items: center;" >
+            <div>
+                <div style="display: flex;justify-content: space-between;" >
+                    <button onclick="eel.menu_back()" id="menu_back" ><img style="scale: 2;" src="assets/chevron_left.svg" ></button>
+                    <h1 id="menu_title" style="color: white;font-size: 2em;" >Menu</h1>
+                </div>
+                <div id="menu" style="display: flex;flex-direction: column;">
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</body>
+</html>
+<script>
+
+
+menu_container = document.getElementById("menu")
+
+menu_title = document.getElementById("menu_title")
+
+menu_back = document.getElementById("menu_back")
+
+eel.expose(menu);
+function menu(menu_options,menu_header,skip){
+    menu_title.innerHTML=menu_header
+
+    if(skip==true){
+        menu_back.style.opacity = 1
+    }else{
+        menu_back.style.opacity = 0
+    }
+
+
+
+    menu_container.innerHTML=''
+    for (let i = 0; i < menu_options.length; i++) {
+        stroing = '<button onclick="eel.runfunc('+i+')" >'+menu_options[i]+'</button>'
+        menu_container.insertAdjacentHTML( 'beforeend', stroing );
+    }
+}
+
+
+
+
+
+
+
+
+
+</script>

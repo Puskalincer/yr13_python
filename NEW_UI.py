@@ -8,7 +8,12 @@ local_questions = json.loads(open('questions.json', 'r').read())
 
 
 
+
+
+
+
 class storage:
+    users=["john","lennon"]
     current_question = []
     current_questions = []
     question_amount = 0
@@ -33,7 +38,6 @@ def setup_question(question):
 
 
 
-
 quiz_setup(37,local_questions,37)
 
 eel.init('web')
@@ -43,20 +47,16 @@ eel.question_timed(storage.current_question['question'],storage.current_question
 
 @eel.expose
 def check_answer(choice):
-    eel.hide_button()
     if choice == html.unescape(storage.current_questions[storage.current_num]["correct_answer"]):
         print("yes")
-        eel.result("Correct")
+        eel.score_screen([1,2,3,4])
     else:
         print("no")
-        eel.result("wrong - " + storage.current_questions[storage.current_num]["correct_answer"])
+        eel.score_screen([0,2,3,4])
     time.sleep(1)
     storage.current_num+=1
     setup_question(storage.current_num)
     eel.update_page(storage.current_question['question'],storage.current_question['choices'])
-
-
-
 
 
 
