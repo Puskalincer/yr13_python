@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Le quiz</title>
     <script type="text/javascript" src="/eel.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/menu.css">
@@ -32,8 +32,10 @@
         <div style="width: 100%;height: 100%;display: flex;justify-content: center;align-items: center;" >
             <div>
                 <div style="display: flex;justify-content: space-between;" >
-                    <button onclick="eel.menu_back()" id="menu_back" ><img style="scale: 2;" src="assets/chevron_left.svg" ></button>
-                    <h1 id="menu_title" style="color: white;font-size: 2em;" >Menu</h1>
+                    <button style="display: none;" onclick="eel.menu_back()" id="menu_back" ><img style="scale: 2;" src="assets/chevron_left.svg" ></button>
+                    <h1 id="menu_title" style="color: white;font-size: 2em;" ></h1>
+                </div>
+                <div style="display: none;" id="menu_extra" class="menu_xtraz" >
                 </div>
                 <div id="menu" style="display: flex;flex-direction: column;">
 
@@ -49,21 +51,30 @@
 </html>
 <script>
 
-
 menu_container = document.getElementById("menu")
-
 menu_title = document.getElementById("menu_title")
-
 menu_back = document.getElementById("menu_back")
+menu_extra = document.getElementById("menu_extra")
 
 eel.expose(menu);
-function menu(menu_options,menu_header,skip){
+function menu(menu_options,menu_header,skip,extra_text=false){
+    if (extra_text!=false){
+        menu_extra.style.display='block'
+        menu_extra.innerHTML=''
+        for (let i = 0; i < extra_text.length; i++) {
+            stroing = '<div class="score_card"><p>'+extra_text[i][0]+'</p><p>'+extra_text[i][1]+'</p></div>'
+            menu_extra.insertAdjacentHTML( 'beforeend', stroing );
+        }
+    }else{
+        menu_extra.style.display='none'
+    }
+
     menu_title.innerHTML=menu_header
 
     if(skip==true){
-        menu_back.style.opacity = 1
+        menu_back.style.display = "block"
     }else{
-        menu_back.style.opacity = 0
+        menu_back.style.display = "none"
     }
 
 
@@ -76,8 +87,10 @@ function menu(menu_options,menu_header,skip){
 }
 
 
-
-
+eel.expose(user_chosen);
+function user_chosen(button){
+    menu_container.children[button].disabled = true;
+};
 
 
 

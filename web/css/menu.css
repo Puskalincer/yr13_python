@@ -61,5 +61,6 @@ background-position: 0% 50%;
 
 
 
-
-
+.menu_xtraz:nth-last-child(2){
+    margin-bottom: 20px;
+}

@@ -8,6 +8,7 @@ import html
 from pyboxen import boxen
 from timeit import default_timer as timer
 from pathlib import Path
+import marshal
 
 #Make timer affect score and stuff, remake user menu
 
@@ -25,6 +26,7 @@ score_modifier_win = 2
 score_modifier_lose = 0
 score_modifier_time = 5
 """
+
 
 request_token = ""
 local_questions = ""
@@ -82,10 +84,7 @@ def internet(host="8.8.8.8", port=53, timeout=3):
         return False
 
 def array_untangler(array,item=0):
-    temp_array = []
-    for x in array:
-        temp_array.append(x[item])
-    return temp_array 
+    return [i[item] for i in array] 
 
 class user_manager:    
     def view_user_data(self):
@@ -443,22 +442,25 @@ def advanced_game():
     clear()
     divider()
 
-    print("Max "+str(temp_array_69[a_g_m[1][1].index(request_diffuculty)]))
+    if temp_array_69[a_g_m[1][1].index(request_diffuculty)] > 50:
+        print("Max 50")
+    else:
+        print("Max "+str(temp_array_69[a_g_m[1][1].index(request_diffuculty)]))
+
     request_amount = le_input(temp_array_69[a_g_m[1][1].index(request_diffuculty)],skip_func=main_menu)
     request_amount+=1
-    token=''
-
-
-
 
     if request_type == 'either':
         request_type=''
     else:
         request_type='&type='+request_type
 
+    if request_diffuculty == 'any':
+        request_diffuculty=''
+    else:
+        request_diffuculty='&difficulty='+request_diffuculty
 
-
-    questions , thing_code = api_request('https://opentdb.com/api.php?amount='+str(request_amount)+'&category='+request_catagory+'&difficulty='+request_diffuculty+request_type+token,"results")
+    questions , thing_code = api_request('https://opentdb.com/api.php?amount='+str(request_amount)+'&category='+request_catagory+request_diffuculty+request_type,"results")
 
     #Temp manuel check response code, make automatic later
     if thing_code != 0:
