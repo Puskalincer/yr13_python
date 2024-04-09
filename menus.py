@@ -27,7 +27,6 @@ def user_menu():
     eel.menu(["New user","Delete user","Advanced view"],"Users",True,temp_array)
     menu_storage.previous_menu = bruh[0]
 
-
 def choose_people():
     eel.menu([i[0] for i in users] ,"Users",True)
     menu_storage.previous_menu = game_menu
