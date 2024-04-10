@@ -2,15 +2,22 @@ import eel
 import json
 
 
-users = []
-data_file = 'new_data'
+users = [
+        [
+            "Frieren",
+            3523432
+        ],
+        [
+            "beans",
+            25325232
+        ],
+        [
+            "lulz",
+            342
+        ]
+    ]
 
-def data_manager():
-    try:
-        data = json.loads(open(data_file+".json", "r").read())
-        return data['users']
-    except:
-        print("error")
+
 
 
 
@@ -72,7 +79,7 @@ class menu_storage:
 
 
 
-users = data_manager()
+
 temp_array = [x for x in users]
 temp_array.insert(0,["User","Score"])
 print(users)

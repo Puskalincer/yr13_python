@@ -2,8 +2,16 @@ import random
 import json
 import os
 import html
-import requests
 import time
+import pprint
+
+save_filepath = "saves/"
+
+score_multiplier = 100
+streak_multiplier = 2
+
+
+
 
 example_data = {
     'date':'12/06/2006',
@@ -71,19 +79,22 @@ class Active_user:
     incorrect = 0
     streak = 0
     highest_streak = 0
-    questions_missed = 0
     answers = []
-    times = []
 
     def __int__(self, name: str) -> None:
         self.name = name
-
 
 class Game:
 
     user_array=[]
 
-    def set_users(self,user_amount,data_list:list=None,names:list=None):
+    def set_users(self,data_list:list=None,names:list=None):
+
+        if data_list:
+            user_amount = len(data_list)
+        else:
+            user_amount = len(names)
+        
         for x in range(user_amount):  
             user = Active_user()
 
@@ -96,103 +107,77 @@ class Game:
                 user.incorrect=data.get('incorrect')
                 user.streak=data.get('streak')
                 user.highest_streak=data.get('highest_streak')
-                user.questions_missed=data.get('questions_missed')
                 user.answers=data.get('answers')
-                user.times=data.get('times')
             else:
                 user.name=names[x]
 
             self.user_array.append(user)
 
+    def export_users(self):
+        formatted_user_array = []
+        for x in self.user_array:
+            user_data = {
+                "name":x.name,
+                "score":x.score,
+                "correct":x.correct,
+                "incorrect":x.incorrect,
+                "streak":x.streak,
+                "highest_streak":x.highest_streak,
+                "answers":x.answers,
+            }
 
+            formatted_user_array.append(user_data)
+
+        return formatted_user_array
     
+    def clear_users(self):
+        self.user_array = []
 
-
-
-
-"""
-Main_game = Game()
-Main_game.set_users(4)
-for x in Main_game.user_array:
-    print(x.name)
-"""
-
-
-
-saved_user_data = [
-    {
-        'name':'Beilif',
-        'score':0,
-        'correct':0,
-        'incorrect':0,
-        'streak':0,
-        'highest_streak':0,
-        'questions_missed':0,
-        'answers':[],
-        'times':[]
-    }
-]
-
-
-def format_display_question(questions):
+def format_display_question(questions:list) -> tuple:
     temp_array = questions["incorrect_answers"]
     temp_array.append(questions["correct_answer"])
     random.shuffle(temp_array)
     return temp_array , questions["question"]
 
-
-save_filepath = "saves/"
-
-
-
-Game().set_users(user_amount=1,data_list=saved_user_data)
-
-print(Game().user_array[0].name)
-
-score_multiplier = 100
-streak_multiplier = 2
-
-
-def play_save(name):
+def play_save(name:str) -> None:
     save_data = json.loads(open(save_filepath+name, "r").read())
-    main_question_loop(save_data["question_amount"], save_data["questions"],save_data["active_users"],save_data["current_loop"])
+    prepare_quiz(save_data["q"],save_data["u"],loop_override=save_data['l'])
 
-def main_question_loop(how_many_questions:int,questions:list,active_users:list,loop_override=None):
+def prepare_quiz(questions:list,user_data:list=None,user_list:list=None,loop_override:list=None) -> None:
+    Game().set_users(data_list=user_data,names=user_list)
+    main_question_loop(questions,loop_override)
+
+def main_question_loop(questions:list,loop_override:list=None) -> None:
     if loop_override != None:
         x = loop_override[0]
         y = loop_override[1]
-    clear()
     while x < len(questions):
         current_question = questions[x]
         choices , displayed_question = format_display_question(current_question)
-        while y < len(active_users):
+        while y < len(Game().user_array):
             numba = x + 1
-            print (Game().user_array[y].name+" -- Question " + str(numba) + " of " + str(how_many_questions))
-
-            
-
 
             if Game().user_array[y].streak == 0 and Game().user_array[y].highest_streak == 0:
-                print('No streak')
+                current_streak='No streak'
             elif Game().user_array[y].streak == 0:
-                print('Previous streak -- ' + str(Game().user_array[y].highest_streak))
-            elif Game().user_array[y].highest_streak == 0 :
-                print('Current streak -- ' + str(Game().user_array[y].streak))
+                current_streak='Previous best streak -- ' + str(Game().user_array[y].highest_streak)
+            else:
+                current_streak='Current streak -- ' + str(Game().user_array[y].streak)
 
+            clear()
+            print ('{0: <30}'.format(Game().user_array[y].name+" -- Question " + str(numba) + " of " + str(len(questions))),current_streak+'\n')
 
-
-
-            
             print(html.unescape(displayed_question) + '\n')
-            for d in choices:
-                print(html.unescape(d))
+            for n , d in enumerate(choices , start=1):
+                print(str(n) + ' ' + html.unescape(d))
             user_choice = le_input(len(choices),skip=False)
+
+            Game().user_array[y].answers.append(choices[user_choice])
+
             if int(user_choice) == choices.index(current_question["correct_answer"]):
                 print("\nCorrect")
                 Game().user_array[y].correct+=1
                 Game().user_array[y].streak+=1
-
-
 
                 Game().user_array[y].score=(Game().user_array[y].score+score_multiplier)+(streak_multiplier*Game().user_array[y].streak)
             else:
@@ -209,22 +194,32 @@ def main_question_loop(how_many_questions:int,questions:list,active_users:list,l
             y=y+1
 
 
-        
+
         clear()
+        print ('{0: <20}'.format('Name'),'Score')
         for person in Game().user_array:
-
-
-            print ('{0: <20}'.format('Name'),'Score')
             print ('{0: <20}'.format(person.name),person.score)
         time.sleep(2)
-
-
-
-
 
         x=x+1
         y=0
         clear()
 
 
-play_save('2.json')
+    print('Final scores\n')
+    print ('{0: <20}'.format('Name'),'Score')
+    for person in Game().user_array:
+        print ('{0: <20}'.format(person.name),person.score)
+    print("\n")
+
+    #print(Game().export_users())
+
+    for x in Game().user_array:
+        pprint.pprint(x.__dict__,sort_dicts=False)
+        print("\n")
+
+
+
+
+
+play_save('new_user_system.json')
