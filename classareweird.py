@@ -163,60 +163,47 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
                 current_streak='Previous best streak -- ' + str(Game().user_array[y].highest_streak)
             else:
                 current_streak='Current streak -- ' + str(Game().user_array[y].streak)
-
             clear()
             print ('{0: <30}'.format(Game().user_array[y].name+" -- Question " + str(numba) + " of " + str(len(questions))),current_streak+'\n')
-
             print(html.unescape(displayed_question) + '\n')
             for n , d in enumerate(choices , start=1):
                 print(str(n) + ' ' + html.unescape(d))
             user_choice = le_input(len(choices),skip=False)
-
             Game().user_array[y].answers.append(choices[user_choice])
-
             if int(user_choice) == choices.index(current_question["correct_answer"]):
                 print("\nCorrect")
                 Game().user_array[y].correct+=1
                 Game().user_array[y].streak+=1
-
                 Game().user_array[y].score=(Game().user_array[y].score+score_multiplier)+(streak_multiplier*Game().user_array[y].streak)
             else:
-                print("\nIncorrect : it was " + current_question["correct_answer"])
+                print("\nIncorrect : it was - " + current_question["correct_answer"])
                 Game().user_array[y].incorrect+=1
-
                 if Game().user_array[y].streak != 0:
                     if Game().user_array[y].streak > Game().user_array[y].highest_streak:
                         Game().user_array[y].highest_streak=Game().user_array[y].streak
                     Game().user_array[y].streak=0
-
-
             time.sleep(1)
             y=y+1
-
-
-
         clear()
         print ('{0: <20}'.format('Name'),'Score')
         for person in Game().user_array:
             print ('{0: <20}'.format(person.name),person.score)
         time.sleep(2)
-
         x=x+1
         y=0
         clear()
-
-
     print('Final scores\n')
     print ('{0: <20}'.format('Name'),'Score')
     for person in Game().user_array:
         print ('{0: <20}'.format(person.name),person.score)
     print("\n")
+    input("back to menu")
 
     #print(Game().export_users())
 
-    for x in Game().user_array:
-        pprint.pprint(x.__dict__,sort_dicts=False)
-        print("\n")
+    #for x in Game().user_array:
+    #    pprint.pprint(x.__dict__,sort_dicts=False)
+    #    print("\n")
 
 
 

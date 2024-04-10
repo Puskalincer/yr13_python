@@ -1,29 +1,43 @@
 {
     "users": [
-        [
-            "bob",
-            2,
-            4,
-            0,
-            "none",
-            "none"
-        ],
-        [
-            "beans",
-            0,
-            0,
-            0,
-            "none",
-            "none"
-        ],
-        [
-            "lulz",
-            0,
-            0,
-            0,
-            "none",
-            "none"
-        ]
+        {
+            "name": "Beilif",
+            "game1": {
+                "score": 0,
+                "correct": 0,
+                "incorrect": 0,
+                "streak": 0,
+                "highest_streak": 0,
+                "answers": []
+            },
+            "game2": {
+                "score": 0,
+                "correct": 0,
+                "incorrect": 0,
+                "streak": 0,
+                "highest_streak": 0,
+                "answers": []
+            }
+        },
+        {
+            "name": "john",
+            "game1": {
+                "score": 0,
+                "correct": 0,
+                "incorrect": 0,
+                "streak": 0,
+                "highest_streak": 0,
+                "answers": []
+            },
+            "game2": {
+                "score": 0,
+                "correct": 0,
+                "incorrect": 0,
+                "streak": 0,
+                "highest_streak": 0,
+                "answers": []
+            }
+        }
     ],
     "token": "4874f2ee08a828e17c4671e88f4996f68d1dcc6fd1bdec07cebbeb0bc7ba18ae",
     "catagories": [

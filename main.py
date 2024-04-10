@@ -40,7 +40,6 @@ data_file = "data"
 save_filepath = "saves/"
 
 a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard","any"]],["- Type selection:",["multiple","boolean","either"]]]
-user_menu = ["New User","Delete User","Change user pin"]
 response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
 
 test_results_format=[["John",{
@@ -86,51 +85,54 @@ def internet(host="8.8.8.8", port=53, timeout=3):
 def array_untangler(array,item=0):
     return [i[item] for i in array] 
 
-class user_manager:    
-    def view_user_data(self):
-        generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},data_file)
-        user_choice = le_input(renderer.option_list(["Users",users,"Options:",user_menu],1),skip_func=main_menu)
-        if user_choice == 0:
-            self.new_user()
-        elif user_choice == 1:
-            self.delete_user()
-        elif user_choice == 2:
-            self.change_user_pin()
-    def new_user(self):
-        user = input("user name : ")
-        users.append([user , 0, 0, 0, "none", "none" ])
+
+
+
+
+
+def view_user_data():
+    #generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},data_file)
+
+
+    c_aray = renderer.option_list(["Users",'',"Options:",user_menu.get('menu')])
+    user_choice = le_input(c_aray,skip_func=main_menu)
+    user_menu[user_choice]()
+
+def new_user():
+    user = input("user name : ")
+    users.append([user , 0, 0, 0, "none", "none" ])
+    view_user_data()
+def delete_user():
+    beanz = le_input(renderer.list(["Delete pin",array_untangler(users)]),skip_func=view_user_data)
+    if beanz >= 0:
+        renderer.option_list(["",[users[beanz]],"Confirm deletion of user\n",["delete","cancel"]],mode=1)
+        deletion = input("-- ")
+        if deletion == "y":
+            if users[beanz][5] != "none":
+                while True:
+                    secure = input("Enter pin : ")
+                    if secure == users[beanz][5]:
+                        users.pop(int(beanz))
+                        break
+                    elif secure == '':
+                        break
+                    else:
+                        print("Pin wrong")
+            else:
+                users.pop(int(beanz))
         self.view_user_data()
-    def delete_user(self):
-        beanz = le_input(renderer.list(["Delete pin",array_untangler(users)]),skip_func=self.view_user_data)
-        if beanz >= 0:
-            renderer.option_list(["",[users[beanz]],"Confirm deletion of user\n",["delete","cancel"]],mode=1)
-            deletion = input("-- ")
-            if deletion == "y":
-                if users[beanz][5] != "none":
-                    while True:
-                        secure = input("Enter pin : ")
-                        if secure == users[beanz][5]:
-                            users.pop(int(beanz))
-                            break
-                        elif secure == '':
-                            break
-                        else:
-                            print("Pin wrong")
-                else:
-                    users.pop(int(beanz))
-            self.view_user_data()
-        elif beanz == None:
-            self.view_user_data()
-    def change_user_pin(self):
-        clear()
-        renderer.list(["Change pin",array_untangler(users)])
-        beanz = input("-- ")
-        beanz = int(beanz) - 1
-        clear()
-        print(users[beanz][0])
-        wanted_pin = input("-- ")
-        users[beanz][5] = wanted_pin
+    elif beanz == None:
         self.view_user_data()
+
+
+user_menu = {
+    'menu':["New User","Delete User"],
+    0:new_user,
+    1:delete_user
+}
+
+
+
 
 class renderer:
     def list(items,mode=0,question='',sub=0,sub_txt='',no_num=0):
@@ -275,7 +277,8 @@ class renderer:
         return len(items[3])
     """
 
-USER_MANAGER = user_manager()
+
+
 
 def prepare_catagories():
     temp_array = [[],[],[]]
@@ -312,15 +315,14 @@ def data_manager():
         one_time_start()
         return "o_t_s"
 
-def generate_save_file(filename,active_users,questions,question_amount,current_loop):
+#Used to format the data for saving games
+def generate_save_file(filename,active_users,questions,loop_override):
     x = {
-        "active_users": active_users,
-        "questions": questions,
-        "current_loop" : current_loop,
-        "question_amount" : question_amount
+        "u": active_users,
+        "q": questions,
+        "l" : loop_override,
     }
-    file_path = save_filepath+filename
-    generate_data_file(x,file_path)
+    generate_data_file(x,save_filepath+filename)
 
 def generate_data_file(info,name):
     file = open(name+".json", "w")
@@ -363,7 +365,7 @@ def main_question_loop(how_many_questions,questions,active_users,x=0,y=0,sub_tex
                         if user_choice == "n":
                             main_menu()
                             return
-                generate_save_file(name,active_users,questions,how_many_questions,[x,y])           
+                generate_save_file(name,active_users,questions,[x,y])           
                 main_menu()
                 return
             elif user_choice == "menu":
@@ -541,7 +543,7 @@ menu_options = {
     "items":["Play","User managment","Continue game","settings"],
     "title":"Menu",
     0:game_menu,
-    1:USER_MANAGER.view_user_data,
+    1:view_user_data,
     2:save_menu,
     3:setting_menu
 }
@@ -581,7 +583,21 @@ def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False
         sub=1
     return le_input(renderer.list([title,menu_items],sub=sub,sub_txt=sub_txt,no_num=no_index),skip=skip,skip_func=back_func,text_mode=text_mode)
 
-main_menu()
+#main_menu()
+
+
+
+#Testing new user format
+
+#print(users[0]['name'])
+
+#I have streamlines the user system by making it a keyed dictionary 
+#It,s now easier to get user information
+
+for user in users:
+    print(user['name'])
+
+
 
 #print(menu(["thing1","thing2","thing3"],"things",back_func=main_menu))
 #gets current file path, kinda cool
