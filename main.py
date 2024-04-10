@@ -9,6 +9,7 @@ from pyboxen import boxen
 from timeit import default_timer as timer
 from pathlib import Path
 import marshal
+import pprint
 
 #Make timer affect score and stuff, remake user menu
 
@@ -42,19 +43,6 @@ save_filepath = "saves/"
 a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard","any"]],["- Type selection:",["multiple","boolean","either"]]]
 response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
 
-test_results_format=[["John",{
-    "Q1":{
-        "time":1,
-        "catagory":"placeholder",
-        "answered":"correct"
-    },
-    "Q2":{
-        "time":1,
-        "catagory":"placeholder",
-        "answered":"correct"
-    }
-}],["John"]]
-
 def api_request(request_string,specify_thingy='',mode=0):
     res = requests.get(request_string)
     response = json.loads(res.text)
@@ -87,48 +75,61 @@ def array_untangler(array,item=0):
 
 
 
+def spaced_print(things):
+    clear()
+    print ('{0: <20}'.format('Name'),'highscore\n')
+    for thing in things:
+        print ('{0: <20}'.format(thing['name']),thing['all_score'])
+    print('\n')
+
+def enum_print(array):
+    for index , item in enumerate(array,start=1):
+        print(str(index) + ' ' + item)
+    print('\n')
 
 
 
 def view_user_data():
-    #generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},data_file)
-
-
-    c_aray = renderer.option_list(["Users",'',"Options:",user_menu.get('menu')])
-    user_choice = le_input(c_aray,skip_func=main_menu)
+    generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},data_file)
+    spaced_print(users)
+    enum_print(user_menu.get('menu'))
+    user_choice = le_input(len(user_menu.get('menu')),skip_func=main_menu)
     user_menu[user_choice]()
-
 def new_user():
-    user = input("user name : ")
-    users.append([user , 0, 0, 0, "none", "none" ])
+    user_name = input("user name : ")
+    user_format = {
+        "name": user_name,
+        "all_score": 0,
+        "games":[]
+    }
+    users.append(user_format)
     view_user_data()
 def delete_user():
-    beanz = le_input(renderer.list(["Delete pin",array_untangler(users)]),skip_func=view_user_data)
-    if beanz >= 0:
-        renderer.option_list(["",[users[beanz]],"Confirm deletion of user\n",["delete","cancel"]],mode=1)
-        deletion = input("-- ")
-        if deletion == "y":
-            if users[beanz][5] != "none":
-                while True:
-                    secure = input("Enter pin : ")
-                    if secure == users[beanz][5]:
-                        users.pop(int(beanz))
-                        break
-                    elif secure == '':
-                        break
-                    else:
-                        print("Pin wrong")
-            else:
-                users.pop(int(beanz))
-        self.view_user_data()
-    elif beanz == None:
-        self.view_user_data()
-
-
+    temp_array = []
+    for x in users:
+        temp_array.append(x['name'])
+    beanz = le_input(renderer.list(["Delete pin",temp_array]),skip_func=view_user_data)
+    users.pop(beanz)
+    view_user_data()
+def advanced_user_view():
+    #Through testing i have found that formatting the dictionary is easier to read than pprint
+    #pprint.pprint(users,sort_dicts=False)
+    print("\n")
+    for user in users:
+        print("{}: {}".format('name', user['name']))
+        print("{}: {}".format('all_score', user['all_score']))
+        for thing in user['games']:
+            print("\n")
+            for key, value in thing.items():
+                print("{}: {}".format("\t"+key, value))
+        print("\n")
+    input('back')
+    view_user_data()
 user_menu = {
-    'menu':["New User","Delete User"],
+    'menu':["New User","Delete User","Advanced view"],
     0:new_user,
-    1:delete_user
+    1:delete_user,
+    2:advanced_user_view
 }
 
 
@@ -583,7 +584,31 @@ def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False
         sub=1
     return le_input(renderer.list([title,menu_items],sub=sub,sub_txt=sub_txt,no_num=no_index),skip=skip,skip_func=back_func,text_mode=text_mode)
 
-#main_menu()
+main_menu()
+
+
+
+
+
+
+"""
+#User deletion wasent working so i tested if pop still works and it does so i have to look elswhere.
+print(users)
+
+users.pop(0)
+
+print('\n')
+
+print(users)
+"""
+
+
+"""
+#New simple user print
+print ('{0: <20}'.format('Name'),'highscore\n')
+for user in users:
+    print ('{0: <20}'.format(user['name']),user['all_score'])
+"""
 
 
 
@@ -594,8 +619,10 @@ def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False
 #I have streamlines the user system by making it a keyed dictionary 
 #It,s now easier to get user information
 
-for user in users:
-    print(user['name'])
+#for user in users:
+#    print(user['name'])
+
+
 
 
 

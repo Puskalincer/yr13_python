@@ -2,41 +2,47 @@
     "users": [
         {
             "name": "Beilif",
-            "game1": {
-                "score": 0,
-                "correct": 0,
-                "incorrect": 0,
-                "streak": 0,
-                "highest_streak": 0,
-                "answers": []
-            },
-            "game2": {
-                "score": 0,
-                "correct": 0,
-                "incorrect": 0,
-                "streak": 0,
-                "highest_streak": 0,
-                "answers": []
-            }
+            "all_score": 0,
+            "games": [
+                {
+                    "score": 0,
+                    "correct": 0,
+                    "incorrect": 0,
+                    "streak": 0,
+                    "highest_streak": 0,
+                    "answers": []
+                },
+                {
+                    "score": 0,
+                    "correct": 0,
+                    "incorrect": 0,
+                    "streak": 0,
+                    "highest_streak": 0,
+                    "answers": []
+                }
+            ]
         },
         {
-            "name": "john",
-            "game1": {
-                "score": 0,
-                "correct": 0,
-                "incorrect": 0,
-                "streak": 0,
-                "highest_streak": 0,
-                "answers": []
-            },
-            "game2": {
-                "score": 0,
-                "correct": 0,
-                "incorrect": 0,
-                "streak": 0,
-                "highest_streak": 0,
-                "answers": []
-            }
+            "name": "John",
+            "all_score": 0,
+            "games": [
+                {
+                    "score": 0,
+                    "correct": 0,
+                    "incorrect": 0,
+                    "streak": 0,
+                    "highest_streak": 0,
+                    "answers": []
+                },
+                {
+                    "score": 0,
+                    "correct": 0,
+                    "incorrect": 0,
+                    "streak": 0,
+                    "highest_streak": 0,
+                    "answers": []
+                }
+            ]
         }
     ],
     "token": "4874f2ee08a828e17c4671e88f4996f68d1dcc6fd1bdec07cebbeb0bc7ba18ae",
