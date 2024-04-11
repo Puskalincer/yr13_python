@@ -3,7 +3,22 @@
         {
             "name": "Beilif",
             "all_score": 0,
-            "games": []
+            "games": [
+                {
+                    "score": 204,
+                    "correct": 2,
+                    "incorrect": 3,
+                    "streak": 0,
+                    "highest_streak": 1,
+                    "answers": [
+                        "2006",
+                        "7.62x39mm",
+                        "Global Personal System",
+                        "Courage",
+                        "Luigi Galvani"
+                    ]
+                }
+            ]
         },
         {
             "name": "John",
@@ -26,6 +41,11 @@
                     "answers": []
                 }
             ]
+        },
+        {
+            "name": "None",
+            "all_score": 0,
+            "games": []
         }
     ],
     "token": "4874f2ee08a828e17c4671e88f4996f68d1dcc6fd1bdec07cebbeb0bc7ba18ae",

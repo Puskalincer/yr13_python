@@ -23,6 +23,7 @@ number = 0
 question_file = "questions"
 data_file = "data"
 save_filepath = "saves/"
+data_filepath = "data/"
 
 a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard","any"]],["- Type selection:",["multiple","boolean","either"]]]
 response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
@@ -42,8 +43,6 @@ def api_request(request_string,specify_thingy='',mode=0):
 #Utilitys -Final
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
-def divider():
-    print("\n" + 34 * "-" + "\n")
 
 def internet(host="8.8.8.8", port=53, timeout=3):
     try:
@@ -78,6 +77,7 @@ def view_user_data():
     enum_print(user_menu.get('menu'))
     user_choice = le_input(len(user_menu.get('menu')),skip_func=main_menu)
     user_menu[user_choice]()
+
 def new_user():
     user_name = input("user name : ")
     user_format = {
@@ -87,14 +87,16 @@ def new_user():
     }
     users.append(user_format)
     view_user_data()
+
 def delete_user():
     beanz = le_input(renderer.list(["Delete pin",array_untangler(users,'name')]),skip_func=view_user_data)
     users.pop(beanz)
     view_user_data()
+
 def advanced_user_view():
     #Through testing i have found that formatting the dictionary is easier to read than pprint
     #pprint.pprint(users,sort_dicts=False)
-    print("\n")
+    clear()
     for user in users:
         print("{}: {}".format('name', user['name']))
         print("{}: {}".format('all_score', user['all_score']))
@@ -105,6 +107,7 @@ def advanced_user_view():
         print("\n")
     input('back')
     view_user_data()
+
 user_menu = {
     'menu':["New User","Delete User","Advanced view"],
     0:new_user,
@@ -302,7 +305,7 @@ def generate_save_file(filename,active_users,questions,loop_override):
 def read_data_file(name,filetype='.json'):
     return json.loads(open(name+filetype, "r").read())
 
-def generate_data_file(info,name):
+def generate_data_file(info,name:str) -> None:
     file = open(name+".json", "w")
     json.dump(info,file,indent=4)
 
@@ -322,7 +325,7 @@ class Game:
 
     user_array=[]
 
-    def set_users(self,data_list:list=None,names:list=None):
+    def set_users(self,data_list:list=None,names:list=None) -> None:
 
         if data_list:
             user_amount = len(data_list)
@@ -347,7 +350,7 @@ class Game:
 
             self.user_array.append(user)
 
-    def export_users(self):
+    def export_users(self) -> list:
         formatted_user_array = []
         for x in self.user_array:
             user_data = {
@@ -364,29 +367,22 @@ class Game:
 
         return formatted_user_array
     
-    def clear_users(self):
-        self.user_array = []
+    def clear_users(self) -> None:
+        #this didnt work
+        #self.user_array = []
 
-
+        #This did work, solving users increasing everytime,lul
+        self.user_array.clear()
 
 def play_save(name:str) -> None:
     save_data = read_data_file(save_filepath+name,'')
     prepare_quiz(save_data["q"],save_data["u"],loop_override=save_data['l'])
-
-
 
 def prepare_quiz(questions:list,user_data:list=None,user_list:list=None,loop_override:list=None) -> None:
     #If you played another game there would be extra users cause i forgot to clear the array. woops.
     Game().clear_users()
     Game().set_users(data_list=user_data,names=user_list)
     main_question_loop(questions,loop_override)
-
-
-
-
-
-
-
 
 def format_display_question(questions:list) -> tuple:
     temp_array = [x for x in questions["incorrect_answers"]]
@@ -413,7 +409,8 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
             else:
                 current_streak='Current streak -- ' + str(Game().user_array[y].streak)
             clear()
-            print ('{0: <30}'.format(Game().user_array[y].name+" -- Question " + str(numba) + " of " + str(len(questions))),current_streak+'\n')
+            formatted_display = Game().user_array[y].name+" -- Question " + str(numba) + " of " + str(len(questions))
+            print ('{0: <30}'.format(formatted_display),current_streak+'\n')
             print(html.unescape(displayed_question) + '\n')
             for n , d in enumerate(choices , start=1):
                 print(str(n) + ' ' + html.unescape(d))
@@ -466,7 +463,6 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
     for person in Game().user_array:
         print ('{0: <20}'.format(person.name),person.score)
     print("\n")
-    
     # Adds users game data to their user file.
     exported_users = Game().export_users()
     for user in exported_users:
@@ -474,8 +470,6 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
         del user['name']
         users[returned_index]['games'].append(user)
     re_save_data()
-
-
     enum_print(['menu','advanced view'])
     user_choice = le_input(2,False)
     if user_choice == 1:
@@ -487,10 +481,6 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
         main_menu()
     else:
         main_menu()
-
-
-
-
 
 def quiz_prepare(questions:list,quastion_amount:int=None) -> None:
     if quastion_amount != None:
@@ -511,9 +501,9 @@ def active_users_select() -> list:
     return active_users
 
 #Custom game setup
-def base_custom_input(array,array_name,misc_option=''): 
+def base_custom_input(array,array_name,misc_option='',menu_func=None): 
     renderer.list([array_name,array])
-    chosen_item = le_input(len(array),skip_func=game_menu)
+    chosen_item = le_input(len(array),skip_func=menu_func)
     if misc_option == "num":
         return chosen_item
     if misc_option:
@@ -526,9 +516,9 @@ def advanced_game():
     if online == False:
         input("Internet required")
         game_menu()
-    sub_cat = base_custom_input(a_g_m[0][1],a_g_m[0][0],"num")
+    sub_cat = base_custom_input(a_g_m[0][1],a_g_m[0][0],"num",game_menu)
     temp_cat_select = sub_cat + 1
-    request_catagory = str(base_custom_input(array_untangler(catagories[sub_cat],1),"- Catagoey selection:",temp_cat_select))
+    request_catagory = str(base_custom_input(array_untangler(catagories[sub_cat],1),"- Catagoey selection:",temp_cat_select,advanced_game))
 
     #Get limits impliment thing.
     beunos = api_request('https://opentdb.com/api_count.php?category='+request_catagory,"category_question_count")
@@ -542,7 +532,6 @@ def advanced_game():
     request_diffuculty = base_custom_input(a_g_m[1][1],a_g_m[1][0])
     request_type = base_custom_input(a_g_m[2][1],a_g_m[2][0])
     clear()
-    divider()
 
     if temp_array_69[a_g_m[1][1].index(request_diffuculty)] > 50:
         print("Max 50")
@@ -566,7 +555,7 @@ def advanced_game():
 
     #Temp manuel check response code, make automatic later
     if thing_code != 0:
-        print("failed")
+        print("An error occurred, please try again")
         input("return to menu -- ")
         main_menu()
     #
@@ -620,7 +609,12 @@ def save_menu():
 def main_menu():
     menu_options[menu(menu_options["items"],menu_options["title"])]()
 
-setting_items = ["Gui mode = console","score_time_limit = " + str(score_time_limit),"score_modifier_base = " + str(score_modifier_base),"score_modifier_win = "+str(score_modifier_win),"score_modifier_lose = "+str(score_modifier_lose),"score_modifier_time = "+str(score_modifier_time),"request_token = "+request_token,"online = "+str(online),"question_file_name = "+question_file,"data_file_name = "+data_file,"save_filepath_name = "+save_filepath]
+setting_items = ["Gui mode = console","request_token = "+request_token,"online = "+str(online),"question_file_name = "+question_file,"data_file_name = "+data_file,"save_filepath_name = "+save_filepath]
+
+
+
+
+
 
 def setting_menu():
     menu(setting_items,"Settings",main_menu)
@@ -649,8 +643,6 @@ menu_options = {
 }
 
 online = internet()
-#Initialization things -Final
-clear()
 results = data_manager()
 if results != "o_t_s":
     users = results["users"]
@@ -663,15 +655,22 @@ if results != "o_t_s":
     else:
         #number = results["counter"]+1
         pass
-    generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},data_file)
+    re_save_data()
 else:
     time.sleep(1)
 
 
 local_questions = read_data_file(question_file)
 
+
 if not os.path.exists(Path(save_filepath)):
     Path(save_filepath).mkdir(parents=True, exist_ok=True)
+
+if not os.path.exists(Path(data_filepath)):
+    Path(data_filepath).mkdir(parents=True, exist_ok=True)
+
+
+
 
 def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False):
     clear()
@@ -685,48 +684,4 @@ def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False
         sub=1
     return le_input(renderer.list([title,menu_items],sub=sub,sub_txt=sub_txt,no_num=no_index),skip=skip,skip_func=back_func,text_mode=text_mode)
 
-#main_menu()
-
-play_save('new_user_system.json')
-
-
-
-
-"""
-#User deletion wasent working so i tested if pop still works and it does so i have to look elswhere.
-print(users)
-
-users.pop(0)
-
-print('\n')
-
-print(users)
-"""
-
-
-"""
-#New simple user print
-print ('{0: <20}'.format('Name'),'highscore\n')
-for user in users:
-    print ('{0: <20}'.format(user['name']),user['all_score'])
-"""
-
-
-
-#Testing new user format
-
-#print(users[0]['name'])
-
-#I have streamlines the user system by making it a keyed dictionary 
-#It,s now easier to get user information
-
-#for user in users:
-#    print(user['name'])
-
-
-
-
-
-#print(menu(["thing1","thing2","thing3"],"things",back_func=main_menu))
-#gets current file path, kinda cool
-#print(Path().resolve())
+main_menu()
