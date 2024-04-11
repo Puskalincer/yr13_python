@@ -8,8 +8,7 @@ import html
 from pyboxen import boxen
 from pathlib import Path
 
-#Make timer affect score and stuff, remake user menu : Done
-
+#Amount of points you get when 
 score_multiplier = 100
 streak_multiplier = 2
 
@@ -69,7 +68,7 @@ def enum_print(array):
     print('\n')
 
 def re_save_data():
-    generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},data_file)
+    generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},data_filepath+data_file)
 
 def view_user_data():
     re_save_data()
@@ -281,13 +280,13 @@ def one_time_start():
     print("Generating Start file")
     catagories = prepare_catagories()
     request_token = api_request('https://opentdb.com/api_token.php?command=request',"token",1) 
-    generate_data_file(api_request('https://opentdb.com/api.php?amount=50')["results"],question_file)
-    generate_data_file({"users": [],"token": request_token,"catagories" : catagories,"counter":0},data_file)
+    generate_data_file(api_request('https://opentdb.com/api.php?amount=50')["results"],data_filepath+question_file)
+    generate_data_file({"users": [],"token": request_token,"catagories" : catagories,"counter":0},data_filepath+data_file)
     data_manager()
 
 def data_manager():
     try:
-        data = read_data_file(data_file)
+        data = read_data_file(data_filepath+data_file)
         return data
     except:
         one_time_start()
@@ -609,7 +608,7 @@ def save_menu():
 def main_menu():
     menu_options[menu(menu_options["items"],menu_options["title"])]()
 
-setting_items = ["Gui mode = console","request_token = "+request_token,"online = "+str(online),"question_file_name = "+question_file,"data_file_name = "+data_file,"save_filepath_name = "+save_filepath]
+setting_items = ["Gui mode = console","request_token = "+request_token,"online = "+str(online)]
 
 
 
@@ -650,7 +649,7 @@ if results != "o_t_s":
     catagories = results["catagories"]
     if results["counter"]>20:
         questions = api_request('https://opentdb.com/api.php?amount=50')["results"]
-        generate_data_file(questions,question_file)
+        generate_data_file(questions,data_filepath+question_file)
         number = 0
     else:
         #number = results["counter"]+1
@@ -659,18 +658,13 @@ if results != "o_t_s":
 else:
     time.sleep(1)
 
-
-local_questions = read_data_file(question_file)
-
+local_questions = read_data_file(data_filepath+question_file)
 
 if not os.path.exists(Path(save_filepath)):
     Path(save_filepath).mkdir(parents=True, exist_ok=True)
 
 if not os.path.exists(Path(data_filepath)):
     Path(data_filepath).mkdir(parents=True, exist_ok=True)
-
-
-
 
 def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False):
     clear()
