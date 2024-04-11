@@ -6,37 +6,12 @@ import requests
 import socket
 import html
 from pyboxen import boxen
-from timeit import default_timer as timer
 from pathlib import Path
-import marshal
-import pprint
 
 #Make timer affect score and stuff, remake user menu : Done
 
-
-
 score_multiplier = 100
 streak_multiplier = 2
-
-
-
-
-#Depreciated
-score_time_limit = 10
-score_modifier_base = 50
-score_modifier_win = 10
-score_modifier_lose = 0
-score_modifier_time = 5
-
-
-"""
-score_time_limit = 10
-score_modifier_base = 73
-score_modifier_win = 2
-score_modifier_lose = 0
-score_modifier_time = 5
-"""
-
 
 request_token = ""
 local_questions = ""
@@ -94,8 +69,11 @@ def enum_print(array):
         print(str(index) + ' ' + item)
     print('\n')
 
-def view_user_data():
+def re_save_data():
     generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},data_file)
+
+def view_user_data():
+    re_save_data()
     spaced_print(users)
     enum_print(user_menu.get('menu'))
     user_choice = le_input(len(user_menu.get('menu')),skip_func=main_menu)
@@ -401,23 +379,7 @@ def prepare_quiz(questions:list,user_data:list=None,user_list:list=None,loop_ove
     #If you played another game there would be extra users cause i forgot to clear the array. woops.
     Game().clear_users()
     Game().set_users(data_list=user_data,names=user_list)
-
-    #Comparing both systems to add exported objects to user variable user storage, to go in file
-    clear()
-    exported_users = Game().export_users()
-
-    #print(exported_users[0])    
-    #del my_dict['key']
-    
-    
-    existing_users = array_untangler(users,'name')
-
-    print(array_untangler(exported_users,'name'))
-    
-
-
-
-    #main_question_loop(questions,loop_override)
+    main_question_loop(questions,loop_override)
 
 
 
@@ -504,6 +466,15 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
     for person in Game().user_array:
         print ('{0: <20}'.format(person.name),person.score)
     print("\n")
+    
+    # Adds users game data to their user file.
+    exported_users = Game().export_users()
+    for user in exported_users:
+        returned_index = array_untangler(users,'name').index(user.get('name'))
+        del user['name']
+        users[returned_index]['games'].append(user)
+    re_save_data()
+
 
     enum_print(['menu','advanced view'])
     user_choice = le_input(2,False)
@@ -516,17 +487,6 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
         main_menu()
     else:
         main_menu()
-
-
-
-
-    #print(Game().export_users())
-
-    #for x in Game().user_array:
-    #    pprint.pprint(x.__dict__,sort_dicts=False)
-    #    print("\n")
-
-
 
 
 
@@ -549,86 +509,6 @@ def active_users_select() -> list:
         beanz = le_input(len(user_names),skip_func=game_menu)
         active_users.append(user_names[beanz])
     return active_users
-
-
-
-
-#Depreciated
-
-def old_main_question_loop(how_many_questions,questions,active_users,x=0,y=0,sub_text="10 secs"):
-    current_score = []
-    for users in active_users:
-        current_score.append(0)
-    while x < int(how_many_questions):
-        question = questions[x]
-        thing1 , thing2 = format_display_question(question)
-        while y < len(active_users):
-            renderer.list([active_users[y][0] + " -- Question " + str(x) + " of " + str(how_many_questions),thing1],question=thing2+"\n",sub=1,sub_txt=sub_text)
-            start = timer()
-            user_choice = le_input(len(thing1),skip=False)
-            end = timer()
-            if user_choice == "save":
-                saves = os.listdir('saves')
-                if len(saves) == 0:
-                    saves = ["No saves"]
-                name = menu(saves,"Saves",sub_txt="Save name",no_index=1,text_mode=True,back_func=main_menu)
-                for save_item in saves:
-                    save = Path(save_item).stem
-                    if save == name:
-                        print("Overwrite save? y/n")
-                        user_choice = le_input(text_mode='specify',specific={"y","n"})
-                        if user_choice == "n":
-                            main_menu()
-                            return
-                generate_save_file(name,active_users,questions,[x,y])           
-                main_menu()
-                return
-            elif user_choice == "menu":
-                main_menu()
-                return
-            elif int(user_choice) == thing1.index(question["correct_answer"]):
-                print("\nCorrect")
-                final_time = int(end - start)
-                if final_time < 10:
-                    le_numbers = score_modifier_base-(final_time*score_modifier_time)
-                    current_score[y] = current_score[y] + le_numbers
-            else:
-                print("\nIncorrect : " + question["correct_answer"])
-            #print(final_time) 
-            #print(final_time*score_modifier_time)
-            #print(score_modifier_base-(final_time*score_modifier_time))
-            input("")
-            y=y+1
-        x=x+1
-        y=0
-        clear()
-        renderer.list_result(["scores",array_untangler(active_users,0),current_score])
-        input("")
-    main_menu()
-
-def old_quiz_prepare(quastion_amount,questions,change_range=50):
-    current_question = []
-    requested_quesions = random.sample(range(change_range), int(quastion_amount))
-    for x , y in enumerate(requested_quesions):
-        current_question.append(questions[requested_quesions[x]])
-    active_users = active_users_select()
-    old_main_question_loop(quastion_amount,current_question,active_users)
-
-def old_active_users_select():
-    active_users = []
-    x = le_input(renderer.list(["Users",array_untangler(users,'name')],sub=1,sub_txt="Player amount"),skip_func=game_menu)
-    x+=1
-    renderer.list(["Users",array_untangler(users)])
-    for y in range(int(x)):
-        beanz = le_input(len(array_untangler(users)),skip_func=game_menu)
-        active_users.append(users[beanz])
-    return active_users
-
-
-
-
-
-
 
 #Custom game setup
 def base_custom_input(array,array_name,misc_option=''): 
