@@ -1,0 +1,3 @@
+Eel==0.16.0
+pyboxen==1.3.0
+Requests==2.31.0

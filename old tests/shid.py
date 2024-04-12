@@ -12,6 +12,7 @@ def INPOOOOOOOT(range):
         try:
             choice = int(input())
             if choice > 0 and choice <= range:
+                choice-=1
                 return choice
             else:
                 print("Number in range please")
@@ -60,6 +61,13 @@ class Game:
     def clear_users(self):
         self.user_array.clear()
 
+
+def list_print(array_name):
+    for id , items in enumerate(array_name, start=1):
+        print(str(id) + ' ' + items)
+    print('\n')
+
+
 def read_data_file(name,filetype='.json'):
     return json.loads(open(name+filetype, "r").read())
 
@@ -76,11 +84,9 @@ def question_function(questions,users):
             choices.append(question['correct_answer'])
             random.shuffle(choices)
 
-            for id , items in enumerate(choices, start=1):
-                print(str(id) + ' ' + items)
-            print('\n')
+            list_print(choices)
+
             user_answer = INPOOOOOOOT(len(choices))
-            user_answer-=1
 
             if choices[user_answer] == question['correct_answer']:
                 print("Correct!")
@@ -104,6 +110,17 @@ def question_function(questions,users):
 
 
 
+def main_menu():
+    clear()
+    print("main menu")
+    list_print(['play','play1','play2'])
+    user_choice = INPOOOOOOOT(3)
+    if user_choice == 0:
+        print("1")
+    elif user_choice == 1:
+        print("2")
+    elif user_choice == 2:
+        print("3")
 
 
 questions = read_data_file('data/questions')[:5]

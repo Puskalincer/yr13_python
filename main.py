@@ -537,7 +537,7 @@ def advanced_game():
     beunos = api_request('https://opentdb.com/api_count.php?category='+request_catagory,"category_question_count")
 
     temp_array_69 = []
-    ['total_easy_question_count','total_medium_question_count''total_hard_question_count']
+    ['total_easy_question_count','total_medium_question_count','total_hard_question_count']
 
 
 
