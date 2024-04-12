@@ -1,49 +1,73 @@
+#Import os, used for terminal clearing
 import os
+#Used when formating recieved questions and file stuff,
 import json 
+#Pauses when playing quiz to read results
 import time
+#Randomizes local questions and randomizeds quiz choices.
 import random
+#Gets results from api's
 import requests
+#Used to check if user has internet access
 import socket
+#Used to turn encoded text to readable
 import html
+#Makes cool box around text
 from pyboxen import boxen
+#Used to check if path exists
 from pathlib import Path
 
-#Amount of points you get when 
+#Amount of points you get when you get a question right
 score_multiplier = 100
+#Gets times by current streak number
 streak_multiplier = 2
 
-request_token = ""
+#Stores local questions loaded from file
 local_questions = ""
+#Stores catagories questions loaded from file
 catagories = []
+#Stores users questions loaded from file
 users = []
+#Bool for online, affects if custom play works
 online = True
+#Counter for offline file, resets after afew
 number = 0
 
+#name of file with questions
 question_file = "questions"
+#name of file with data
 data_file = "data"
+#name of folder with saves
 save_filepath = "saves/"
+#name of folder with data
 data_filepath = "data/"
 
-a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",["easy","medium","hard","any"]],["- Type selection:",["multiple","boolean","either"]]]
-response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
+#Menus for the advanced game menu
+a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",
+        ["easy","medium","hard","any"]],["- Type selection:",["multiple","boolean","either"]]]
 
-def api_request(request_string,specify_thingy='',mode=0):
-    res = requests.get(request_string)
+#Readable meaning for response codes
+#response_codes = ["Success","No Results","Invalid Parameter ","Token Not Found ","Token Empty ","Rate Limit"]
+
+#Returns result from given api string
+def api_request(request_str:str,key:str='',mode=0):
+    res = requests.get(request_str)
     response = json.loads(res.text)
     if mode == 1:
-        return response[specify_thingy]
+        return response[key]
     try:
-        return response[specify_thingy] , response["response_code"]
+        return response[key] , response["response_code"]
     except:
-        if specify_thingy:
-            return response[specify_thingy]
+        if key:
+            return response[key]
         return response
 
-#Utilitys -Final
-def clear():
+#Clears the terminal for easier reading
+def clear() -> None:
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def internet(host="8.8.8.8", port=53, timeout=3):
+#Checks internet connection
+def internet(host:str="8.8.8.8", port:int=53, timeout:int=3) -> bool:
     try:
         socket.setdefaulttimeout(timeout)
         socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
@@ -52,39 +76,35 @@ def internet(host="8.8.8.8", port=53, timeout=3):
         #print(ex)
         return False
 
+#Gets specified index item from multi level array
 def array_untangler(array:list,item:int=0) -> list:
     return [i[item] for i in array] 
 
-def spaced_print(things):
+def spaced_print(things:list) -> None:
     clear()
     print ('{0: <20}'.format('Name'),'highscore\n')
     for thing in things:
         print ('{0: <20}'.format(thing['name']),thing['all_score'])
     print('\n')
 
-def enum_print(array):
+def enum_print(array:list) -> None:
     for index , item in enumerate(array,start=1):
         print(str(index) + ' ' + item)
     print('\n')
 
-def re_save_data():
-    generate_data_file({"users": users,"token": request_token,"catagories" : catagories,"counter":number},data_filepath+data_file)
+def re_save_data() -> None:
+    generate_data_file({"users": users,"catagories" : catagories,"counter":number},data_filepath+data_file)
 
-def view_user_data():
+def view_user_data() -> None:
     re_save_data()
     spaced_print(users)
     enum_print(user_menu.get('menu'))
     user_choice = le_input(len(user_menu.get('menu')),skip_func=main_menu)
     user_menu[user_choice]()
 
-def new_user():
+def new_user() -> None:
     user_name = input("user name : ")
-    user_format = {
-        "name": user_name,
-        "all_score": 0,
-        "games":[]
-    }
-    users.append(user_format)
+    users.append(dict(name = user_name, all_score = 0, games = []))
     view_user_data()
 
 def delete_user():
@@ -93,8 +113,6 @@ def delete_user():
     view_user_data()
 
 def advanced_user_view():
-    #Through testing i have found that formatting the dictionary is easier to read than pprint
-    #pprint.pprint(users,sort_dicts=False)
     clear()
     for user in users:
         print("{}: {}".format('name', user['name']))
@@ -279,9 +297,8 @@ def prepare_catagories():
 def one_time_start():
     print("Generating Start file")
     catagories = prepare_catagories()
-    request_token = api_request('https://opentdb.com/api_token.php?command=request',"token",1) 
-    generate_data_file(api_request('https://opentdb.com/api.php?amount=50')["results"],data_filepath+question_file)
-    generate_data_file({"users": [],"token": request_token,"catagories" : catagories,"counter":0},data_filepath+data_file)
+    generate_data_file(api_request('https://opentdb.com/api.php?amount=50','results'),data_filepath+question_file)
+    generate_data_file({"users": [],"catagories" : catagories,"counter":0},data_filepath+data_file)
     data_manager()
 
 def data_manager():
@@ -315,10 +332,10 @@ class Active_user:
     incorrect = 0
     streak = 0
     highest_streak = 0
-    answers = []
 
-    def __int__(self, name: str) -> None:
+    def __int__(self, name: str , answers) -> None:
         self.name = name
+        self.answers = answers
 
 class Game:
 
@@ -346,6 +363,7 @@ class Game:
                 user.answers=data.get('answers')
             else:
                 user.name=names[x]
+                user.answers=[]
 
             self.user_array.append(user)
 
@@ -367,17 +385,20 @@ class Game:
         return formatted_user_array
     
     def clear_users(self) -> None:
-        #this didnt work
-        #self.user_array = []
-
-        #This did work, solving users increasing everytime,lul
         self.user_array.clear()
 
 def play_save(name:str) -> None:
     save_data = read_data_file(save_filepath+name,'')
-    prepare_quiz(save_data["q"],save_data["u"],loop_override=save_data['l'])
+    prepare_users(save_data["q"],save_data["u"],loop_override=save_data['l'])
 
-def prepare_quiz(questions:list,user_data:list=None,user_list:list=None,loop_override:list=None) -> None:
+def quiz_prepare(questions:list,quastion_amount:int=None) -> None:
+    if quastion_amount != None:
+        questions = random.sample(questions, quastion_amount)
+    random.shuffle(questions)
+    active_users = active_users_select()
+    prepare_users(questions,user_list=active_users)
+
+def prepare_users(questions:list,user_data:list=None,user_list:list=None,loop_override:list=None) -> None:
     #If you played another game there would be extra users cause i forgot to clear the array. woops.
     Game().clear_users()
     Game().set_users(data_list=user_data,names=user_list)
@@ -481,13 +502,6 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
     else:
         main_menu()
 
-def quiz_prepare(questions:list,quastion_amount:int=None) -> None:
-    if quastion_amount != None:
-        questions = random.sample(questions, quastion_amount)
-    random.shuffle(questions)
-    active_users = active_users_select()
-    prepare_quiz(questions,user_list=active_users)
-
 def active_users_select() -> list:
     user_names = array_untangler(users,'name')
     active_users = []
@@ -523,6 +537,10 @@ def advanced_game():
     beunos = api_request('https://opentdb.com/api_count.php?category='+request_catagory,"category_question_count")
 
     temp_array_69 = []
+    ['total_easy_question_count','total_medium_question_count''total_hard_question_count']
+
+
+
     temp_array_69.append(beunos['total_easy_question_count'])
     temp_array_69.append(beunos['total_medium_question_count'])
     temp_array_69.append(beunos['total_hard_question_count'])
@@ -549,6 +567,7 @@ def advanced_game():
         request_diffuculty=''
     else:
         request_diffuculty='&difficulty='+request_diffuculty
+
 
     questions , thing_code = api_request('https://opentdb.com/api.php?amount='+str(request_amount)+'&category='+request_catagory+request_diffuculty+request_type,"results")
 
@@ -608,12 +627,7 @@ def save_menu():
 def main_menu():
     menu_options[menu(menu_options["items"],menu_options["title"])]()
 
-setting_items = ["Gui mode = console","request_token = "+request_token,"online = "+str(online)]
-
-
-
-
-
+setting_items = ["Gui mode = console","online = "+str(online),"score_multiplier = "+str(score_multiplier),"streak_multiplier = "+str(streak_multiplier)]
 
 def setting_menu():
     menu(setting_items,"Settings",main_menu)
@@ -629,7 +643,6 @@ g_m_o = {
     "items":["Quick","Basic","Advanced","Custom"],
     "title":"Game menu",
     "data_2":[5,20,30],
-    3:advanced_game
 }
 
 menu_options = {
@@ -645,7 +658,6 @@ online = internet()
 results = data_manager()
 if results != "o_t_s":
     users = results["users"]
-    request_token = results["token"]
     catagories = results["catagories"]
     if results["counter"]>20:
         questions = api_request('https://opentdb.com/api.php?amount=50')["results"]
