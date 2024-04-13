@@ -34,13 +34,13 @@ online = True
 number = 0
 
 #name of file with questions
-question_file = "questions"
+QUESTION_FILE = "questions"
 #name of file with data
 data_file = "data"
 #name of folder with saves
 save_filepath = "saves/"
 #name of folder with data
-data_filepath = "data/"
+DATA_FILEPATH = "data/"
 
 #Menus for the advanced game menu
 a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",
@@ -88,7 +88,7 @@ def enum_print(array:list) -> None:
 
 #Saves current data to data file
 def re_save_data() -> None:
-    generate_data_file({"users": users,"catagories" : catagories,"counter":number},data_filepath+data_file)
+    generate_data_file({"users": users,"catagories" : catagories,"counter":number},DATA_FILEPATH+data_file)
 
 #Shows users names and high scores and some options
 def view_user_data() -> None:
@@ -237,7 +237,7 @@ def le_input(range=0,skip=True,skip_func="",text_mode=False,specific=None):
                         return user_input
                 print("Please choose from the options above")
         except:
-            print("Please enter a number in range")
+            print("Please enter a NUMBER in range")
 
 #Menu, for simplification
 def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False):
@@ -276,14 +276,14 @@ def prepare_catagories() -> list[list]:
 def one_time_start() -> None:
     print("Generating Start file")
     catagories = prepare_catagories()
-    generate_data_file(api_request('https://opentdb.com/api.php?amount=50')["results"],data_filepath+question_file)
-    generate_data_file({"users": [],"catagories" : catagories,"counter":0},data_filepath+data_file)
+    generate_data_file(api_request('https://opentdb.com/api.php?amount=50')["results"],DATA_FILEPATH+QUESTION_FILE)
+    generate_data_file({"users": [],"catagories" : catagories,"counter":0},DATA_FILEPATH+data_file)
     data_manager()
 
 #Trys to read data file, if cant makes one with required stuff.
 def data_manager():
     try:
-        data = read_data_file(data_filepath+data_file)
+        data = read_data_file(DATA_FILEPATH+data_file)
         return data
     except:
         one_time_start()
@@ -538,8 +538,8 @@ def advanced_game() -> None:
     for key in keys:
         upper_limit_formatted.append(upper_limits[key])
     upper_limit_formatted.append(sum(upper_limit_formatted))
-    request_diffuculty = base_custom_input(a_g_m[1][1],a_g_m[1][0])
-    request_type = base_custom_input(a_g_m[2][1],a_g_m[2][0])
+    request_diffuculty = base_custom_input(a_g_m[1][1],a_g_m[1][0],menu_func=advanced_game)
+    request_type = base_custom_input(a_g_m[2][1],a_g_m[2][0],menu_func=advanced_game)
     clear()
     if upper_limit_formatted[a_g_m[1][1].index(request_diffuculty)] > 50:
         print("Max 50")
@@ -587,7 +587,7 @@ setting_items = ["online = "+str(online),"score_multiplier = "+str(score_multipl
 
 #Settings menu,never finished.
 def setting_menu():
-    menu(setting_items,"Settings",main_menu)
+    menu(setting_items,"Settings",main_menu,no_index=1,text_mode=True)
     main_menu()
 
 #Game menu, shows quiz choices.
@@ -627,8 +627,8 @@ if not os.path.exists(Path(save_filepath)):
     Path(save_filepath).mkdir(parents=True, exist_ok=True)
 
 #Makes data folder if None
-if not os.path.exists(Path(data_filepath)):
-    Path(data_filepath).mkdir(parents=True, exist_ok=True)
+if not os.path.exists(Path(DATA_FILEPATH)):
+    Path(DATA_FILEPATH).mkdir(parents=True, exist_ok=True)
 
 #Checks internet connection
 online = internet()
@@ -639,7 +639,7 @@ if results != "o_t_s":
     catagories = results["catagories"]
     if results["counter"]>20:
         questions = api_request('https://opentdb.com/api.php?amount=50')["results"]
-        generate_data_file(questions,data_filepath+question_file)
+        generate_data_file(questions,DATA_FILEPATH+QUESTION_FILE)
         number = 0
     else:
         number = results["counter"]+1
@@ -649,6 +649,6 @@ else:
     time.sleep(1)
 
 #Gets questions from questions file
-local_questions = read_data_file(data_filepath+question_file)
+local_questions = read_data_file(DATA_FILEPATH+QUESTION_FILE)
 
 main_menu()
