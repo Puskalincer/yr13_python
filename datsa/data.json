@@ -1,0 +1,11 @@
+{
+    "users": [
+        {
+            "name": "harry",
+            "all_score": 0,
+            "games": []
+        }
+    ],
+    "catagories": [],
+    "counter": 0
+}

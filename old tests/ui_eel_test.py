@@ -4,7 +4,7 @@ import random
 import html
 import time
 
-local_questions = json.loads(open('questions.json', 'r').read())
+local_questions = json.loads(open('./data/questions.json', 'r').read())
 
 
 

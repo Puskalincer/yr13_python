@@ -3,12 +3,42 @@
         {
             "name": "Beilif",
             "all_score": 204,
-            "games": []
+            "games": [
+                {
+                    "score": 530,
+                    "correct": 5,
+                    "incorrect": 0,
+                    "streak": 5,
+                    "highest_streak": 0,
+                    "answers": [
+                        "1 Month",
+                        "88",
+                        "The Sound of Crickets",
+                        "Famous",
+                        "Hampshire"
+                    ]
+                }
+            ]
         },
         {
             "name": "John",
             "all_score": 0,
-            "games": []
+            "games": [
+                {
+                    "score": 530,
+                    "correct": 5,
+                    "incorrect": 0,
+                    "streak": 5,
+                    "highest_streak": 0,
+                    "answers": [
+                        "1 Month",
+                        "88",
+                        "The Sound of Crickets",
+                        "Famous",
+                        "Hampshire"
+                    ]
+                }
+            ]
         }
     ],
     "catagories": [

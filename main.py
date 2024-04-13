@@ -40,7 +40,7 @@ data_file = "data"
 #name of folder with saves
 save_filepath = "saves/"
 #name of folder with data
-data_filepath = "data/"
+data_filepath = "datsa/"
 
 #Menus for the advanced game menu
 a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",
@@ -97,8 +97,11 @@ def re_save_data() -> None:
 
 def view_user_data() -> None:
     re_save_data()
-    spaced_print(users)
-    enum_print(user_menu.get('menu'))
+
+    renderer.list_result(users,'Users',user_menu.get('menu'),'options')
+    #spaced_print(users)
+
+    #enum_print(user_menu.get('menu'))
     user_choice = le_input(len(user_menu.get('menu')),skip_func=main_menu)
     user_menu[user_choice]()
 
@@ -107,8 +110,8 @@ def new_user() -> None:
     users.append(dict(name = user_name, all_score = 0, games = []))
     view_user_data()
 
-def delete_user():
-    beanz = le_input(renderer.list(["Delete pin",array_untangler(users,'name')]),skip_func=view_user_data)
+def delete_user() -> None:
+    beanz = le_input(renderer.list(["Delete user",array_untangler(users,'name')]),skip_func=view_user_data)
     users.pop(beanz)
     view_user_data()
 
@@ -187,14 +190,20 @@ class renderer:
         )
         return len(items[3])
 
-    def list_result(items):
-        title = items[0]
+    def list_result(items,title,options,title2):
         clear()
         temp_array = []
-        for idx , array_item in enumerate(items[1]):
-            temp_array.append(' {left:<7}    {right:>7}'.format(left= array_item, right=str(items[2][idx])))
+
+        temp_array.append(' {left:<10}    {right:>10}'.format(left= 'Name', right='highscore\n'))
+        
+        for thing in items:
+            temp_array.append(' {left:<10}    {right:>10}'.format(left= thing['name'], right=str(thing['all_score'])))
+        
+        temp_array.append("\n"+title2)
+        for idx , array_item in enumerate(options , start=1):
+            temp_array.append(html.unescape(str(idx) + " - "+ array_item))
         text = '\n'.join(temp_array)
-        text = ' {left:<7}    {right:>7}'.format(left= "user", right="score\n") + text
+
         print(
             boxen(
                 text,
@@ -205,75 +214,6 @@ class renderer:
                 padding=(1,5),
             )
         )
-        return len(items[1])
-
-
-
-    """
-    def option_list(items,mode=0):
-        clear()
-        if mode == 0:
-            temp_array = []
-            title = html.unescape(items[0])
-            for idx , array_item in enumerate(items[1] , start=1):
-                temp_array.append(html.unescape(str(idx) + " - "+ array_item))
-            text = '\n'.join(temp_array)
-            print(
-                boxen(
-                    html.unescape(text),
-                    title=title,
-                    subtitle=title,
-                    subtitle_alignment="right",
-                    color="cyan",
-                    padding=(1,5),
-                )
-            )
-
-
-
-        elif mode == 1:
-            users = items[1]
-            temp_array = []
-            title = html.unescape(items[0])
-
-
-
-            
-            question = "User \t \t Correct \t Incorrect \t W/L Ratio \t Best category \n"
-            for beans, value in enumerate(users):
-                temp_array.append(value[0] + " \t  " + str(value[1]) + " \t  " + str(value[2]) + " \t  " + str(value[3]) + " \t  " + str(value[4]))
-        
-
-                
-            text = '\n'.join(temp_array)
-
-            text=question+text
-
-            print(
-                boxen(
-                    html.unescape(text),
-                    title=title,
-                    subtitle=title,
-                    subtitle_alignment="right",
-                    color="cyan",
-                    padding=(1,5),
-                )
-            )
-
-
-
-
-
-
-            
-        
-        divider()
-        print(items[2])
-        for idx , array_item in enumerate(items[3] , start=1):
-            print(html.unescape(str(idx) + " - "+ array_item))
-        divider()
-        return len(items[3])
-    """
 
 def prepare_catagories():
     temp_array = [[],[],[]]
@@ -297,7 +237,7 @@ def prepare_catagories():
 def one_time_start():
     print("Generating Start file")
     catagories = prepare_catagories()
-    generate_data_file(api_request('https://opentdb.com/api.php?amount=50','results'),data_filepath+question_file)
+    generate_data_file(api_request('https://opentdb.com/api.php?amount=50')["results"],data_filepath+question_file)
     generate_data_file({"users": [],"catagories" : catagories,"counter":0},data_filepath+data_file)
     data_manager()
 
@@ -435,8 +375,8 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
             for n , d in enumerate(choices , start=1):
                 print(str(n) + ' ' + html.unescape(d))
             print("\n")
-            user_choice = le_input(len(choices),skip=False)
-            if user_choice == "save":
+            user_choice = le_input(len(choices)+2,skip=False)
+            if user_choice == len(choices):
                 saves = os.listdir('saves')
                 if len(saves) == 0:
                     saves = ["No saves"]
@@ -452,7 +392,7 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
                 generate_save_file(name,Game().export_users(),questions,[x,y])           
                 main_menu()
                 return
-            elif user_choice == "menu":
+            elif user_choice == len(choices)+1:
                 main_menu()
                 return
             Game().user_array[y].answers.append(choices[user_choice])
@@ -534,18 +474,16 @@ def advanced_game():
     request_catagory = str(base_custom_input(array_untangler(catagories[sub_cat],1),"- Catagoey selection:",temp_cat_select,advanced_game))
 
     #Get limits impliment thing.
-    beunos = api_request('https://opentdb.com/api_count.php?category='+request_catagory,"category_question_count")
+    upper_limits = api_request('https://opentdb.com/api_count.php?category='+request_catagory,"category_question_count")
 
     temp_array_69 = []
-    ['total_easy_question_count','total_medium_question_count','total_hard_question_count']
 
+    keys =  ['total_easy_question_count','total_medium_question_count','total_hard_question_count',all_value]
+    all_value = 0
+    for i in keys:
+        all_value=all_value+upper_limits[i]
+        temp_array_69.append(upper_limits[i])
 
-
-    temp_array_69.append(beunos['total_easy_question_count'])
-    temp_array_69.append(beunos['total_medium_question_count'])
-    temp_array_69.append(beunos['total_hard_question_count'])
-    temp_array_69.append(beunos['total_easy_question_count']+beunos['total_medium_question_count']+beunos['total_hard_question_count'])
-    
     request_diffuculty = base_custom_input(a_g_m[1][1],a_g_m[1][0])
     request_type = base_custom_input(a_g_m[2][1],a_g_m[2][0])
     clear()
@@ -593,8 +531,6 @@ def le_input(range=0,skip=True,skip_func="",text_mode=False,specific=None):
                     print("No skipping")
             elif text_mode == True:
                 return user_input
-            elif user_input in {"save","menu"}:
-                return user_input
             elif text_mode == 'specify':
                 if user_input in specific:
                     return user_input
@@ -627,10 +563,11 @@ def save_menu():
 def main_menu():
     menu_options[menu(menu_options["items"],menu_options["title"])]()
 
-setting_items = ["Gui mode = console","online = "+str(online),"score_multiplier = "+str(score_multiplier),"streak_multiplier = "+str(streak_multiplier)]
+setting_items = ["online = "+str(online),"score_multiplier = "+str(score_multiplier),"streak_multiplier = "+str(streak_multiplier)]
 
 def setting_menu():
     menu(setting_items,"Settings",main_menu)
+    main_menu()
 
 def game_menu():
     user_choice = menu(g_m_o["items"],g_m_o["title"],main_menu)
@@ -654,6 +591,13 @@ menu_options = {
     3:setting_menu
 }
 
+if not os.path.exists(Path(save_filepath)):
+    Path(save_filepath).mkdir(parents=True, exist_ok=True)
+
+if not os.path.exists(Path(data_filepath)):
+    Path(data_filepath).mkdir(parents=True, exist_ok=True)
+
+
 online = internet()
 results = data_manager()
 if results != "o_t_s":
@@ -671,12 +615,6 @@ else:
     time.sleep(1)
 
 local_questions = read_data_file(data_filepath+question_file)
-
-if not os.path.exists(Path(save_filepath)):
-    Path(save_filepath).mkdir(parents=True, exist_ok=True)
-
-if not os.path.exists(Path(data_filepath)):
-    Path(data_filepath).mkdir(parents=True, exist_ok=True)
 
 def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False):
     clear()
