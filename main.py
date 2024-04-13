@@ -40,7 +40,7 @@ data_file = "data"
 #name of folder with saves
 save_filepath = "saves/"
 #name of folder with data
-data_filepath = "datsa/"
+data_filepath = "data/"
 
 #Menus for the advanced game menu
 a_g_m = [["Mode selection:",["Main","Entertainment","Science"]],["- difficulty selection:",
@@ -80,42 +80,37 @@ def internet(host:str="8.8.8.8", port:int=53, timeout:int=3) -> bool:
 def array_untangler(array:list,item:int=0) -> list:
     return [i[item] for i in array] 
 
-def spaced_print(things:list) -> None:
-    clear()
-    print ('{0: <20}'.format('Name'),'highscore\n')
-    for thing in things:
-        print ('{0: <20}'.format(thing['name']),thing['all_score'])
-    print('\n')
-
+#Prints items form array with indexed number at start
 def enum_print(array:list) -> None:
     for index , item in enumerate(array,start=1):
-        print(str(index) + ' ' + item)
+        print(str(index) + ' ' + html.unescape(item))
     print('\n')
 
+#Saves current data to data file
 def re_save_data() -> None:
     generate_data_file({"users": users,"catagories" : catagories,"counter":number},data_filepath+data_file)
 
+#Shows users names and high scores and some options
 def view_user_data() -> None:
     re_save_data()
-
     renderer.list_result(users,'Users',user_menu.get('menu'),'options')
-    #spaced_print(users)
-
-    #enum_print(user_menu.get('menu'))
     user_choice = le_input(len(user_menu.get('menu')),skip_func=main_menu)
     user_menu[user_choice]()
 
+#Makes new user
 def new_user() -> None:
     user_name = input("user name : ")
     users.append(dict(name = user_name, all_score = 0, games = []))
     view_user_data()
 
+#Deletes user
 def delete_user() -> None:
     beanz = le_input(renderer.list(["Delete user",array_untangler(users,'name')]),skip_func=view_user_data)
     users.pop(beanz)
     view_user_data()
 
-def advanced_user_view():
+#Shows users stored game results.
+def advanced_user_view() -> None:
     clear()
     for user in users:
         print("{}: {}".format('name', user['name']))
@@ -128,6 +123,7 @@ def advanced_user_view():
     input('back')
     view_user_data()
 
+#View user data menu options
 user_menu = {
     'menu':["New User","Delete User","Advanced view"],
     0:new_user,
@@ -135,6 +131,7 @@ user_menu = {
     2:advanced_user_view
 }
 
+#Class containing print functions.Each function prints the nice box around the given data
 class renderer:
     def list(items,mode=0,question='',sub=0,sub_txt='',no_num=0):
         title = html.unescape(items[0])
@@ -215,7 +212,48 @@ class renderer:
             )
         )
 
-def prepare_catagories():
+#Main input function used on every input for boundry and invalid entries
+def le_input(range=0,skip=True,skip_func="",text_mode=False,specific=None):
+    while True:
+        try:
+            user_input = input("-- ")
+            if user_input  == '':
+                if skip == True:
+                    skip_func()
+                    return
+                else:
+                    print("No skipping")
+            elif text_mode == True:
+                return user_input
+            elif text_mode == 'specify':
+                if user_input in specific:
+                    return user_input
+                print("not valid")
+            else:
+                user_input = int(user_input)
+                if user_input > 0:
+                    if user_input <= range:
+                        user_input-=1
+                        return user_input
+                print("Please choose from the options above")
+        except:
+            print("Please enter a number in range")
+
+#Menu, for simplification
+def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False):
+    clear()
+    if back_func == None:
+        skip=False
+    else:
+        skip=True
+    if sub_txt == None:
+        sub=0
+    else:
+        sub=1
+    return le_input(renderer.list([title,menu_items],sub=sub,sub_txt=sub_txt,no_num=no_index),skip=skip,skip_func=back_func,text_mode=text_mode)
+
+#Fetches catagories from api and sorts them correctly
+def prepare_catagories() -> list[list]:
     temp_array = [[],[],[]]
     response = api_request('https://opentdb.com/api_category.php',"trivia_categories")
     for x in response:
@@ -234,13 +272,15 @@ def prepare_catagories():
             temp_array[2].append([x["id"],x["name"]])
     return temp_array
 
-def one_time_start():
+#Runs if no data file is found, gets all required data and makes required files.
+def one_time_start() -> None:
     print("Generating Start file")
     catagories = prepare_catagories()
     generate_data_file(api_request('https://opentdb.com/api.php?amount=50')["results"],data_filepath+question_file)
     generate_data_file({"users": [],"catagories" : catagories,"counter":0},data_filepath+data_file)
     data_manager()
 
+#Trys to read data file, if cant makes one with required stuff.
 def data_manager():
     try:
         data = read_data_file(data_filepath+data_file)
@@ -250,7 +290,7 @@ def data_manager():
         return "o_t_s"
 
 #Used to format the data for saving games
-def generate_save_file(filename,active_users,questions,loop_override):
+def generate_save_file(filename:str,active_users:list,questions:list,loop_override:list) -> None:
     x = {
         "u": active_users,
         "q": questions,
@@ -258,13 +298,16 @@ def generate_save_file(filename,active_users,questions,loop_override):
     }
     generate_data_file(x,save_filepath+filename)
 
-def read_data_file(name,filetype='.json'):
+#Reads data from given file name
+def read_data_file(name:str,filetype:str='.json') -> any:
     return json.loads(open(name+filetype, "r").read())
 
-def generate_data_file(info,name:str) -> None:
+#Writes data from given file name
+def generate_data_file(info:any,name:str) -> None:
     file = open(name+".json", "w")
     json.dump(info,file,indent=4)
 
+#Base user class, used to make user objects storing game data
 class Active_user:
     name = None
     score = 0
@@ -277,6 +320,7 @@ class Active_user:
         self.name = name
         self.answers = answers
 
+#Used to make array of user objects, export user objects as dictionarys, also can clear array for next game
 class Game:
 
     user_array=[]
@@ -327,10 +371,12 @@ class Game:
     def clear_users(self) -> None:
         self.user_array.clear()
 
+#Loads save and starts game from save data
 def play_save(name:str) -> None:
     save_data = read_data_file(save_filepath+name,'')
     prepare_users(save_data["q"],save_data["u"],loop_override=save_data['l'])
 
+#shuffles questions if required and gets playing users.
 def quiz_prepare(questions:list,quastion_amount:int=None) -> None:
     if quastion_amount != None:
         questions = random.sample(questions, quastion_amount)
@@ -338,19 +384,23 @@ def quiz_prepare(questions:list,quastion_amount:int=None) -> None:
     active_users = active_users_select()
     prepare_users(questions,user_list=active_users)
 
+#Turns users into objects using game class then runs quiz
 def prepare_users(questions:list,user_data:list=None,user_list:list=None,loop_override:list=None) -> None:
     #If you played another game there would be extra users cause i forgot to clear the array. woops.
     Game().clear_users()
     Game().set_users(data_list=user_data,names=user_list)
     main_question_loop(questions,loop_override)
 
+#Combines 3 incorrect and correct choices into one array.
 def format_display_question(questions:list) -> tuple:
     temp_array = [x for x in questions["incorrect_answers"]]
     temp_array.append(questions["correct_answer"])
     random.shuffle(temp_array)
     return temp_array , questions["question"]
 
+#Runs the main quiz.
 def main_question_loop(questions:list,loop_override:list=None) -> None:
+    #Loop override for loaded saved games
     if loop_override != None:
         x = loop_override[0]
         y = loop_override[1]
@@ -358,10 +408,13 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
         x=0
         y=0
     while x < len(questions):
+        #Format for each question
         current_question = questions[x]
         choices , displayed_question = format_display_question(current_question)
+        #Array to go through users
         while y < len(Game().user_array):
-            numba = x + 1
+            question_display_number = x + 1
+            #Streak display calculations.
             if Game().user_array[y].streak == 0 and Game().user_array[y].highest_streak == 0:
                 current_streak='No streak'
             elif Game().user_array[y].streak == 0:
@@ -369,14 +422,17 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
             else:
                 current_streak='Current streak -- ' + str(Game().user_array[y].streak)
             clear()
-            formatted_display = Game().user_array[y].name+" -- Question " + str(numba) + " of " + str(len(questions))
+            #Display top bar data
+            formatted_display = Game().user_array[y].name+" -- Question " + str(question_display_number) + " of " + str(len(questions))
             print ('{0: <30}'.format(formatted_display),current_streak+'\n')
+            #Prints question and choices
             print(html.unescape(displayed_question) + '\n')
-            for n , d in enumerate(choices , start=1):
-                print(str(n) + ' ' + html.unescape(d))
-            print("\n")
+            enum_print(choices)
+            #Take input, if its 1 number above the choices it opens save menu
+            #If its 2 numbers above choices it goes to menu
             user_choice = le_input(len(choices)+2,skip=False)
             if user_choice == len(choices):
+                #Save stuff
                 saves = os.listdir('saves')
                 if len(saves) == 0:
                     saves = ["No saves"]
@@ -395,6 +451,7 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
             elif user_choice == len(choices)+1:
                 main_menu()
                 return
+            #Math for streaks, scoreing and other user data
             Game().user_array[y].answers.append(choices[user_choice])
             if int(user_choice) == choices.index(current_question["correct_answer"]):
                 print("\nCorrect")
@@ -442,19 +499,21 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
     else:
         main_menu()
 
+#Choose users from existing users to play quiz, data will be saved under the same name
 def active_users_select() -> list:
     user_names = array_untangler(users,'name')
     active_users = []
     player_amount = le_input(renderer.list(["Users",user_names],sub=1,sub_txt="Player amount"),skip_func=game_menu)
     player_amount+=1
-    renderer.list(["Users",user_names])
     for y in range(player_amount):
+        renderer.list(["Users",user_names])
         beanz = le_input(len(user_names),skip_func=game_menu)
         active_users.append(user_names[beanz])
+        user_names.pop(beanz)
     return active_users
 
-#Custom game setup
-def base_custom_input(array,array_name,misc_option='',menu_func=None): 
+#Custom game input
+def base_custom_input(array:list,array_name:str,misc_option:str='',menu_func:any=None) -> any: 
     renderer.list([array_name,array])
     chosen_item = le_input(len(array),skip_func=menu_func)
     if misc_option == "num":
@@ -465,88 +524,48 @@ def base_custom_input(array,array_name,misc_option='',menu_func=None):
         return nested_catagory[chosen_item]
     return array[chosen_item]
 
-def advanced_game():
+#Custom game alloes user to choose catagory, difficulty, type and amount.
+def advanced_game() -> None:
     if online == False:
         input("Internet required")
         game_menu()
     sub_cat = base_custom_input(a_g_m[0][1],a_g_m[0][0],"num",game_menu)
     temp_cat_select = sub_cat + 1
-    request_catagory = str(base_custom_input(array_untangler(catagories[sub_cat],1),"- Catagoey selection:",temp_cat_select,advanced_game))
-
-    #Get limits impliment thing.
+    request_catagory = str(base_custom_input(array_untangler(catagories[sub_cat],1),"- Catagorey selection:",temp_cat_select,advanced_game))
     upper_limits = api_request('https://opentdb.com/api_count.php?category='+request_catagory,"category_question_count")
-
     temp_array_69 = []
-
     keys =  ['total_easy_question_count','total_medium_question_count','total_hard_question_count',all_value]
     all_value = 0
     for i in keys:
         all_value=all_value+upper_limits[i]
         temp_array_69.append(upper_limits[i])
-
     request_diffuculty = base_custom_input(a_g_m[1][1],a_g_m[1][0])
     request_type = base_custom_input(a_g_m[2][1],a_g_m[2][0])
     clear()
-
     if temp_array_69[a_g_m[1][1].index(request_diffuculty)] > 50:
         print("Max 50")
     else:
         print("Max "+str(temp_array_69[a_g_m[1][1].index(request_diffuculty)]))
-
     request_amount = le_input(temp_array_69[a_g_m[1][1].index(request_diffuculty)],skip_func=main_menu)
     request_amount+=1
-
     if request_type == 'either':
         request_type=''
     else:
         request_type='&type='+request_type
-
     if request_diffuculty == 'any':
         request_diffuculty=''
     else:
         request_diffuculty='&difficulty='+request_diffuculty
-
-
     questions , thing_code = api_request('https://opentdb.com/api.php?amount='+str(request_amount)+'&category='+request_catagory+request_diffuculty+request_type,"results")
-
-    #Temp manuel check response code, make automatic later
     if thing_code != 0:
         print("An error occurred, please try again")
         input("return to menu -- ")
         main_menu()
-    #
-    #generate_data_file(questions,question_file)
     quiz_prepare(questions)
 
-#everything down is done ish.
-def le_input(range=0,skip=True,skip_func="",text_mode=False,specific=None):
-    while True:
-        try:
-            user_input = input("-- ")
-            if user_input  == '':
-                if skip == True:
-                    skip_func()
-                    return
-                else:
-                    print("No skipping")
-            elif text_mode == True:
-                return user_input
-            elif text_mode == 'specify':
-                if user_input in specific:
-                    return user_input
-                print("not valid")
-            else:
-                user_input = int(user_input)
-                if user_input > 0:
-                    if user_input <= range:
-                        user_input-=1
-                        return user_input
-                print("num not in range")
-        except:
-            print("pick number")
-
+#Save menu, displays saves and option, if no saves no options.
 def save_menu():
-    saves = os.listdir('saves')
+    saves = os.listdir(save_filepath)
     if len(saves) == 0:
         menu(["No Saves"],"Saves",main_menu,no_index=1,text_mode=True)
         main_menu()
@@ -560,15 +579,19 @@ def save_menu():
         input("Save deleted")
         main_menu()
 
+#Main menu
 def main_menu():
     menu_options[menu(menu_options["items"],menu_options["title"])]()
 
+#Settings, never finished.
 setting_items = ["online = "+str(online),"score_multiplier = "+str(score_multiplier),"streak_multiplier = "+str(streak_multiplier)]
 
+#Settings menu,never finished.
 def setting_menu():
     menu(setting_items,"Settings",main_menu)
     main_menu()
 
+#Game menu, shows quiz choices.
 def game_menu():
     user_choice = menu(g_m_o["items"],g_m_o["title"],main_menu)
     if user_choice == 3:
@@ -576,12 +599,14 @@ def game_menu():
     else:
         quiz_prepare(local_questions,g_m_o["data_2"][user_choice])
 
+#Game menu options
 g_m_o = {
     "items":["Quick","Basic","Advanced","Custom"],
     "title":"Game menu",
     "data_2":[5,20,30],
 }
 
+#Menu options
 menu_options = {
     "items":["Play","User managment","Continue game","settings"],
     "title":"Menu",
@@ -591,14 +616,17 @@ menu_options = {
     3:setting_menu
 }
 
+#Makes save folder if None
 if not os.path.exists(Path(save_filepath)):
     Path(save_filepath).mkdir(parents=True, exist_ok=True)
 
+#Makes data folder if None
 if not os.path.exists(Path(data_filepath)):
     Path(data_filepath).mkdir(parents=True, exist_ok=True)
 
-
+#Checks internet connection
 online = internet()
+#Gets data from data file
 results = data_manager()
 if results != "o_t_s":
     users = results["users"]
@@ -608,24 +636,13 @@ if results != "o_t_s":
         generate_data_file(questions,data_filepath+question_file)
         number = 0
     else:
-        #number = results["counter"]+1
+        number = results["counter"]+1
         pass
     re_save_data()
 else:
     time.sleep(1)
 
+#Gets questions from questions file
 local_questions = read_data_file(data_filepath+question_file)
-
-def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False):
-    clear()
-    if back_func == None:
-        skip=False
-    else:
-        skip=True
-    if sub_txt == None:
-        sub=0
-    else:
-        sub=1
-    return le_input(renderer.list([title,menu_items],sub=sub,sub_txt=sub_txt,no_num=no_index),skip=skip,skip_func=back_func,text_mode=text_mode)
 
 main_menu()
