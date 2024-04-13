@@ -485,6 +485,7 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
     for user in exported_users:
         returned_index = array_untangler(users,'name').index(user.get('name'))
         del user['name']
+        users[returned_index]['all_score']=users[returned_index]['all_score']+user.get('score')
         users[returned_index]['games'].append(user)
     re_save_data()
     enum_print(['menu','advanced view'])

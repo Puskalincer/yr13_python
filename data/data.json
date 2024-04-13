@@ -1,83 +1,49 @@
 {
     "users": [
         {
-            "name": "Beilif",
-            "all_score": 204,
+            "name": "Harry",
+            "all_score": 516,
             "games": [
                 {
-                    "score": 530,
-                    "correct": 5,
-                    "incorrect": 0,
-                    "streak": 5,
+                    "score": 0,
+                    "correct": 0,
+                    "incorrect": 5,
+                    "streak": 0,
                     "highest_streak": 0,
                     "answers": [
-                        "1 Month",
-                        "88",
-                        "The Sound of Crickets",
-                        "Famous",
-                        "Hampshire"
+                        "Lead",
+                        "Destinations",
+                        "360",
+                        "1980",
+                        "1989 Ford Explorer XLT"
                     ]
                 },
                 {
-                    "score": 102,
-                    "correct": 1,
-                    "incorrect": 4,
+                    "score": 312,
+                    "correct": 3,
+                    "incorrect": 2,
                     "streak": 0,
-                    "highest_streak": 1,
+                    "highest_streak": 3,
                     "answers": [
-                        "Pierce Brosnan",
-                        "Bravo Six",
-                        "37",
-                        "Willy Wonka",
-                        "1 Million"
+                        "Walter White",
+                        "346",
+                        "2006",
+                        "Joe Biden",
+                        "Croix Meridies"
                     ]
                 },
                 {
-                    "score": 102,
-                    "correct": 1,
-                    "incorrect": 4,
-                    "streak": 0,
-                    "highest_streak": 1,
-                    "answers": [
-                        "Wally Walrus",
-                        "False",
-                        "178",
-                        "May 9th, 1945",
-                        "54"
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "John",
-            "all_score": 0,
-            "games": [
-                {
-                    "score": 530,
-                    "correct": 5,
-                    "incorrect": 0,
-                    "streak": 5,
-                    "highest_streak": 0,
-                    "answers": [
-                        "1 Month",
-                        "88",
-                        "The Sound of Crickets",
-                        "Famous",
-                        "Hampshire"
-                    ]
-                },
-                {
-                    "score": 206,
+                    "score": 204,
                     "correct": 2,
                     "incorrect": 3,
-                    "streak": 0,
-                    "highest_streak": 2,
+                    "streak": 1,
+                    "highest_streak": 1,
                     "answers": [
-                        "Wally Walrus",
                         "True",
-                        "195",
-                        "September 2nd, 1945",
-                        "25"
+                        "Computers",
+                        "A minor car accident in a snowstorm",
+                        "True",
+                        "1985"
                     ]
                 }
             ]
@@ -187,5 +153,5 @@
             ]
         ]
     ],
-    "counter": 11
+    "counter": 12
 }
