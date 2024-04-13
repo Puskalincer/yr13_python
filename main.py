@@ -105,8 +105,8 @@ def new_user() -> None:
 
 #Deletes user
 def delete_user() -> None:
-    beanz = le_input(renderer.list(["Delete user",array_untangler(users,'name')]),skip_func=view_user_data)
-    users.pop(beanz)
+    user_choice = le_input(renderer.list(["Delete user",array_untangler(users,'name')]),skip_func=view_user_data)
+    users.pop(user_choice)
     view_user_data()
 
 #Shows users stored game results.
@@ -256,20 +256,20 @@ def menu(menu_items,title,back_func=None,sub_txt=None,no_index=0,text_mode=False
 def prepare_catagories() -> list[list]:
     temp_array = [[],[],[]]
     response = api_request('https://opentdb.com/api_category.php',"trivia_categories")
-    for x in response:
-        first_word = x["name"].split()[0]
+    for item in response:
+        first_word = item["name"].split()[0]
         if first_word == "Entertainment:" or first_word == "Science:":
             pass
         else:
-            temp_array[0].append([ x["id"],x["name"]])
-    for x in response:
-        first_word = x["name"].split()[0]
+            temp_array[0].append([ item["id"],item["name"]])
+    for item in response:
+        first_word = item["name"].split()[0]
         if first_word == "Entertainment:":
-            temp_array[1].append([x["id"],x["name"]])
-    for x in response:
-        first_word = x["name"].split()[0]
+            temp_array[1].append([item["id"],item["name"]])
+    for item in response:
+        first_word = item["name"].split()[0]
         if first_word == "Science:":
-            temp_array[2].append([x["id"],x["name"]])
+            temp_array[2].append([item["id"],item["name"]])
     return temp_array
 
 #Runs if no data file is found, gets all required data and makes required files.
@@ -291,12 +291,12 @@ def data_manager():
 
 #Used to format the data for saving games
 def generate_save_file(filename:str,active_users:list,questions:list,loop_override:list) -> None:
-    x = {
+    data = {
         "u": active_users,
         "q": questions,
         "l" : loop_override,
     }
-    generate_data_file(x,save_filepath+filename)
+    generate_data_file(data,save_filepath+filename)
 
 #Reads data from given file name
 def read_data_file(name:str,filetype:str='.json') -> any:
@@ -332,11 +332,11 @@ class Game:
         else:
             user_amount = len(names)
         
-        for x in range(user_amount):  
+        for index in range(user_amount):  
             user = Active_user()
 
             if data_list != None:
-                data = data_list[x]
+                data = data_list[index]
 
                 user.name=data.get('name')
                 user.score=data.get('score')
@@ -346,22 +346,22 @@ class Game:
                 user.highest_streak=data.get('highest_streak')
                 user.answers=data.get('answers')
             else:
-                user.name=names[x]
+                user.name=names[index]
                 user.answers=[]
 
             self.user_array.append(user)
 
     def export_users(self) -> list:
         formatted_user_array = []
-        for x in self.user_array:
+        for user in self.user_array:
             user_data = {
-                "name":x.name,
-                "score":x.score,
-                "correct":x.correct,
-                "incorrect":x.incorrect,
-                "streak":x.streak,
-                "highest_streak":x.highest_streak,
-                "answers":x.answers,
+                "name":user.name,
+                "score":user.score,
+                "correct":user.correct,
+                "incorrect":user.incorrect,
+                "streak":user.streak,
+                "highest_streak":user.highest_streak,
+                "answers":user.answers,
             }
 
             formatted_user_array.append(user_data)
@@ -393,7 +393,7 @@ def prepare_users(questions:list,user_data:list=None,user_list:list=None,loop_ov
 
 #Combines 3 incorrect and correct choices into one array.
 def format_display_question(questions:list) -> tuple:
-    temp_array = [x for x in questions["incorrect_answers"]]
+    temp_array = [item for item in questions["incorrect_answers"]]
     temp_array.append(questions["correct_answer"])
     random.shuffle(temp_array)
     return temp_array , questions["question"]
@@ -402,28 +402,28 @@ def format_display_question(questions:list) -> tuple:
 def main_question_loop(questions:list,loop_override:list=None) -> None:
     #Loop override for loaded saved games
     if loop_override != None:
-        x = loop_override[0]
-        y = loop_override[1]
+        question_loop = loop_override[0]
+        user_loop = loop_override[1]
     else:
-        x=0
-        y=0
-    while x < len(questions):
+        question_loop=0
+        user_loop=0
+    while question_loop < len(questions):
         #Format for each question
-        current_question = questions[x]
+        current_question = questions[question_loop]
         choices , displayed_question = format_display_question(current_question)
         #Array to go through users
-        while y < len(Game().user_array):
-            question_display_number = x + 1
+        while user_loop < len(Game().user_array):
+            question_display_number = question_loop + 1
             #Streak display calculations.
-            if Game().user_array[y].streak == 0 and Game().user_array[y].highest_streak == 0:
+            if Game().user_array[user_loop].streak == 0 and Game().user_array[user_loop].highest_streak == 0:
                 current_streak='No streak'
-            elif Game().user_array[y].streak == 0:
-                current_streak='Previous best streak -- ' + str(Game().user_array[y].highest_streak)
+            elif Game().user_array[user_loop].streak == 0:
+                current_streak='Previous best streak -- ' + str(Game().user_array[user_loop].highest_streak)
             else:
-                current_streak='Current streak -- ' + str(Game().user_array[y].streak)
+                current_streak='Current streak -- ' + str(Game().user_array[user_loop].streak)
             clear()
             #Display top bar data
-            formatted_display = Game().user_array[y].name+" -- Question " + str(question_display_number) + " of " + str(len(questions))
+            formatted_display = Game().user_array[user_loop].name+" -- Question " + str(question_display_number) + " of " + str(len(questions))
             print ('{0: <30}'.format(formatted_display),current_streak+'\n')
             #Prints question and choices
             print(html.unescape(displayed_question) + '\n')
@@ -440,40 +440,40 @@ def main_question_loop(questions:list,loop_override:list=None) -> None:
                 for save_item in saves:
                     save = Path(save_item).stem
                     if save == name:
-                        print("Overwrite save? y/n")
-                        user_choice = le_input(text_mode='specify',specific={"y","n"})
+                        print("Overwrite save? user_loop/n")
+                        user_choice = le_input(text_mode='specify',specific={"user_loop","n"})
                         if user_choice == "n":
                             main_menu()
                             return
-                generate_save_file(name,Game().export_users(),questions,[x,y])           
+                generate_save_file(name,Game().export_users(),questions,[question_loop,user_loop])           
                 main_menu()
                 return
             elif user_choice == len(choices)+1:
                 main_menu()
                 return
             #Math for streaks, scoreing and other user data
-            Game().user_array[y].answers.append(choices[user_choice])
+            Game().user_array[user_loop].answers.append(choices[user_choice])
             if int(user_choice) == choices.index(current_question["correct_answer"]):
                 print("\nCorrect")
-                Game().user_array[y].correct+=1
-                Game().user_array[y].streak+=1
-                Game().user_array[y].score=(Game().user_array[y].score+score_multiplier)+(streak_multiplier*Game().user_array[y].streak)
+                Game().user_array[user_loop].correct+=1
+                Game().user_array[user_loop].streak+=1
+                Game().user_array[user_loop].score=(Game().user_array[user_loop].score+score_multiplier)+(streak_multiplier*Game().user_array[user_loop].streak)
             else:
                 print("\nIncorrect : it was - " + current_question["correct_answer"])
-                Game().user_array[y].incorrect+=1
-                if Game().user_array[y].streak != 0:
-                    if Game().user_array[y].streak > Game().user_array[y].highest_streak:
-                        Game().user_array[y].highest_streak=Game().user_array[y].streak
-                    Game().user_array[y].streak=0
+                Game().user_array[user_loop].incorrect+=1
+                if Game().user_array[user_loop].streak != 0:
+                    if Game().user_array[user_loop].streak > Game().user_array[user_loop].highest_streak:
+                        Game().user_array[user_loop].highest_streak=Game().user_array[user_loop].streak
+                    Game().user_array[user_loop].streak=0
             time.sleep(1)
-            y=y+1
+            user_loop=user_loop+1
         clear()
         print ('{0: <20}'.format('Name'),'Score')
         for person in Game().user_array:
             print ('{0: <20}'.format(person.name),person.score)
         time.sleep(2)
-        x=x+1
-        y=0
+        question_loop=question_loop+1
+        user_loop=0
         clear()
     print('Final scores\n')
     print ('{0: <20}'.format('Name'),'Score')
@@ -505,11 +505,11 @@ def active_users_select() -> list:
     active_users = []
     player_amount = le_input(renderer.list(["Users",user_names],sub=1,sub_txt="Player amount"),skip_func=game_menu)
     player_amount+=1
-    for y in range(player_amount):
+    for nothing in range(player_amount):
         renderer.list(["Users",user_names])
-        beanz = le_input(len(user_names),skip_func=game_menu)
-        active_users.append(user_names[beanz])
-        user_names.pop(beanz)
+        user_choice = le_input(len(user_names),skip_func=game_menu)
+        active_users.append(user_names[user_choice])
+        user_names.pop(user_choice)
     return active_users
 
 #Custom game input
@@ -533,20 +533,19 @@ def advanced_game() -> None:
     temp_cat_select = sub_cat + 1
     request_catagory = str(base_custom_input(array_untangler(catagories[sub_cat],1),"- Catagorey selection:",temp_cat_select,advanced_game))
     upper_limits = api_request('https://opentdb.com/api_count.php?category='+request_catagory,"category_question_count")
-    temp_array_69 = []
-    keys =  ['total_easy_question_count','total_medium_question_count','total_hard_question_count',all_value]
-    all_value = 0
-    for i in keys:
-        all_value=all_value+upper_limits[i]
-        temp_array_69.append(upper_limits[i])
+    upper_limit_formatted = []
+    keys =  ['total_easy_question_count','total_medium_question_count','total_hard_question_count']
+    for key in keys:
+        upper_limit_formatted.append(upper_limits[key])
+    upper_limit_formatted.append(sum(upper_limit_formatted))
     request_diffuculty = base_custom_input(a_g_m[1][1],a_g_m[1][0])
     request_type = base_custom_input(a_g_m[2][1],a_g_m[2][0])
     clear()
-    if temp_array_69[a_g_m[1][1].index(request_diffuculty)] > 50:
+    if upper_limit_formatted[a_g_m[1][1].index(request_diffuculty)] > 50:
         print("Max 50")
     else:
-        print("Max "+str(temp_array_69[a_g_m[1][1].index(request_diffuculty)]))
-    request_amount = le_input(temp_array_69[a_g_m[1][1].index(request_diffuculty)],skip_func=main_menu)
+        print("Max "+str(upper_limit_formatted[a_g_m[1][1].index(request_diffuculty)]))
+    request_amount = le_input(upper_limit_formatted[a_g_m[1][1].index(request_diffuculty)],skip_func=main_menu)
     request_amount+=1
     if request_type == 'either':
         request_type=''
@@ -599,6 +598,12 @@ def game_menu():
     else:
         quiz_prepare(local_questions,g_m_o["data_2"][user_choice])
 
+#Displays instructions on not so obvious things.
+def instructions():
+    data = ["Entering nothing is usually back.","In the quiz the choices + 1 is save, the choices + 2 is main menu"]
+    menu(data,"Instructions",main_menu,no_index=1,text_mode=True)
+    main_menu()
+
 #Game menu options
 g_m_o = {
     "items":["Quick","Basic","Advanced","Custom"],
@@ -608,12 +613,13 @@ g_m_o = {
 
 #Menu options
 menu_options = {
-    "items":["Play","User managment","Continue game","settings"],
+    "items":["Play","User managment","Continue game","settings","instructions"],
     "title":"Menu",
     0:game_menu,
     1:view_user_data,
     2:save_menu,
-    3:setting_menu
+    3:setting_menu,
+    4:instructions
 }
 
 #Makes save folder if None
